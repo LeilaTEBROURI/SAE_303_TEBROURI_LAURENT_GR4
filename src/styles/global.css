@@ -2130,3 +2130,84 @@ html[data-mode-loupe="active"] #spotlight {
     transition: none;
   }
 }
+
+/* Un pied de page commun pour retrouver les dossiers et les crédits. */
+.site-footer {
+  display: block;
+  margin-top: 64px;
+  border-top: 1px solid #75694e;
+  padding-block: 40px 24px;
+  font-size: 13px;
+  line-height: 1.7;
+}
+.footer-main {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr 1fr;
+  gap: 48px;
+}
+.footer-title {
+  display: inline-block;
+  color: #fffbee;
+  font:
+    26px/1.3 "Special Elite",
+    serif;
+  margin: 10px 0 16px;
+  text-decoration: none;
+}
+.footer-main h2 {
+  color: #f8c457;
+  font-size: 14px;
+  font-weight: 700;
+  margin-bottom: 16px;
+}
+.footer-main p + p {
+  margin-top: 12px;
+}
+.footer-main strong {
+  color: #fffbee;
+  font-weight: 600;
+}
+.footer-main ul {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 20px;
+}
+.footer-main li + li {
+  margin-top: 7px;
+}
+.footer-main a:hover,
+.footer-main a:focus-visible {
+  color: #f8c457;
+  text-decoration: underline;
+}
+.footer-bottom {
+  display: flex;
+  justify-content: space-between;
+  gap: 24px;
+  border-top: 1px solid #514e46;
+  padding-top: 20px;
+  margin-top: 32px;
+  font-size: 11px;
+}
+@media (max-width: 900px) {
+  .footer-main {
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+  }
+  .footer-about {
+    grid-column: 1 / -1;
+  }
+}
+@media (max-width: 560px) {
+  .footer-main {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+  .footer-about {
+    grid-column: auto;
+  }
+  .footer-bottom {
+    flex-direction: column;
+    gap: 8px;
+  }
+}

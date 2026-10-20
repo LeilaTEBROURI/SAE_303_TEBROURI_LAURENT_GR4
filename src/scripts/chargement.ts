@@ -90,6 +90,7 @@ document.addEventListener("click", (event) => {
     event.shiftKey ||
     event.altKey ||
     lien.hasAttribute("download") ||
+    lien.classList.contains("glossary-term") ||
     (lien.target && lien.target !== "_self")
   )
     return;
