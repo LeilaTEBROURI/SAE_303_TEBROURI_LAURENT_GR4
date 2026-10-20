@@ -1,4 +1,5 @@
 ---
+import { adresseQuartier } from "../utils/quartiers";
 import Terme from "../components/Terme.astro";
 import Layout from "../layouts/Layout.astro";
 import indicateurs from "../assets/indicateurs.json";
@@ -13,9 +14,9 @@ const exemples = [
 ---
 
 <Layout title="Conclusion de l’enquête · Qui a volé l’ombre ?">
-  <header class="verdict-hero">
+  <header class="verdict-hero pt-[42px] max-[760.001px]:pt-[25px] pr-[245px] max-[760.001px]:pr-0 pb-[45px] max-[760.001px]:pb-[30px] pl-0 max-w-none relative min-h-[260px] [&_h1]:text-[clamp(34px,_4.5vw,_58px)] max-[760.001px]:[&_h1]:text-[36px] [&_h1]:font-bold [&_h1]:leading-[1.12] [&_h1]:tracking-[-0.025em] [&_h1]:mb-[25px] [&_h1_span]:text-primary [&_>_.muted]:max-w-[830px] [&_>_.muted]:text-[16px] max-[760.001px]:[&_>_.muted]:text-[14px] max-[760.001px]:[&::after]:[content:''] max-[760.001px]:[&::after]:block max-[760.001px]:[&::after]:clear-both">
     <img
-      class="verdict-barrier"
+      class="verdict-barrier absolute max-[760.001px]:static w-[210px] max-[760.001px]:w-[100px] h-auto top-[80px] right-0 [transform:rotate(5deg)] max-[760.001px]:float-right max-[760.001px]:mt-[6px] max-[760.001px]:mr-0 max-[760.001px]:mb-4 max-[760.001px]:ml-4"
       src="/illustrations/dont_cross_barriere.avif"
       alt=""
       width="876"
@@ -24,22 +25,31 @@ const exemples = [
       aria-hidden="true"
     />
 
-    <p class="eyebrow">Les conclusions de notre enquête</p>
+    <p class="eyebrow uppercase tracking-[0.12em] text-[11px] font-bold text-primary mb-[18px]">
+      Les conclusions de notre enquête
+    </p>
     <h1>
       Des indices sur la carte.
       <br />
       <span>Des actions sur le terrain.</span>
     </h1>
-    <p class="muted">
+    <p class="muted text-muted">
       Nous avons croisé les surfaces chaudes, les contours des 23 quartiers
       prioritaires de la politique de la ville (<Terme id="qpv" />) et les lieux
       de fraîcheur recensés pour repérer les situations à approfondir.
     </p>
-    <div class="verdict-tag">VERDICT PROVISOIRE · À COMPLÉTER SUR PLACE</div>
+    <div class="verdict-tag inline-block [border:1px_solid_#c49e4b] text-primary pt-2 pr-3 pb-2 pl-3 rounded-[4px] text-[10px] max-[760.001px]:text-[8px] tracking-[0.1em] mt-[25px]">
+      VERDICT PROVISOIRE · À COMPLÉTER SUR PLACE
+    </div>
   </header>
-  <section class="paper verdict-summary" aria-labelledby="constat-title">
+  <section
+    class="paper verdict-summary bg-cream text-ink rounded-[8px] pt-[34px] max-[760.001px]:pt-[23px] min-[760.001px]:max-[900.001px]:pt-[25px] pr-[34px] max-[760.001px]:pr-[23px] min-[760.001px]:max-[900.001px]:pr-[25px] pb-[34px] max-[760.001px]:pb-[23px] min-[760.001px]:max-[900.001px]:pb-[25px] pl-[34px] max-[760.001px]:pl-[23px] min-[760.001px]:max-[900.001px]:pl-[25px] grid grid-cols-[1.6fr_1fr] max-[760.001px]:grid-cols-1 gap-10 max-[900.001px]:gap-6 [&_.typewriter]:text-[#8d522d] [&_.typewriter]:text-[11px] [&_.typewriter]:mb-4 [&_h2]:text-[26px] max-[760.001px]:[&_h2]:text-[24px] [&_h2]:leading-[1.25] [&_h2]:font-bold [&_h2]:mb-[18px] [&_>_div_>_p:not(.typewriter)]:text-[14px] [&_>_div_>_p:not(.typewriter)]:mb-[15px]"
+    aria-labelledby="constat-title"
+  >
     <div>
-      <p class="typewriter">CE QUE NOS RECHERCHES MONTRENT</p>
+      <p class="typewriter font-typewriter text-[13px]">
+        CE QUE NOS RECHERCHES MONTRENT
+      </p>
       <h2 id="constat-title">
         Les quartiers ne disposent pas des mêmes ressources à proximité.
       </h2>
@@ -55,7 +65,7 @@ const exemples = [
         Marne-Capucins en compte 40.
       </p>
     </div>
-    <aside class="verdict-number">
+    <aside class="verdict-number bg-[#f6efdb] pt-[25px] pr-[25px] pb-[25px] pl-[25px] rounded-[7px] self-center [&_>_strong]:block [&_>_strong]:text-[58px] max-[760.001px]:[&_>_strong]:text-[48px] [&_>_strong]:tracking-[-0.04em] [&_>_strong]:leading-[1.1] [&_>_strong]:text-[#b04e28] [&_>_strong]:mb-[15px] [&_p]:text-[14px] [&_small]:block [&_small]:mt-[18px] [&_small]:text-[11px] [&_small]:leading-[1.6] [&_small]:text-[#676052]">
       <strong>23 QPV</strong>
       <p>
         comparés selon leur part chaude et les lieux ponctuels recensés à 300 m.
@@ -66,20 +76,27 @@ const exemples = [
       </small>
     </aside>
   </section>
-  <section class="verdict-examples" aria-labelledby="exemples-title">
-    <div class="section-head">
+  <section
+    class="verdict-examples mt-[45px] max-[760.001px]:[&_.section-head]:gap-[10px] max-[760.001px]:[&_.section-head_>_p]:text-[12px]"
+    aria-labelledby="exemples-title"
+  >
+    <div class="section-head flex justify-between items-center max-[760.001px]:items-start gap-[25px] max-[760.001px]:gap-[18px] mb-[30px] max-[760.001px]:flex-col [&_h2]:text-[28px] max-[760.001px]:[&_h2]:text-[25px] [&_h2]:font-bold [&_h2]:leading-[1.3] [&_p]:text-[14px] max-[760.001px]:[&_p]:text-[13px]">
       <div>
-        <p class="eyebrow">Trois dossiers à approfondir</p>
+        <p class="eyebrow uppercase tracking-[0.12em] text-[11px] font-bold text-primary mb-[18px]">
+          Trois dossiers à approfondir
+        </p>
         <h2 id="exemples-title">Des situations différentes, à vérifier.</h2>
       </div>
-      <p class="muted">Repère commun : 300 m à vol d’oiseau.</p>
+      <p class="muted text-muted">Repère commun : 300 m à vol d’oiseau.</p>
     </div>
-    <div class="verdict-grid">
+    <div class="verdict-grid grid grid-cols-3 max-[760.001px]:grid-cols-1 gap-5">
       {exemples.map((q) => (
-        <article class="paper verdict-case">
-          <p class="typewriter">{q.communes}</p>
+        <article class="paper verdict-case bg-cream text-ink rounded-[8px] pt-[25px] pr-[25px] pb-[25px] pl-[25px] flex flex-col gap-[15px] [&_>_.typewriter]:text-[11px] [&_>_.typewriter]:text-[#756745] [&_h3]:text-[25px] max-[760.001px]:[&_h3]:text-[24px] min-[760.001px]:max-[900.001px]:[&_h3]:text-[21px] [&_h3]:font-bold [&_h3]:leading-[1.2] [&_p]:text-[14px] [&_.case-caution]:text-[11px] [&_.case-caution]:text-[#6f6656] [&_a]:mt-auto [&_a]:text-[12px] [&_a]:font-semibold [&_a]:underline">
+          <p class="typewriter font-typewriter text-[13px]">
+            {q.communes}
+          </p>
           <h3>{q.quartier}</h3>
-          <p class="case-heat">
+          <p class="case-heat [&_strong]:text-[30px] [&_strong]:text-[#b04e28] [&_strong]:block">
             <strong>{format(q.part_chaude_pct)} %</strong> de surface chaude
           </p>
           <p>
@@ -91,13 +108,15 @@ const exemples = [
               ? "Le filtre exclut les parcs surfaciques. Ce zéro n’établit donc pas l’absence réelle de possibilités de fraîcheur."
               : "Ce nombre ne mesure ni la capacité, ni les horaires, ni l’accès réel aux lieux. Les parcs représentés en polygones ne sont pas comptés."}
           </p>
-          <a href={`/quartiers/${q.code_qp}/`}>Revoir les indices ↗</a>
+          <a href={adresseQuartier(q)}>Revoir les indices ↗</a>
         </article>
       ))}
     </div>
   </section>
-  <section class="paper verdict-limits">
-    <p class="typewriter">COMMENT INTERPRÉTER LE VERDICT</p>
+  <section class="paper verdict-limits bg-cream text-ink rounded-[8px] pt-[30px] max-[760.001px]:pt-[23px] pr-[30px] max-[760.001px]:pr-[23px] pb-[30px] max-[760.001px]:pb-[23px] pl-[30px] max-[760.001px]:pl-[23px] mt-[25px] [&_.typewriter]:text-[#8d522d] [&_.typewriter]:text-[11px] [&_.typewriter]:mb-4 [&_h2]:text-[26px] max-[760.001px]:[&_h2]:text-[24px] [&_h2]:leading-[1.25] [&_h2]:font-bold [&_h2]:mb-[18px] [&_>_p:not(.typewriter)]:text-[14px] [&_>_p:not(.typewriter)]:mb-[15px] [&_a]:text-[12px] [&_a]:underline">
+    <p class="typewriter font-typewriter text-[13px]">
+      COMMENT INTERPRÉTER LE VERDICT
+    </p>
     <h2>Notre carte aide à poser les bonnes questions.</h2>
     <p>
       Nous avons localisé des situations à examiner ; nous n’avons pas mesuré
@@ -114,30 +133,39 @@ const exemples = [
     </p>
     <a href="/sources/">Retrouver les sources et les calculs ↗</a>
   </section>
-  <section class="verdict-actions" aria-labelledby="actions-title">
-    <p class="eyebrow">Et maintenant, que peut-on faire ?</p>
+  <section
+    class="verdict-actions mt-[50px] [&_>_h2]:text-[32px] max-[760.001px]:[&_>_h2]:text-[27px] [&_>_h2]:font-bold [&_>_h2]:leading-[1.25] [&_>_h2]:max-w-[930px] [&_>_h2]:mb-[18px]"
+    aria-labelledby="actions-title"
+  >
+    <p class="eyebrow uppercase tracking-[0.12em] text-[11px] font-bold text-primary mb-[18px]">
+      Et maintenant, que peut-on faire ?
+    </p>
     <h2 id="actions-title">
       Quatre pistes à discuter avec les habitants et les collectivités.
     </h2>
-    <p class="muted actions-intro">
+    <p class="muted actions-intro text-muted max-w-[900px] text-[14px] mb-7">
       Ce sont des propositions à étudier localement. Nos données ne permettent
       pas de choisir seules les aménagements ni de chiffrer leur effet.
     </p>
-    <div class="actions-grid">
-      <article class="paper">
-        <p class="typewriter">01 · VÉRIFIER L’EXISTANT</p>
+    <div class="actions-grid grid grid-cols-2 max-[760.001px]:grid-cols-1 gap-5 [&_article]:pt-7 max-[760.001px]:[&_article]:pt-6 [&_article]:pr-7 max-[760.001px]:[&_article]:pr-6 [&_article]:pb-7 max-[760.001px]:[&_article]:pb-6 [&_article]:pl-7 max-[760.001px]:[&_article]:pl-6 [&_article]:flex [&_article]:flex-col [&_article]:gap-[14px] [&_.typewriter]:text-[11px] [&_.typewriter]:text-[#2c6d4b] [&_h3]:text-[23px] [&_h3]:font-bold [&_h3]:leading-[1.3] [&_article_>_p:not(.typewriter)]:text-[14px]">
+      <article class="paper bg-cream text-ink rounded-[8px] pt-[25px] pr-[25px] pb-[25px] pl-[25px]">
+        <p class="typewriter font-typewriter text-[13px]">
+          01 · VÉRIFIER L’EXISTANT
+        </p>
         <h3>Confirmer les lieux réellement utilisables.</h3>
         <p>
           Faire des repérages avec les habitants : entrées des parcs, horaires,
           accès gratuit, état des fontaines et parcours accessibles. Compléter
           l’inventaire avant de décider où intervenir.
         </p>
-        <span class="action-horizon">
+        <span class="action-horizon block [border-top:1px_solid_#d9ceba] pt-[14px] mt-auto text-[10px] text-[#6f6656]">
           Première étape de l’enquête de terrain
         </span>
       </article>
-      <article class="paper">
-        <p class="typewriter">02 · RENDRE LA FRAÎCHEUR VISIBLE</p>
+      <article class="paper bg-cream text-ink rounded-[8px] pt-[25px] pr-[25px] pb-[25px] pl-[25px]">
+        <p class="typewriter font-typewriter text-[13px]">
+          02 · RENDRE LA FRAÎCHEUR VISIBLE
+        </p>
         <h3>Mieux indiquer les lieux et leurs accès.</h3>
         <p>
           Une fois les informations vérifiées, signaler les points d’eau, les
@@ -145,12 +173,14 @@ const exemples = [
           des itinéraires à partir des accès réels plutôt que d’un simple rayon
           sur la carte.
         </p>
-        <span class="action-horizon">
+        <span class="action-horizon block [border-top:1px_solid_#d9ceba] pt-[14px] mt-auto text-[10px] text-[#6f6656]">
           Information et accès aux ressources existantes
         </span>
       </article>
-      <article class="paper">
-        <p class="typewriter">03 · CRÉER DE L’OMBRE</p>
+      <article class="paper bg-cream text-ink rounded-[8px] pt-[25px] pr-[25px] pb-[25px] pl-[25px]">
+        <p class="typewriter font-typewriter text-[13px]">
+          03 · CRÉER DE L’OMBRE
+        </p>
         <h3>Étudier des protections sur les espaces fréquentés.</h3>
         <p>
           Examiner la plantation d’arbres adaptés et, selon les lieux, des
@@ -158,12 +188,14 @@ const exemples = [
           Vérifier le sol, les usages, l’entretien et les besoins en eau avant
           tout choix.
         </p>
-        <span class="action-horizon">
+        <span class="action-horizon block [border-top:1px_solid_#d9ceba] pt-[14px] mt-auto text-[10px] text-[#6f6656]">
           Aménagements à concevoir et à entretenir
         </span>
       </article>
-      <article class="paper">
-        <p class="typewriter">04 · TRANSFORMER ET SUIVRE</p>
+      <article class="paper bg-cream text-ink rounded-[8px] pt-[25px] pr-[25px] pb-[25px] pl-[25px]">
+        <p class="typewriter font-typewriter text-[13px]">
+          04 · TRANSFORMER ET SUIVRE
+        </p>
         <h3>Végétaliser et redonner une place aux sols.</h3>
         <p>
           Étudier la{" "}
@@ -173,10 +205,12 @@ const exemples = [
           <Terme id="canopee" label="canopée" /> et des observations de terrain
           pour suivre les évolutions.
         </p>
-        <span class="action-horizon">Projet dans la durée et évaluation</span>
+        <span class="action-horizon block [border-top:1px_solid_#d9ceba] pt-[14px] mt-auto text-[10px] text-[#6f6656]">
+          Projet dans la durée et évaluation
+        </span>
       </article>
     </div>
-    <p class="action-source">
+    <p class="action-source text-muted text-[11px] leading-[1.7] mt-5 [&_a]:underline">
       Les pistes d’ombrage, de végétalisation et de désimperméabilisation
       s’appuient sur les familles de solutions présentées par l’
       <a
@@ -197,8 +231,10 @@ const exemples = [
       . Leur pertinence doit être vérifiée pour chaque site.
     </p>
   </section>
-  <section class="verdict-end">
-    <p class="typewriter">L’ENQUÊTE NE S’ARRÊTE PAS À LA CARTE</p>
+  <section class="verdict-end pt-10 pr-0 pb-5 pl-0 mt-[35px] [border-top:1px_solid_#716b5b] max-w-[1000px] [&_>_.typewriter]:text-primary [&_>_.typewriter]:text-[11px] [&_>_.typewriter]:mb-[18px] [&_h2]:text-[36px] max-[760.001px]:[&_h2]:text-[29px] [&_h2]:font-bold [&_h2]:leading-[1.25] [&_h2]:mb-5 [&_>_p:last-of-type]:text-muted [&_>_p:last-of-type]:text-[15px] [&_>_p:last-of-type]:max-w-[850px] max-[760.001px]:[&_.btn]:text-[12px]">
+    <p class="typewriter font-typewriter text-[13px]">
+      L’ENQUÊTE NE S’ARRÊTE PAS À LA CARTE
+    </p>
     <h2>
       Nos résultats donnent des pistes.
       <br />
@@ -209,10 +245,16 @@ const exemples = [
       c’est ainsi que l’enquête peut aider à construire des réponses adaptées.
     </p>
     <div class="flex flex-wrap gap-3 mt-6">
-      <a class="btn btn-primary" href="/carte/">
+      <a
+        class="btn btn-primary font-semibold normal-case shadow-none text-ink bg-primary [&:hover]:bg-[#ffd57c]"
+        href="/carte/"
+      >
         Retour sur le terrain →
       </a>
-      <a class="btn btn-outline text-cream" href="/#dossiers">
+      <a
+        class="btn btn-outline text-cream font-semibold normal-case shadow-none"
+        href="/#dossiers"
+      >
         Revoir les dossiers
       </a>
     </div>

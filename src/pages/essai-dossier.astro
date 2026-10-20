@@ -1,4 +1,5 @@
 ---
+import { adresseQuartier } from "../utils/quartiers";
 import Layout from "../layouts/Layout.astro";
 import CarteEnquete from "../components/CarteEnquete.astro";
 import indicateurs from "../assets/indicateurs.json";
@@ -19,7 +20,7 @@ const format = (n: number) =>
     />
     <div class="trial-thief" aria-hidden="true">
       <img
-        class="peeking-thief"
+        class="peeking-thief fixed right-0 top-[42vh] max-[760.001px]:top-[46vh] w-[64px] max-[760.001px]:w-[25px] pointer-events-none z-[4] [transition:opacity_140ms_ease] [&_img]:block [&_img]:w-full [&_img]:h-auto [&.peeking-thief-left]:left-0 [&.peeking-thief-left]:right-[auto] [&.peeking-thief-left]:[transform:scaleX(-1)] [&.peeking-thief-hidden]:opacity-0"
         src="/illustrations/voleur-original.svg"
         width="135"
         height="173"
@@ -63,9 +64,7 @@ const format = (n: number) =>
     </button>
     <div class="trial-content">
       <div class="trial-toolbar">
-        <a href={`/quartiers/${quartier.code_qp}/`}>
-          ← Voir la version actuelle
-        </a>
+        <a href={adresseQuartier(quartier)}>← Voir la version actuelle</a>
         <span class="trial-edition">ENQUÊTE DE TERRAIN / 12</span>
       </div>
       <header class="trial-heading">
@@ -79,13 +78,15 @@ const format = (n: number) =>
       <article class="trial-file" data-dossier={quartier.code_qp}>
         <div class="file-tab">LES PIÈCES DU DOSSIER</div>
         <div class="file-topline">
-          <span class="typewriter">N° 12 / QN03317M</span>
+          <span class="typewriter font-typewriter text-[13px]">
+            N° 12 / QN03317M
+          </span>
           <span class="file-date">CHALEUR · 11 JUILLET 2022</span>
         </div>
         <section class="trial-metrics" aria-label="Les trois premiers indices">
           <article>
             <p class="trial-index">INDICE 01 — CHALEUR</p>
-            <strong class="hot-text">
+            <strong class="hot-text text-[#bd4f26]">
               {format(quartier.part_chaude_pct)}
               <span> %</span>
             </strong>
@@ -94,7 +95,7 @@ const format = (n: number) =>
           </article>
           <article>
             <p class="trial-index">INDICE 02 — LIEUX</p>
-            <strong class="green-text" id="trial-vegetation">
+            <strong class="green-text text-[#2c6d4b]" id="trial-vegetation">
               {quartier.nombre_lieux_frais}
               <span> lieux</span>
             </strong>
@@ -103,7 +104,7 @@ const format = (n: number) =>
           </article>
           <article>
             <p class="trial-index">INDICE 03 — EAU</p>
-            <strong class="blue-text" id="trial-water">
+            <strong class="blue-text text-[#2d7e9e]" id="trial-water">
               {quartier.comptes_300m["Eau et rafraîchissement"]}
               <span> lieux d’eau</span>
             </strong>
@@ -112,13 +113,17 @@ const format = (n: number) =>
           </article>
         </section>
         <div class="trial-map-heading">
-          <span class="typewriter">LA SCÈNE À EXAMINER</span>
+          <span class="typewriter font-typewriter text-[13px]">
+            LA SCÈNE À EXAMINER
+          </span>
           <p>Superpose les indices et explore les alentours.</p>
         </div>
         <CarteEnquete code={quartier.code_qp} detail />
         <section class="trial-note">
           <span class="note-pin" aria-hidden="true"></span>
-          <p class="typewriter">CE QU’ON RETIENT</p>
+          <p class="typewriter font-typewriter text-[13px]">
+            CE QU’ON RETIENT
+          </p>
           <h2>Un quartier largement classé chaud.</h2>
           <p>
             <strong>{format(quartier.part_chaude_pct)} %</strong> de sa surface

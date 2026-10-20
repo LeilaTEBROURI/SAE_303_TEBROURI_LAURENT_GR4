@@ -1,3 +1,4 @@
+import { adresseQuartier } from "../utils/quartiers";
 // Comme les filtres du TP4 : lire les sélections, puis actualiser les résultats.
 import quartiers from "../assets/indicateurs.json";
 const selectA = document.querySelector<HTMLSelectElement>("#quartier-a")!;
@@ -33,7 +34,7 @@ function afficherQuartier(side: string, code: string, distance: number) {
   card.querySelector<HTMLProgressElement>("[data-heat-bar]")!.value =
     q.part_chaude_pct;
   card.querySelector<HTMLAnchorElement>("[data-dossier-link]")!.href =
-    `/quartiers/${q.code_qp}/`;
+    adresseQuartier(q);
   return q;
 }
 function afficherComparaison() {

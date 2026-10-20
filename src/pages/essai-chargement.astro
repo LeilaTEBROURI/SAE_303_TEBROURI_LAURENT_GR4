@@ -3,17 +3,23 @@ import Layout from "../layouts/Layout.astro";
 ---
 
 <Layout title="Essai du chargement · Qui a volé l’ombre ?">
-  <section class="glossary-intro">
-    <p class="eyebrow">Un nouveau tour du voleur</p>
+  <section class="glossary-intro max-w-[850px] pt-[35px] pb-[35px] [&_h1]:text-[clamp(34px,_5vw,_58px)] [&_h1]:leading-[1.08] [&_h1]:font-bold [&_h1]:mb-6 [&_>_p:not(.eyebrow)]:text-[#d6d0c1] [&_>_p:not(.eyebrow)]:max-w-[700px] [&_>_p:not(.eyebrow)]:leading-[1.7] [&_>_p:not(.eyebrow)]:mt-[14px]">
+    <p class="eyebrow uppercase tracking-[0.12em] text-[11px] font-bold text-primary mb-[18px]">
+      Un nouveau tour du voleur
+    </p>
     <h1>On suit sa trace ?</h1>
     <p>
       Le voleur traverse les cercles et les colore à son passage. Cet aperçu
       dure trois secondes ; entre deux pages, l’animation dure environ 1,5
       seconde.
     </p>
-    <button id="tester-chargement" class="btn btn-primary" type="button">
+    <button
+      id="tester-chargement"
+      class="btn btn-primary text-[16px] leading-[1.6] font-semibold normal-case shadow-none text-ink bg-primary [&:hover]:bg-[#ffd57c]"
+      type="button"
+    >
       Voir l’animation →
     </button>
-    <p class="muted mt-4">Échap permet de fermer l’aperçu.</p>
+    <p class="muted mt-4 text-muted">Échap permet de fermer l’aperçu.</p>
   </section>
 </Layout>

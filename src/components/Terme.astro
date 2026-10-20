@@ -11,7 +11,7 @@ const texte = label ?? terme.mot;
 ---
 
 <a
-  class="glossary-term"
+  class="glossary-term text-[inherit] [text-decoration:underline_dotted] [text-underline-offset:0.22em] [text-decoration-thickness:1px] [&:hover]:[text-decoration-style:solid] [&:focus-visible]:[text-decoration-style:solid]"
   href={`/glossaire/#${id}`}
   aria-label={`${texte} : ${terme.complet ?? terme.mot}. Lire la définition.`}
 >

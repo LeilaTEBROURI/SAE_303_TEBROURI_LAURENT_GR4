@@ -9,8 +9,11 @@ const links = [
 ];
 ---
 
-<header class="container site-header">
-  <a class="brand" href="/">
+<header class="container site-header w-[min(1400px,_calc(100%_-_96px))] max-[760.001px]:w-[calc(100%_-_36px)] min-[760.001px]:max-[1100.001px]:w-[calc(100%_-_56px)] ml-auto mr-auto flex items-center gap-[30px] max-[1100.001px]:gap-[18px] min-h-[112px] max-[760.001px]:min-h-[100px] max-[1000.001px]:flex-wrap max-[1000.001px]:pt-[18px] max-[1000.001px]:pb-[18px] [&_nav]:flex [&_nav]:gap-7 max-[1000.001px]:[&_nav]:gap-[12px_20px] min-[1000.001px]:max-[1100.001px]:[&_nav]:gap-[18px] [&_nav]:text-[13px] max-[760.001px]:[&_nav]:text-[11px] min-[760.001px]:max-[900.001px]:[&_nav]:text-[12px] [&_nav]:text-muted max-[1000.001px]:[&_nav]:[order:3] max-[1000.001px]:[&_nav]:w-full max-[1000.001px]:[&_nav]:justify-start max-[1000.001px]:[&_nav]:flex-wrap [&_nav_a[aria-current='page']]:text-cream [&_nav_a:hover]:underline">
+  <a
+    class="brand flex gap-3 items-center mr-auto no-underline max-[760.001px]:[flex:1] [&_span]:text-[11px] max-[760.001px]:[&_span]:text-[9px] min-[760.001px]:max-[1100.001px]:[&_span]:text-[10px] [&_span]:font-bold [&_span]:tracking-[1.6px] max-[760.001px]:[&_span]:max-w-none min-[760.001px]:max-[1100.001px]:[&_span]:max-w-[160px] max-[760.001px]:[&_img]:w-[28px] max-[760.001px]:[&_img]:h-[28px]"
+    href="/"
+  >
     <img src="/illustrations/e5f05.svg" width="34" height="34" alt="" />
     <span>ENQUÊTE MÉTROPOLITAINE</span>
   </a>
@@ -24,7 +27,7 @@ const links = [
       </a>
     ))}
   </nav>
-  <label class="loupe-control">
+  <label class="loupe-control relative z-[2100] flex items-center gap-[9px] [border:1px_solid_#bab6ab] rounded-[24px] pt-[9px] max-[760.001px]:pt-[7px] pr-[14px] max-[760.001px]:pr-[10px] pb-[9px] max-[760.001px]:pb-[7px] pl-[14px] max-[760.001px]:pl-[10px] text-[11px] max-[760.001px]:text-[10px] bg-ink cursor-pointer [&_.toggle]:text-cream [&_.toggle]:bg-[#bab6ab] [&_.toggle]:[border:1px_solid_#bab6ab] [&_.toggle:checked]:bg-primary [&_.toggle:checked]:text-ink">
     <input
       aria-describedby="loupe-help"
       id="mode-loupe"
@@ -34,6 +37,9 @@ const links = [
     Mode détective
   </label>
 </header>
-<p id="loupe-help" class="container loupe-help">
+<p
+  id="loupe-help"
+  class="container loupe-help w-[min(1400px,_calc(100%_-_96px))] max-[760.001px]:w-[calc(100%_-_36px)] min-[760.001px]:max-[1100.001px]:w-[calc(100%_-_56px)] ml-auto mr-auto text-[10px] max-[760.001px]:text-[9px] text-muted mt-[-7px] max-[760.001px]:mt-0 mb-[10px] text-right max-[760.001px]:text-left [&_kbd]:[font:inherit] [&_kbd]:[border:1px_solid_#79746b] [&_kbd]:rounded-[3px] [&_kbd]:pt-[1px] [&_kbd]:pr-1 [&_kbd]:pb-[1px] [&_kbd]:pl-1"
+>
   Éclaire les indices · <kbd>Échap</kbd> pour désactiver le mode détective.
 </p>

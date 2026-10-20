@@ -4,11 +4,18 @@ Astro.response.status = 404;
 ---
 
 <Layout title="Dossier introuvable · Qui a volé l’ombre ?">
-  <section class="sources-intro">
-    <p class="eyebrow">Dossier introuvable · 404</p>
+  <section class="sources-intro [&_h1]:text-[clamp(28px,_3vw,_42px)] max-[760.001px]:[&_h1]:text-[32px] [&_h1]:font-bold [&_h1]:leading-[1.2] [&_h1]:mb-5 pt-[35px] pb-10 max-w-[900px]">
+    <p class="eyebrow uppercase tracking-[0.12em] text-[11px] font-bold text-primary mb-[18px]">
+      Dossier introuvable · 404
+    </p>
     <h1>Ce quartier n’est pas dans les dossiers.</h1>
-    <p class="muted">Choisis l’un des 23 quartiers de l’enquête.</p>
-    <a class="btn btn-primary mt-6" href="/#dossiers">
+    <p class="muted text-muted">
+      Choisis l’un des 23 quartiers de l’enquête.
+    </p>
+    <a
+      class="btn btn-primary mt-6 font-semibold normal-case shadow-none text-ink bg-primary [&:hover]:bg-[#ffd57c]"
+      href="/#dossiers"
+    >
       Retour aux dossiers →
     </a>
   </section>

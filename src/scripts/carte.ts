@@ -1,3 +1,4 @@
+import { adresseQuartier } from "../utils/quartiers";
 // Même organisation que TP7/leaflet : données → carte → fonction de rendu → événements.
 import L from "leaflet";
 import type { GeoJsonObject, Feature } from "geojson";
@@ -60,7 +61,7 @@ if (explorer) {
       layer.bindTooltip(feature.properties.quartier, { sticky: true });
       layer.on("click", () => {
         if (detail && feature.properties.code_qp !== code) {
-          window.location.href = `/quartiers/${feature.properties.code_qp}/`;
+          window.location.href = adresseQuartier(feature.properties);
           return;
         }
         code = feature.properties.code_qp;
@@ -84,7 +85,7 @@ if (explorer) {
             ) {
               e.preventDefault();
               if (detail && feature.properties.code_qp !== code) {
-                window.location.href = `/quartiers/${feature.properties.code_qp}/`;
+                window.location.href = adresseQuartier(feature.properties);
                 return;
               }
               code = feature.properties.code_qp;
@@ -190,7 +191,7 @@ if (explorer) {
       }
     }
     const open = explorer!.querySelector<HTMLAnchorElement>("[data-open]")!;
-    open.href = q ? `/quartiers/${q.code_qp}/` : "/#dossiers";
+    open.href = q ? adresseQuartier(q) : "/#dossiers";
     open.textContent = q ? "Ouvrir ce dossier →" : "Choisir un dossier →";
     open.hidden = detail;
 

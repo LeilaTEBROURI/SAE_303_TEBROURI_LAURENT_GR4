@@ -8,7 +8,10 @@ const gauche =
 ---
 
 <div
-  class:list={["peeking-thief", { "peeking-thief-left": gauche }]}
+  class:list={[
+    "peeking-thief fixed right-0 top-[42vh] max-[760.001px]:top-[46vh] w-[64px] max-[760.001px]:w-[25px] pointer-events-none z-[4] [transition:opacity_140ms_ease] [&_img]:block [&_img]:w-full [&_img]:h-auto [&.peeking-thief-left]:left-0 [&.peeking-thief-left]:right-[auto] [&.peeking-thief-left]:[transform:scaleX(-1)] [&.peeking-thief-hidden]:opacity-0",
+    { "peeking-thief-left": gauche },
+  ]}
   aria-hidden="true"
 >
   <img src="/illustrations/voleur.avif" alt="" width="92" height="274" />

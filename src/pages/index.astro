@@ -8,10 +8,12 @@ import quartiers from "../assets/indicateurs.json";
 ---
 
 <Layout>
-  <section class="home-hero">
-    <div class="hero-copy">
-      <p class="case-label">Enquête ouverte · 23 quartiers</p>
-      <h1 class="glitch">
+  <section class="home-hero grid grid-cols-[0.85fr_1.15fr] max-[760.001px]:grid-cols-1 gap-13 max-[760.001px]:gap-[25px] min-[760.001px]:max-[1100.001px]:gap-5 min-[1100.001px]:max-[1500.001px]:gap-8 items-center relative pt-[30px] max-[760.001px]:pt-[22px] pb-[55px] min-h-[570px] max-[1100.001px]:min-h-[480px] max-[760.001px]:overflow-hidden max-[760.001px]:ml-[-18px] max-[760.001px]:mr-[-18px] max-[760.001px]:pl-[18px] max-[760.001px]:pr-[18px]">
+    <div class="hero-copy flex flex-col items-start gap-[22px] min-[760.001px]:max-[1100.001px]:gap-[17px] max-[760.001px]:relative max-[760.001px]:z-[2] [&_h2]:text-[24px] max-[760.001px]:[&_h2]:text-[23px] min-[760.001px]:max-[1100.001px]:[&_h2]:text-[20px] [&_h2]:font-semibold [&_h2]:leading-[1.35] [&_>_p.muted]:text-[16px] max-[1100.001px]:[&_>_p.muted]:text-[14px]">
+      <p class="case-label bg-primary text-ink inline-block [transform:rotate(4deg)] pt-[9px] pr-[14px] pb-[9px] pl-[14px] uppercase text-[11px] tracking-[1.2px] font-bold">
+        Enquête ouverte · 23 quartiers
+      </p>
+      <h1 class="glitch font-glitch text-[clamp(46px,_5.2vw,_74px)] max-[760.001px]:text-[clamp(44px,_12vw,_68px)] leading-[1.1] font-normal tracking-[-0.03em]">
         QUI A VOLÉ
         <br />
         L’OMBRE ?
@@ -21,12 +23,15 @@ import quartiers from "../assets/indicateurs.json";
         <br />
         Où trouver de la fraîcheur ?
       </h2>
-      <p class="muted">
+      <p class="muted text-muted">
         Ouvre un dossier, rassemble les indices
         <br />
         et découvre les lieux recensés près du quartier.
       </p>
-      <a class="btn btn-primary hero-cta" href="#dossiers">
+      <a
+        class="btn btn-primary hero-cta font-semibold normal-case shadow-none min-h-[56px] pl-[23px] pr-[23px] gap-[35px] text-[17px] text-ink bg-primary [&:hover]:bg-[#ffd57c] [&_span]:text-[24px]"
+        href="#dossiers"
+      >
         Choisir mon quartier <span aria-hidden="true">→</span>
       </a>
       <a class="text-sm" href="/carte/">
@@ -36,29 +41,29 @@ import quartiers from "../assets/indicateurs.json";
     <HeroIllustration />
   </section>
   <ProgressionEnquete />
-  <section id="dossiers" class="archive" aria-labelledby="dossiers-title">
-    <div class="section-head">
+  <section id="dossiers" class="archive pt-2" aria-labelledby="dossiers-title">
+    <div class="section-head flex justify-between items-center max-[760.001px]:items-start gap-[25px] max-[760.001px]:gap-[18px] mb-[30px] max-[760.001px]:flex-col [&_h2]:text-[28px] max-[760.001px]:[&_h2]:text-[25px] [&_h2]:font-bold [&_h2]:leading-[1.3] [&_p]:text-[14px] max-[760.001px]:[&_p]:text-[13px]">
       <div>
         <h2 id="dossiers-title">23 quartiers. 23 dossiers à ouvrir.</h2>
-        <p class="muted mt-2">
+        <p class="muted mt-2 text-muted">
           Choisis un quartier pour examiner la chaleur et les possibilités de
           fraîcheur. Il s’agit de quartiers prioritaires de la politique de la
           ville (<Terme id="qpv" />
           ).
         </p>
       </div>
-      <label class="search-field">
+      <label class="search-field w-[330px] max-[760.001px]:w-full shrink-0 [&_input]:w-full [&_input]:bg-transparent [&_input]:text-cream [&_input]:[border-color:#817e76]">
         <span class="sr-only">Rechercher un quartier ou une commune</span>
         <input
           id="recherche"
-          class="input input-bordered"
+          class="input input-bordered text-[16px] leading-[1.6]"
           type="search"
           placeholder="⌕ Rechercher un quartier…"
         />
       </label>
     </div>
     <p id="resultats" class="sr-only" aria-live="polite"></p>
-    <div class="folder-grid">
+    <div class="folder-grid grid grid-cols-4 max-[760.001px]:grid-cols-2 min-[760.001px]:max-[1100.001px]:grid-cols-3 gap-[26px_20px] max-[760.001px]:gap-[26px_14px] pt-4">
       {quartiers.map((quartier, index) => (
         <DossierCard quartier={quartier} index={index} />
       ))}
@@ -67,9 +72,14 @@ import quartiers from "../assets/indicateurs.json";
       Aucun dossier ne correspond. Essaie le nom d’une commune.
     </p>
   </section>
-  <section class="home-verdict" aria-labelledby="home-verdict-title">
+  <section
+    class="home-verdict flex justify-between gap-[35px] items-center max-[900.001px]:items-start mt-[50px] max-[760.001px]:mt-[35px] pt-[34px] max-[760.001px]:pt-6 pr-[34px] max-[760.001px]:pr-6 pb-[34px] max-[760.001px]:pb-6 pl-[34px] max-[760.001px]:pl-6 [border:1px_solid_#777062] rounded-[8px] max-[900.001px]:flex-col [&_h2]:text-[30px] max-[760.001px]:[&_h2]:text-[26px] [&_h2]:leading-[1.25] [&_h2]:font-bold [&_h2]:mb-[14px] [&_>_div_>_p:last-child]:max-w-[740px] [&_>_div_>_p:last-child]:text-[14px] [&_>_div_>_p:last-child]:text-muted [&_.btn]:shrink-0"
+    aria-labelledby="home-verdict-title"
+  >
     <div>
-      <p class="eyebrow">Conclusion de l’enquête</p>
+      <p class="eyebrow uppercase tracking-[0.12em] text-[11px] font-bold text-primary mb-[18px]">
+        Conclusion de l’enquête
+      </p>
       <h2 id="home-verdict-title">
         Les indices sont réunis.
         <br />
@@ -80,7 +90,10 @@ import quartiers from "../assets/indicateurs.json";
         étudier pour améliorer l’accès à la fraîcheur.
       </p>
     </div>
-    <a class="btn btn-primary" href="/conclusion/">
+    <a
+      class="btn btn-primary font-semibold normal-case shadow-none text-ink bg-primary [&:hover]:bg-[#ffd57c]"
+      href="/conclusion/"
+    >
       Lire le verdict →
     </a>
   </section>

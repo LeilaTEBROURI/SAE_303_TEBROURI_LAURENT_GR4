@@ -5,20 +5,22 @@ import CarteEnquete from "../components/CarteEnquete.astro";
 ---
 
 <Layout title="Vue d’ensemble · Qui a volé l’ombre ?">
-  <section class="overview-hero">
+  <section class="overview-hero grid grid-cols-[1.8fr_1fr] max-[760.001px]:grid-cols-1 gap-[55px] max-[760.001px]:gap-[22px] min-[760.001px]:max-[1100.001px]:gap-[25px] items-center pt-[34px] max-[760.001px]:pt-[25px] pb-[38px] max-[760.001px]:pb-[25px] [&_h1]:text-[clamp(28px,_3vw,_42px)] max-[760.001px]:[&_h1]:text-[32px] [&_h1]:font-bold [&_h1]:leading-[1.2] [&_h1]:mb-5 [&_>_div_>_p:last-child]:text-[15px] [&_>_div_>_p:last-child]:max-w-[850px]">
     <div>
-      <p class="eyebrow">Le terrain de l’enquête</p>
+      <p class="eyebrow uppercase tracking-[0.12em] text-[11px] font-bold text-primary mb-[18px]">
+        Le terrain de l’enquête
+      </p>
       <h1>
         Bordeaux Métropole,
         <br />à la recherche de fraîcheur.
       </h1>
-      <p class="muted">
+      <p class="muted text-muted">
         Où la <Terme id="temperature-surface" label="chaleur de surface" /> se
         concentre-t-elle ? Quels lieux sont recensés pour se rafraîchir ?
         Explore les quartiers, puis ouvre leur dossier.
       </p>
     </div>
-    <aside class="paper scope">
+    <aside class="paper scope bg-cream text-ink rounded-[8px] pt-[25px] pr-[25px] pb-[25px] pl-[25px] [&_h2]:text-[19px] [&_h2]:font-bold [&_h2]:leading-[1.35] [&_h2]:mb-3 [&_p]:text-[12px]">
       <h2>
         Tout Bordeaux en contexte.
         <br />
@@ -31,18 +33,18 @@ import CarteEnquete from "../components/CarteEnquete.astro";
       </p>
     </aside>
   </section>
-  <div class="metrics">
-    <article class="paper">
+  <div class="metrics grid grid-cols-3 max-[760.001px]:grid-cols-1 gap-5 max-[760.001px]:gap-3 mb-7 [&_strong]:block [&_strong]:text-[36px] max-[1100.001px]:[&_strong]:text-[30px] [&_strong]:leading-[1.3] [&_strong]:font-bold [&_strong]:mb-[5px] [&_h2]:text-[14px] max-[1100.001px]:[&_h2]:text-[13px] [&_h2]:font-semibold [&_p]:text-[11px] [&_p]:mt-[5px] max-[760.001px]:[&_.paper]:pt-[18px] max-[760.001px]:[&_.paper]:pr-[18px] max-[760.001px]:[&_.paper]:pb-[18px] max-[760.001px]:[&_.paper]:pl-[18px]">
+    <article class="paper bg-cream text-ink rounded-[8px] pt-[25px] pr-[25px] pb-[25px] pl-[25px]">
       <strong>300 m</strong>
       <h2>rayon par défaut autour des QPV</h2>
       <p>100 et 500 m aussi disponibles sur la carte</p>
     </article>
-    <article class="paper">
+    <article class="paper bg-cream text-ink rounded-[8px] pt-[25px] pr-[25px] pb-[25px] pl-[25px]">
       <strong>23</strong>
       <h2>quartiers prioritaires étudiés</h2>
       <p>Géographie prioritaire 2024</p>
     </article>
-    <article class="paper">
+    <article class="paper bg-cream text-ink rounded-[8px] pt-[25px] pr-[25px] pb-[25px] pl-[25px]">
       <strong>11 juillet 2022</strong>
       <h2>date de l’observation de chaleur</h2>
       <p>
@@ -51,13 +53,19 @@ import CarteEnquete from "../components/CarteEnquete.astro";
       </p>
     </article>
   </div>
-  <p class="compare-entry">
-    <a class="btn btn-outline" href="/comparer/">
+  <p class="compare-entry mt-0 mr-0 mb-6 ml-0">
+    <a
+      class="btn btn-outline text-cream font-semibold normal-case shadow-none"
+      href="/comparer/"
+    >
       Comparer deux quartiers ↗
     </a>
   </p>
   <CarteEnquete />
-  <section class="reading-steps" aria-label="Comment mener l’enquête">
+  <section
+    class="reading-steps grid grid-cols-3 max-[760.001px]:grid-cols-1 gap-5 [&_.typewriter]:text-[#a74d2c] [&_.typewriter]:mb-[10px] [&_h2]:text-[23px] [&_h2]:font-bold [&_h2]:mb-[10px] [&_article_>_p:last-child]:text-[14px] max-[760.001px]:[&_.paper]:pt-[23px] max-[760.001px]:[&_.paper]:pr-[23px] max-[760.001px]:[&_.paper]:pb-[23px] max-[760.001px]:[&_.paper]:pl-[23px]"
+    aria-label="Comment mener l’enquête"
+  >
     {[
       {
         n: "01",
@@ -75,8 +83,10 @@ import CarteEnquete from "../components/CarteEnquete.astro";
         text: "Ouvre un dossier pour retrouver les chiffres, leur dénominateur et leurs limites. Les horaires et l’accès restent à contrôler sur place.",
       },
     ].map((item) => (
-      <article class="paper">
-        <p class="typewriter">INDICE {item.n}</p>
+      <article class="paper bg-cream text-ink rounded-[8px] pt-[25px] pr-[25px] pb-[25px] pl-[25px]">
+        <p class="typewriter font-typewriter text-[13px]">
+          INDICE {item.n}
+        </p>
         <h2>{item.title}</h2>
         <p>{item.text}</p>
       </article>

@@ -21,7 +21,12 @@ plot.querySelectorAll("g[aria-label], g[aria-description]").forEach((group) => {
 });
 ---
 
-<figure class={className}>
+<figure
+  class:list={[
+    className,
+    "overflow-x-auto mt-[25px] [&_svg]:h-auto [&_svg]:max-w-[100%]! max-[760.001px]:[&_svg]:max-w-none! [&_svg]:bg-transparent! max-[760.001px]:[&_svg]:min-w-[730px]",
+  ]}
+>
   <div set:html={plot.outerHTML} />
   {caption && <figcaption>{caption}</figcaption>}
 </figure>

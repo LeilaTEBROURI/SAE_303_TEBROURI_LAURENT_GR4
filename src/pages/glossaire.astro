@@ -9,9 +9,11 @@ import { glossaire, rubriques } from "../data/glossaire";
   title="Le glossaire · Qui a volé l’ombre ?"
   description="QPV, surface chaude, rayon de proximité : les mots de l’enquête expliqués simplement, avec des exemples."
 >
-  <header class="glossary-intro with-barrier">
+  <header class="glossary-intro with-barrier max-w-none pt-[35px] pb-[35px] relative pr-55 max-[760.001px]:pr-0 [&_h1]:text-[clamp(34px,_5vw,_58px)] [&_h1]:leading-[1.08] [&_h1]:font-bold [&_h1]:mb-6 [&_>_p:not(.eyebrow)]:text-[#d6d0c1] [&_>_p:not(.eyebrow)]:max-w-[700px] [&_>_p:not(.eyebrow)]:leading-[1.7] [&_>_p:not(.eyebrow)]:mt-[14px] [&_>_.title-barrier]:absolute max-[760.001px]:[&_>_.title-barrier]:static [&_>_.title-barrier]:right-[8px] [&_>_.title-barrier]:top-[65px] max-[760.001px]:[&_>_.title-barrier]:float-right max-[760.001px]:[&_>_.title-barrier]:w-[90px] max-[760.001px]:[&_>_.title-barrier]:mt-0 max-[760.001px]:[&_>_.title-barrier]:mr-0 max-[760.001px]:[&_>_.title-barrier]:mb-[14px] max-[760.001px]:[&_>_.title-barrier]:ml-4 max-[760.001px]:[&::after]:[content:''] max-[760.001px]:[&::after]:block max-[760.001px]:[&::after]:clear-both">
     <BarriereTitre />
-    <p class="eyebrow">Le petit lexique du détective</p>
+    <p class="eyebrow uppercase tracking-[0.12em] text-[11px] font-bold text-primary mb-[18px]">
+      Le petit lexique du détective
+    </p>
     <h1>
       Les mots de l’enquête,
       <br />
@@ -26,45 +28,119 @@ import { glossaire, rubriques } from "../data/glossaire";
       ensuite le bouton Retour de ton navigateur pour reprendre ta lecture.
     </p>
   </header>
-  <nav class="glossary-index paper" aria-label="Thèmes du glossaire">
+  <nav
+    class="glossary-index paper relative bg-cream text-ink rounded-[8px] p-[25px] flex flex-wrap gap-[14px_25px] max-[760.001px]:gap-[15px] text-[13px] max-[760.001px]:flex-col"
+    aria-label="Rechercher et filtrer les mots du glossaire"
+  >
+    <!-- Les repères invisibles conservent la hauteur du bandeau. -->
     {rubriques.map((r) => (
-      <a href={`#theme-${r.id}`}>{r.titre} ↓</a>
+      <span class="invisible" aria-hidden="true">
+        {r.titre} ↓
+      </span>
     ))}
+    <div class="absolute inset-0 grid grid-cols-[repeat(4,minmax(0,1fr))_190px] gap-2 p-3 max-[1000.001px]:grid-cols-[repeat(4,minmax(0,1fr))_155px] max-[760.001px]:grid-cols-2 max-[760.001px]:grid-rows-[1fr_1fr_40px]">
+      {rubriques.map((r) => (
+        <button
+          type="button"
+          data-glossary-theme={r.id}
+          aria-pressed="false"
+          class="min-w-0 cursor-pointer rounded-[5px] border border-[#c49e4b] bg-[#f6efdb] px-2 py-1 text-[11px] leading-[1.2] font-semibold text-ink hover:bg-primary aria-pressed:bg-primary aria-pressed:shadow-[inset_0_0_0_1px_#775a26]"
+        >
+          {r.titre}
+        </button>
+      ))}
+      <label class="relative block min-w-0 max-[760.001px]:col-span-2">
+        <span class="sr-only">Rechercher un mot du glossaire</span>
+        <span
+          class="pointer-events-none absolute left-2 top-1/2 -translate-y-1/2 text-[20px]"
+          aria-hidden="true"
+        >
+          ⌕
+        </span>
+        <input
+          id="recherche-glossaire"
+          type="search"
+          placeholder="Rechercher un mot…"
+          aria-controls="mots-glossaire"
+          class="h-full min-h-0 w-full rounded-[5px] border border-[#b9ad90] bg-cream py-1 pr-2 pl-7 text-[12px] text-ink placeholder:text-[#65615b]"
+        />
+      </label>
+    </div>
   </nav>
-  {rubriques.map((r) => (
-    <section class="glossary-section" aria-labelledby={`theme-${r.id}`}>
-      <h2 id={`theme-${r.id}`}>{r.titre}</h2>
-      <dl class="glossary-grid">
-        {glossaire
-          .filter((t) => t.rubrique === r.id)
-          .map((t) => (
-            <div class="paper glossary-entry" id={t.id}>
-              <dt>
-                <h3>{t.mot}</h3>
-                {t.complet && <p class="glossary-full-name">{t.complet}</p>}
-              </dt>
-              <dd>
-                <p>{t.definition}</p>
-                {t.source && (
-                  <a
-                    class="glossary-source"
-                    href={t.source}
-                    target="_blank"
-                    rel="noreferrer"
-                  >
-                    {t.sourceLabel} ↗
-                  </a>
-                )}
-              </dd>
-            </div>
-          ))}
-      </dl>
-    </section>
-  ))}
-  <div class="glossary-end">
-    <a class="btn btn-primary" href="/carte/">
+  <p
+    id="resultats-glossaire"
+    class="sr-only"
+    role="status"
+    aria-live="polite"
+  ></p>
+  <div
+    id="glossaire-vide"
+    class="mt-[42px] rounded-lg bg-cream p-6 text-ink"
+    hidden
+  >
+    <p>Aucun mot ne correspond à cette recherche.</p>
+    <button
+      id="reinitialiser-glossaire"
+      type="button"
+      class="btn btn-primary mt-4"
+    >
+      Tout afficher
+    </button>
+  </div>
+  <div id="mots-glossaire">
+    {rubriques.map((r) => (
+      <section
+        data-glossary-section
+        class="glossary-section mt-[42px] mb-[42px] [&_>_h2]:text-[27px] [&_>_h2]:font-bold [&_>_h2]:mb-[23px] [&_>_h2]:[scroll-margin-top:25px]"
+        aria-labelledby={`theme-${r.id}`}
+      >
+        <h2 id={`theme-${r.id}`}>{r.titre}</h2>
+        <dl class="glossary-grid grid grid-cols-2 max-[760.001px]:grid-cols-1 gap-[18px]">
+          {glossaire
+            .filter((t) => t.rubrique === r.id)
+            .map((t) => (
+              <div
+                data-glossary-word={t.mot + " " + (t.complet ?? "")}
+                data-rubrique={t.rubrique}
+                class="paper glossary-entry bg-cream text-ink rounded-[8px] pt-[25px] max-[760.001px]:pt-[21px] pr-[25px] max-[760.001px]:pr-[21px] pb-[25px] max-[760.001px]:pb-[21px] pl-[25px] max-[760.001px]:pl-[21px] [scroll-margin-top:24px] [border:2px_solid_transparent] [&:target]:[border-color:#bd4f26] [&:target]:[box-shadow:0_0_0_3px_#f8c457] [&_h3]:font-typewriter [&_h3]:text-[23px] [&_h3]:mb-3 [&_dd]:text-[14px] [&_dd]:leading-[1.75]"
+                id={t.id}
+              >
+                <dt>
+                  <h3>{t.mot}</h3>
+                  {t.complet && (
+                    <p class="glossary-full-name font-semibold text-[14px] mb-[15px]">
+                      {t.complet}
+                    </p>
+                  )}
+                </dt>
+                <dd>
+                  <p>{t.definition}</p>
+                  {t.source && (
+                    <a
+                      class="glossary-source inline-block text-[12px] mt-[15px] underline [text-underline-offset:3px]"
+                      href={t.source}
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      {t.sourceLabel} ↗
+                    </a>
+                  )}
+                </dd>
+              </div>
+            ))}
+        </dl>
+      </section>
+    ))}
+  </div>
+  <div class="glossary-end flex flex-wrap items-center gap-[25px] mt-[35px] mb-[50px]">
+    <a
+      class="btn btn-primary font-semibold normal-case shadow-none text-ink bg-primary [&:hover]:bg-[#ffd57c]"
+      href="/carte/"
+    >
       Retour à la carte →
     </a>
     <a href="/sources/">Voir les sources et la méthode ↗</a>
   </div>
 </Layout>
+
+<script src="../scripts/glossaire.ts"></script>

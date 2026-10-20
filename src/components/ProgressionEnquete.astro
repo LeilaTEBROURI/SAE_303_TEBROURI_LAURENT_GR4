@@ -4,12 +4,21 @@ const { compact = false, code = "" } = Astro.props;
 ---
 
 <section
-  class:list={["enquete-progress", { compact }]}
+  class:list={[
+    "enquete-progress flex justify-between items-center max-[760.001px]:items-stretch gap-7 max-[760.001px]:gap-[18px] [border:1px_solid_#787061] rounded-[8px] pt-[25px] max-[760.001px]:pt-[21px] pr-7 max-[760.001px]:pr-[21px] pb-[25px] max-[760.001px]:pb-[21px] pl-7 max-[760.001px]:pl-[21px] mt-0 mr-0 mb-8 ml-0 max-[760.001px]:flex-col [&_>_div]:[flex:1] [&_>_div]:max-w-[650px] [&_.typewriter]:text-[10px] [&_.typewriter]:text-primary [&_.typewriter]:mb-[6px] [&_.progress]:block [&_.progress]:w-full [&_.progress]:h-[6px] [&.compact]:pt-[17px] max-[760.001px]:[&.compact]:pt-[21px] [&.compact]:pr-[22px] max-[760.001px]:[&.compact]:pr-[21px] [&.compact]:pb-[17px] max-[760.001px]:[&.compact]:pb-[21px] [&.compact]:pl-[22px] max-[760.001px]:[&.compact]:pl-[21px] [&.compact]:mt-5 [&.compact]:mb-[10px] max-[760.001px]:[&.compact]:items-stretch max-[760.001px]:[&.compact]:flex-col max-[760.001px]:[&.compact]:gap-[18px] [&.compact_.progress-label]:text-[15px] [&.compact_.progress-note]:hidden max-[760.001px]:[&_.btn]:self-start max-[760.001px]:[&_.btn]:text-[12px]",
+    { compact },
+  ]}
   aria-label="Progression de l’enquête"
 >
   <div>
-    <p class="typewriter">TON CARNET D’ENQUÊTE</p>
-    <p class="progress-label" data-progress-text aria-live="polite">
+    <p class="typewriter font-typewriter text-[13px]">
+      TON CARNET D’ENQUÊTE
+    </p>
+    <p
+      class="progress-label font-semibold text-[19px] max-[760.001px]:text-[17px] mb-[10px]"
+      data-progress-text
+      aria-live="polite"
+    >
       Les dossiers consultés se marquent au fil de ton exploration.
     </p>
     <progress
@@ -19,12 +28,12 @@ const { compact = false, code = "" } = Astro.props;
       max={quartiers.length}
       aria-label="Nombre de dossiers consultés"
     ></progress>
-    <p class="progress-note" data-progress-note>
+    <p class="progress-note text-[10px] text-muted mt-2" data-progress-note>
       Progression mémorisée sur ce navigateur.
     </p>
   </div>
   <a
-    class="btn btn-primary"
+    class="btn btn-primary font-semibold normal-case shadow-none text-ink bg-primary [&:hover]:bg-[#ffd57c]"
     href={code ? `/comparer/?a=${code}` : "/comparer/"}
   >
     Comparer deux quartiers ↗

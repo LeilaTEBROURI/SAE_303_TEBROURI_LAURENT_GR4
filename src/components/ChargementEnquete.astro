@@ -1,31 +1,39 @@
 <div
   id="chargement-enquete"
-  class="case-loading"
+  class="case-loading fixed [inset:0] z-[10000] bg-[#f6f0da] text-[#303030] grid [place-items:center] pt-8 max-[760.001px]:pt-6 pr-8 max-[760.001px]:pr-6 pb-8 max-[760.001px]:pb-6 pl-8 max-[760.001px]:pl-6 [&_h2]:[font:700_clamp(28px,_4.5vw,_48px)/1.2_'Special_Elite',_serif] [&_h2]:mt-[14px] [&_h2]:mr-0 [&_h2]:mb-[75px] [&_h2]:ml-0 [&_.eyebrow]:text-[#775a26] [&[hidden]]:hidden"
   hidden
   role="status"
   aria-live="polite"
   aria-label="Ouverture de la page en cours"
 >
-  <div class="case-loading-content">
-    <p class="eyebrow">Sur la piste du voleur</p>
+  <div class="case-loading-content w-[min(680px,_100%)] text-center">
+    <p class="eyebrow uppercase tracking-[0.12em] text-[11px] font-bold text-primary mb-[18px]">
+      Sur la piste du voleur
+    </p>
     <h2>
       <span data-loading-line="1">Ne bouge pas…</span>
       <br />
       <span data-loading-line="2">on suit sa trace.</span>
     </h2>
-    <div class="case-loading-track" aria-hidden="true">
+    <div
+      class="case-loading-track relative flex justify-between items-center mt-0 mr-12 max-[760.001px]:mr-[18px] mb-0 ml-12 max-[760.001px]:ml-[18px] h-[75px]"
+      aria-hidden="true"
+    >
       {Array.from({ length: 7 }, (_, i) => (
-        <span class="case-loading-dot" style={`--etape:${i}`}></span>
+        <span
+          class="case-loading-dot w-[clamp(20px,_4vw,_42px)] [aspect-ratio:1] rounded-full bg-[#d9d9d9] [animation:trace-coloree_1ms_calc(var(--etape)_*_225ms)_forwards]"
+          style={`--etape:${i}`}
+        ></span>
       ))}
       <img
-        class="case-loading-thief"
+        class="case-loading-thief absolute w-[120px] max-[760.001px]:w-[85px] h-auto top-[50%] left-[21px] [transform:translate(-50%,_-50%)] [animation:voleur-en-route_1350ms_linear_forwards]"
         src="/illustrations/voleur-corps-transparent.webp"
         alt=""
         width="600"
         height="548"
       />
     </div>
-    <p class="case-loading-caption">
+    <p class="case-loading-caption mt-[65px] mr-0 mb-0 ml-0 text-[#696253] text-[14px]">
       Ouverture de la prochaine pièce du dossier…
     </p>
   </div>

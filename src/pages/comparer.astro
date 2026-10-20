@@ -13,15 +13,17 @@ const b =
 ---
 
 <Layout title="Comparer deux quartiers · Qui a volé l’ombre ?">
-  <header class="comparison-intro with-barrier">
+  <header class="comparison-intro with-barrier pt-[35px] pr-55 max-[760.001px]:pr-0 pb-[35px] pl-0 max-w-none relative [&_h1]:text-[clamp(32px,_4vw,_50px)] max-[760.001px]:[&_h1]:text-[34px] [&_h1]:font-bold [&_h1]:leading-[1.12] [&_h1]:mb-5 [&_>_.muted]:text-[15px] [&_>_.title-barrier]:absolute max-[760.001px]:[&_>_.title-barrier]:static [&_>_.title-barrier]:right-[8px] [&_>_.title-barrier]:top-[65px] max-[760.001px]:[&_>_.title-barrier]:float-right max-[760.001px]:[&_>_.title-barrier]:w-[90px] max-[760.001px]:[&_>_.title-barrier]:mt-0 max-[760.001px]:[&_>_.title-barrier]:mr-0 max-[760.001px]:[&_>_.title-barrier]:mb-[14px] max-[760.001px]:[&_>_.title-barrier]:ml-4 max-[760.001px]:[&::after]:[content:''] max-[760.001px]:[&::after]:block max-[760.001px]:[&::after]:clear-both">
     <BarriereTitre />
-    <p class="eyebrow">Croiser les indices</p>
+    <p class="eyebrow uppercase tracking-[0.12em] text-[11px] font-bold text-primary mb-[18px]">
+      Croiser les indices
+    </p>
     <h1>
       Deux quartiers.
       <br />
       Une même grille de lecture.
     </h1>
-    <p class="muted">
+    <p class="muted text-muted">
       Compare la chaleur et les catégories de lieux à une même distance. Les
       barres utilisent toutes les deux une échelle de 0 à 100 %. Les dossiers
       concernent des quartiers prioritaires de la politique de la ville (
@@ -30,7 +32,7 @@ const b =
     </p>
   </header>
   <form
-    class="paper comparison-controls"
+    class="paper comparison-controls bg-cream text-ink rounded-[8px] pt-[25px] max-[760.001px]:pt-[22px] pr-[25px] max-[760.001px]:pr-[22px] pb-[25px] max-[760.001px]:pb-[22px] pl-[25px] max-[760.001px]:pl-[22px] grid grid-cols-[1fr_1fr_220px] max-[760.001px]:grid-cols-1 min-[760.001px]:max-[1000.001px]:grid-cols-[1fr_1fr] gap-5 [&_label]:text-[12px] [&_label]:font-semibold [&_label]:flex [&_label]:flex-col [&_label]:gap-[10px] [&_label]:min-w-0 [&_select]:w-full [&_select]:text-[12px] [&_select]:bg-[#f6efdb] max-[1000.001px]:[&_label:last-child]:[grid-column:1/-1] max-[760.001px]:[&_label:last-child_select]:max-w-none min-[760.001px]:max-[1000.001px]:[&_label:last-child_select]:max-w-[260px]"
     aria-label="Paramètres de comparaison"
     onsubmit="return false"
   >
@@ -65,18 +67,22 @@ const b =
       </select>
     </label>
   </form>
-  <p class="muted mt-4">
+  <p class="muted mt-4 text-muted">
     300 m reprend le notebook ; 100 et 500 m sont un ajout d’exploration du
     site.
   </p>
-  <p id="comparison-status" class="comparison-status" aria-live="polite">
+  <p
+    id="comparison-status"
+    class="comparison-status text-[12px] text-muted mt-5 mb-5 min-h-[2em]"
+    aria-live="polite"
+  >
     {a.quartier} et {b.quartier} · rayon commun de 300 m.
   </p>
-  <div class="comparison-grid">
+  <div class="comparison-grid grid grid-cols-2 max-[760.001px]:grid-cols-1 gap-[22px]">
     <ComparaisonQuartier quartier={a} side="a" />
     <ComparaisonQuartier quartier={b} side="b" />
   </div>
-  <aside class="comparison-caution paper">
+  <aside class="comparison-caution paper bg-cream text-ink rounded-[8px] pt-[25px] pr-[25px] pb-[25px] pl-[25px] mt-7 [&_h2]:text-[22px] [&_h2]:font-bold [&_h2]:mb-[15px] [&_p]:text-[12px] [&_p]:mb-[13px] [&_a]:text-[12px] [&_a]:underline [&_a]:mr-[22px]">
     <h2>Comparer sans tirer de conclusion trop vite.</h2>
     <p>
       Une fontaine et un bâtiment n’offrent pas le même service. Les nombres

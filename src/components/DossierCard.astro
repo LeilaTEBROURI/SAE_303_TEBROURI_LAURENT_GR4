@@ -1,15 +1,19 @@
 ---
+import { adresseQuartier } from "../utils/quartiers";
 const { quartier, index } = Astro.props;
 ---
 
 <a
-  class="folder-card"
-  href={`/quartiers/${quartier.code_qp}/`}
+  class="folder-card relative bg-gold rounded-[6px] text-[#252525] pt-[23px] max-[760.001px]:pt-5 pr-[22px] max-[760.001px]:pr-[15px] pb-[19px] max-[760.001px]:pb-[15px] pl-[22px] max-[760.001px]:pl-[15px] min-h-[190px] flex flex-col gap-[13px] no-underline [transition:transform_0.18s,_background_0.18s] [&:before]:[content:''] [&:before]:absolute [&:before]:left-0 [&:before]:top-[-10px] [&:before]:w-[36%] [&:before]:h-[17px] [&:before]:rounded-[6px_6px_0_0] [&:before]:bg-inherit [&:hover]:bg-[#d9b45e] [&:hover]:[transform:translateY(-5px)] [&_h3]:text-[17px] max-[760.001px]:[&_h3]:text-[15px] [&_h3]:font-bold [&_h3]:leading-[1.3] [&_>_p]:text-[12px] max-[760.001px]:[&_.dossier-status]:text-[8px] max-[760.001px]:[&_.flex:first-child]:text-[9px]"
+  href={adresseQuartier(quartier)}
   data-search={`${quartier.quartier} ${quartier.communes}`}
 >
   <div class="flex justify-between gap-3 text-[10px] uppercase">
     <span>Dossier {String(index + 1).padStart(2, "0")}</span>
-    <span class="dossier-status" data-code={quartier.code_qp}>
+    <span
+      class="dossier-status font-typewriter"
+      data-code={quartier.code_qp}
+    >
       À explorer
     </span>
   </div>

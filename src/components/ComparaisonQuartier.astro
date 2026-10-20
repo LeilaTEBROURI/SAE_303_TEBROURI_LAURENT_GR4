@@ -1,17 +1,26 @@
 ---
+import { adresseQuartier } from "../utils/quartiers";
 const { quartier: q, side, distance = 300 } = Astro.props;
 const format = (n: number) =>
   n.toLocaleString("fr-FR", { maximumFractionDigits: 1 });
 const counts = q[`comptes_${distance}m`];
 ---
 
-<article class="paper comparison-card" data-comparison={side}>
-  <p class="typewriter">DOSSIER {side === "a" ? "A" : "B"}</p>
+<article
+  class="paper comparison-card bg-cream text-ink rounded-[8px] pt-[30px] max-[760.001px]:pt-[25px] pr-[30px] max-[760.001px]:pr-[25px] pb-[30px] max-[760.001px]:pb-[25px] pl-[30px] max-[760.001px]:pl-[25px] [&_>_.typewriter]:text-[11px] [&_>_.typewriter]:text-[#86643b] [&_>_.typewriter]:mb-[15px] [&_>_h2]:text-[28px] max-[760.001px]:[&_>_h2]:text-[26px] [&_>_h2]:font-bold [&_>_h2]:leading-[1.25] [&_>_h2]:min-h-[2.5em] max-[760.001px]:[&_>_h2]:min-h-0 [&_>_h3]:text-[15px] [&_>_h3]:font-semibold [&_>_h3]:[border-top:1px_solid_#dacfb9] [&_>_h3]:pt-5 [&_>_h3]:mb-[18px] [&_.btn]:text-[12px]"
+  data-comparison={side}
+>
+  <p class="typewriter font-typewriter text-[13px]">
+    DOSSIER {side === "a" ? "A" : "B"}
+  </p>
   <h2 data-field="quartier">{q.quartier}</h2>
-  <p class="comparison-commune" data-field="communes">
+  <p
+    class="comparison-commune text-[13px] text-[#756b59] mt-[10px] mr-0 mb-[25px] ml-0"
+    data-field="communes"
+  >
     {q.communes}
   </p>
-  <div class="comparison-heat">
+  <div class="comparison-heat pt-5 pr-0 pb-5 pl-0 [border-top:1px_solid_#dacfb9] [border-bottom:1px_solid_#dacfb9] [&_strong]:text-[38px] [&_strong]:font-bold [&_strong]:leading-[1.2] [&_strong]:text-[#b04e28] [&_p]:text-[12px] [&_p]:mt-2 [&_p]:mb-[14px] [&_.progress]:w-full [&_.progress]:h-[8px] [&_.progress]:text-[#de6d37]">
     <strong>
       <span data-field="part_chaude_pct">{format(q.part_chaude_pct)}</span> %
     </strong>
@@ -24,7 +33,7 @@ const counts = q[`comptes_${distance}m`];
       aria-label="Part de surface chaude en pourcentage"
     ></progress>
   </div>
-  <dl class="comparison-measures">
+  <dl class="comparison-measures pt-[22px] pr-0 pb-[22px] pl-0 grid gap-[13px] [&_>_div]:flex [&_>_div]:justify-between [&_>_div]:gap-5 [&_>_div]:text-[12px] [&_dt]:max-w-[75%] [&_dd]:font-bold [&_dd]:whitespace-nowrap">
     <div>
       <dt>Superficie totale du QPV</dt>
       <dd>
@@ -51,7 +60,7 @@ const counts = q[`comptes_${distance}m`];
     Lieux recensés dans le QPV ou à <span data-distance>{distance}</span> m de
     son contour
   </h3>
-  <dl class="comparison-counts">
+  <dl class="comparison-counts [&_>_div]:flex [&_>_div]:justify-between [&_>_div]:gap-5 [&_>_div]:text-[12px] [&_dd]:font-bold [&_dd]:whitespace-nowrap grid gap-3 mb-7">
     {Object.entries(counts).map(([name, n]) => (
       <div>
         <dt>{name}</dt>
@@ -60,9 +69,9 @@ const counts = q[`comptes_${distance}m`];
     ))}
   </dl>
   <a
-    class="btn btn-neutral"
+    class="btn btn-neutral font-semibold normal-case shadow-none text-cream bg-ink"
     data-dossier-link
-    href={`/quartiers/${q.code_qp}/`}
+    href={adresseQuartier(q)}
   >
     Ouvrir ce dossier ↗
   </a>

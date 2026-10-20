@@ -34,13 +34,24 @@ const {
     </script>
     <link rel="icon" href="/illustrations/e5f05.svg" type="image/svg+xml" />
   </head>
-  <body class:list={[{ "inner-page": Astro.url.pathname !== "/" }]}>
-    <a class="skip-link" href="#contenu">
+  <body
+    class:list={[
+      "[&.inner-page_>_.container]:w-[min(1400px,_calc(100%_-_160px))] max-[760.001px]:[&.inner-page_>_.container]:w-[calc(100%_-_64px)]",
+      { "inner-page": Astro.url.pathname !== "/" },
+    ]}
+  >
+    <a
+      class="skip-link fixed top-[10px] left-[10px] [transform:translateY(-200%)] z-[5000] bg-primary text-ink pt-3 pr-3 pb-3 pl-3 [&:focus]:[transform:none]"
+      href="#contenu"
+    >
       Aller au contenu
     </a>
     <Header />
     {Astro.url.pathname !== "/" && <VoleurDiscret />}
-    <main id="contenu" class="container">
+    <main
+      id="contenu"
+      class="container w-[min(1400px,_calc(100%_-_96px))] max-[760.001px]:w-[calc(100%_-_36px)] min-[760.001px]:max-[1100.001px]:w-[calc(100%_-_56px)] ml-auto mr-auto"
+    >
       <slot />
     </main>
     <Footer />

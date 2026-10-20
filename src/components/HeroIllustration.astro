@@ -1,21 +1,21 @@
 <div
-  class="hero-art"
+  class="hero-art max-[1500.001px]:max-w-none w-[calc(100%_-_60px)] max-[760.001px]:w-full [aspect-ratio:768/570] relative max-[760.001px]:mt-1 max-w-[768px]"
   aria-label="Un dossier d’enquête, une carte illustrative et tes illustrations"
 >
-  <div class="art-canvas">
-    <div class="art-cover"></div>
-    <div class="art-tab"></div>
-    <div class="art-sheet"></div>
-    <div class="art-map">
+  <div class="art-canvas w-[768px] h-[570px] absolute [transform:scale(var(--art-scale,_1))] [transform-origin:top_left] text-ink">
+    <div class="art-cover absolute bg-gold left-[12px] top-[44px] w-[744px] h-[508px] rounded-[8px]"></div>
+    <div class="art-tab absolute left-[28px] top-[18px] w-[250px] h-[36px] rounded-[16px_16px_0_0] bg-gold"></div>
+    <div class="art-sheet absolute left-[30px] top-[55px] w-[708px] h-[466px] bg-cream [transform:rotate(-1.5deg)]"></div>
+    <div class="art-map absolute left-[44px] top-[78px] w-[680px] h-[426px] bg-[#f6efdb] overflow-hidden">
       <img
-        class="map-rues"
+        class="map-rues absolute left-0 top-0"
         src="/illustrations/4a86d.svg"
         alt=""
         width="680"
         height="426"
       />
       <img
-        class="map-river"
+        class="map-river absolute left-0 top-0"
         src="/illustrations/ea115.svg"
         alt=""
         width="680"
@@ -29,7 +29,7 @@
         { x: 205, y: 305, w: 60, h: 67 },
       ].map((p) => (
         <span
-          class="art-park"
+          class="art-park absolute rounded-[15px] bg-[#2c6d4b] opacity-[0.2]"
           style={`left:${p.x}px;top:${p.y}px;width:${p.w}px;height:${p.h}px`}
         ></span>
       ))}
@@ -46,8 +46,14 @@
           style={`position:absolute;left:${x}px;top:${y}px;width:${w}px;height:${h}px`}
         />
       ))}
-      <img class="art-quartiers" src="/illustrations/c5aff.svg" alt="" />
-      <strong class="art-city">BORDEAUX</strong>
+      <img
+        class="art-quartiers absolute left-[113px] top-[66px] w-[478px] h-[328px]"
+        src="/illustrations/c5aff.svg"
+        alt=""
+      />
+      <strong class="art-city absolute left-[255px] top-[258px] text-[12px]">
+        BORDEAUX
+      </strong>
       {[
         ["d66e0", 105, 148],
         ["7c08d", 300, 277],
@@ -64,12 +70,14 @@
         />
       ))}
     </div>
-    <span class="art-stamp">À EXAMINER</span>
-    <div class="art-note">
+    <span class="art-stamp absolute left-[520px] top-[38px] [border:2px_solid_#a73d30] text-[#a73d30] pt-[6px] pr-3 pb-[6px] pl-3 [transform:rotate(-5deg)] text-[18px]">
+      À EXAMINER
+    </span>
+    <div class="art-note absolute left-[10px] top-[110px] bg-primary w-[154px] h-[102px] [transform:rotate(7deg)] pt-[15px] pr-[15px] pb-[15px] pl-[15px] flex flex-col gap-[10px] [&_strong]:text-[12px] [&_span]:font-['Special_Elite'] [&_span]:text-[17px] [&_span]:leading-[1.3]">
       <strong>INDICE 01</strong>
       <span>Ça chauffe ici.</span>
     </div>
-    <div class="art-photo">
+    <div class="art-photo absolute left-[550px] top-[390px] bg-cream pt-[10px] pr-[9px] pb-[17px] pl-[9px] [transform:rotate(5deg)] [&_img]:object-cover">
       <img
         src="/illustrations/bordeaux.webp"
         alt="Les quais de Bordeaux"
@@ -78,31 +86,40 @@
       />
     </div>
     <img
-      class="art-clip"
+      class="art-clip absolute left-[565px] top-[388px]"
       src="/illustrations/trombone.webp"
       alt=""
       width="20"
       height="25"
     />
     <img
-      class="art-glass"
+      class="art-glass absolute left-[410px] top-[228px]"
       src="/illustrations/e90ed.svg"
       alt=""
       width="160"
       height="170"
     />
-    <div class="art-legend">
+    <div class="art-legend absolute left-[44px] top-[472px] flex gap-4 text-[10px]">
       <span>🟠 Chaleur</span>
       <span>🟢 Lieux frais</span>
       <span>🔵 Eau</span>
     </div>
-    <p class="art-caption">
+    <p class="art-caption absolute left-[44px] top-[510px] text-[10px]">
       Carte illustrative · explore la carte pour consulter les données
     </p>
   </div>
 </div>
-<div class="thief" aria-hidden="true">
-  <img class="thief-body" src="/illustrations/voleur.avif" width="92" height="274" alt="" />
+<div
+  class="thief absolute right-[calc(50%_-_50vw)] top-[100px] max-[760.001px]:top-[80px] w-[92px] max-[760.001px]:w-[60px] h-[274px] max-[760.001px]:h-[179px] pointer-events-none z-[3] [transform:none] max-[760.001px]:[transform-origin:right_top]"
+  aria-hidden="true"
+>
+  <img
+    class="thief-body [transform:none] w-[92px] max-[760.001px]:w-[60px] h-[274px] max-[760.001px]:h-[179px] object-contain"
+    src="/illustrations/voleur.avif"
+    width="92"
+    height="274"
+    alt=""
+  />
 </div>
 <script>
   const art = document.querySelector<HTMLElement>(".hero-art");

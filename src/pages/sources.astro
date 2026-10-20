@@ -1,4 +1,5 @@
 ---
+import { adresseQuartier } from "../utils/quartiers";
 import Terme from "../components/Terme.astro";
 export const prerender = true;
 import Layout from "../layouts/Layout.astro";
@@ -68,24 +69,28 @@ const nuage = {
 ---
 
 <Layout title="Sources et méthode · Qui a volé l’ombre ?">
-  <section class="sources-intro with-barrier">
+  <section class="sources-intro with-barrier [&_h1]:text-[clamp(28px,_3vw,_42px)] max-[760.001px]:[&_h1]:text-[32px] [&_h1]:font-bold [&_h1]:leading-[1.2] [&_h1]:mb-5 pt-[35px] pb-10 max-w-none relative pr-55 max-[760.001px]:pr-0 [&_>_.title-barrier]:absolute max-[760.001px]:[&_>_.title-barrier]:static [&_>_.title-barrier]:right-[8px] [&_>_.title-barrier]:top-[65px] max-[760.001px]:[&_>_.title-barrier]:float-right max-[760.001px]:[&_>_.title-barrier]:w-[90px] max-[760.001px]:[&_>_.title-barrier]:mt-0 max-[760.001px]:[&_>_.title-barrier]:mr-0 max-[760.001px]:[&_>_.title-barrier]:mb-[14px] max-[760.001px]:[&_>_.title-barrier]:ml-4 max-[760.001px]:[&::after]:[content:''] max-[760.001px]:[&::after]:block max-[760.001px]:[&::after]:clear-both">
     <BarriereTitre />
-    <p class="eyebrow">Vérifier les pièces du dossier</p>
+    <p class="eyebrow uppercase tracking-[0.12em] text-[11px] font-bold text-primary mb-[18px]">
+      Vérifier les pièces du dossier
+    </p>
     <h1>
       Les données, la méthode,
       <br />
       et ce qu’on peut en dire.
     </h1>
-    <p class="muted">
+    <p class="muted text-muted">
       « Qui a volé l’ombre ? » est une accroche narrative. Les données ne
       mesurent pas directement l’ombre. Le site reprend la version du notebook
       exportée dans « NOTEBOOK FINI », sans appliquer le correctif proposé
       ensuite.
     </p>
   </section>
-  <div class="sources-grid">
-    <article class="paper">
-      <p class="typewriter">PIÈCE 01</p>
+  <div class="sources-grid grid grid-cols-3 max-[760.001px]:grid-cols-1 gap-5 [&_h2]:text-[23px] [&_h2]:font-bold [&_h2]:mb-3 [&_.typewriter]:text-[#a74d2c] [&_.typewriter]:mb-3 [&_p]:text-[14px] [&_p]:mb-[18px] [&_a]:text-[12px] [&_a]:underline">
+    <article class="paper bg-cream text-ink rounded-[8px] pt-[25px] pr-[25px] pb-[25px] pl-[25px]">
+      <p class="typewriter font-typewriter text-[13px]">
+        PIÈCE 01
+      </p>
       <h2>Les quartiers</h2>
       <p>
         Les 23 quartiers prioritaires de la politique de la ville (
@@ -99,8 +104,10 @@ const nuage = {
         Source : SIG Ville ↗
       </a>
     </article>
-    <article class="paper">
-      <p class="typewriter">PIÈCE 02</p>
+    <article class="paper bg-cream text-ink rounded-[8px] pt-[25px] pr-[25px] pb-[25px] pl-[25px]">
+      <p class="typewriter font-typewriter text-[13px]">
+        PIÈCE 02
+      </p>
       <h2>La chaleur</h2>
       <p>
         {methode.chaleur_source.toLocaleString("fr-FR")} polygones du 11 juillet
@@ -117,8 +124,10 @@ const nuage = {
         Source : Bordeaux Métropole ↗
       </a>
     </article>
-    <article class="paper">
-      <p class="typewriter">PIÈCE 03</p>
+    <article class="paper bg-cream text-ink rounded-[8px] pt-[25px] pr-[25px] pb-[25px] pl-[25px]">
+      <p class="typewriter font-typewriter text-[13px]">
+        PIÈCE 03
+      </p>
       <h2>Les lieux ponctuels</h2>
       <p>
         Inventaire « Espaces fraîcheur », extrait le 19 octobre 2026 :{" "}
@@ -137,9 +146,9 @@ const nuage = {
       </a>
     </article>
   </div>
-  <section class="paper method">
+  <section class="paper method bg-cream text-ink rounded-[8px] pt-[30px] max-[760.001px]:pt-[22px] pr-[30px] max-[760.001px]:pr-[22px] pb-[30px] max-[760.001px]:pb-[22px] pl-[30px] max-[760.001px]:pl-[22px] mt-6 [&_h2]:text-[23px] [&_h2]:font-bold [&_h2]:mb-3 [&_p]:text-[14px] [&_li]:text-[14px]">
     <h2>Les mêmes calculs que dans le notebook</h2>
-    <ol class="method-list">
+    <ol class="method-list [list-style:disc] pl-[22px] mt-5 mb-5 grid gap-3">
       <li>
         <strong>Chaleur :</strong> <Terme id="turf" label="Turf.js" /> 7.2.0
         calcule les intersections entre chaque QPV et les polygones chauds.
@@ -178,9 +187,9 @@ const nuage = {
       l’effectif de lieux ponctuels recensés.
     </p>
   </section>
-  <section class="paper method">
+  <section class="paper method bg-cream text-ink rounded-[8px] pt-[30px] max-[760.001px]:pt-[22px] pr-[30px] max-[760.001px]:pr-[22px] pb-[30px] max-[760.001px]:pb-[22px] pl-[30px] max-[760.001px]:pl-[22px] mt-6 [&_h2]:text-[23px] [&_h2]:font-bold [&_h2]:mb-3 [&_p]:text-[14px] [&_li]:text-[14px]">
     <h2>Ce que signifie chaque nombre</h2>
-    <ul class="method-list">
+    <ul class="method-list [list-style:disc] pl-[22px] mt-5 mb-5 grid gap-3">
       <li>
         <strong>
           <Terme id="part-chaude" label="Part chaude" /> :
@@ -209,7 +218,7 @@ const nuage = {
       <Terme id="lambert" label="Lambert-93" />.
     </p>
   </section>
-  <section class="paper method">
+  <section class="paper method bg-cream text-ink rounded-[8px] pt-[30px] max-[760.001px]:pt-[22px] pr-[30px] max-[760.001px]:pr-[22px] pb-[30px] max-[760.001px]:pb-[22px] pl-[30px] max-[760.001px]:pl-[22px] mt-6 [&_h2]:text-[23px] [&_h2]:font-bold [&_h2]:mb-3 [&_p]:text-[14px] [&_li]:text-[14px]">
     <h2>Comparer les parts de surface chaude</h2>
     <PlotFigure
       options={options}
@@ -225,7 +234,7 @@ const nuage = {
         Lire les chiffres des 23 QPV
       </summary>
       <div class="collapse-content overflow-x-auto">
-        <table class="table">
+        <table class="table text-[12px] [&_caption]:text-left [&_caption]:text-[12px] [&_caption]:pt-3 [&_caption]:pr-3 [&_caption]:pb-3 [&_caption]:pl-3 [&_a]:underline">
           <caption>Indicateurs reproduits à partir du notebook</caption>
           <thead>
             <tr>
@@ -242,7 +251,7 @@ const nuage = {
                 <td>{format(q.part_chaude_pct)} %</td>
                 <td>{q.nombre_lieux_frais}</td>
                 <td>
-                  <a href={`/quartiers/${q.code_qp}/`}>Ouvrir ↗</a>
+                  <a href={adresseQuartier(q)}>Ouvrir ↗</a>
                 </td>
               </tr>
             ))}
@@ -251,17 +260,25 @@ const nuage = {
       </div>
     </details>
     <div class="flex flex-wrap gap-3 mt-5">
-      <a class="btn btn-neutral" download href="/donnees/indicateurs_qpv.json">
+      <a
+        class="btn btn-neutral font-semibold normal-case shadow-none text-cream bg-ink"
+        download
+        href="/donnees/indicateurs_qpv.json"
+      >
         Indicateurs JSON ↓
       </a>
-      <a class="btn btn-neutral" download href="/donnees/indicateurs_qpv.csv">
+      <a
+        class="btn btn-neutral font-semibold normal-case shadow-none text-cream bg-ink"
+        download
+        href="/donnees/indicateurs_qpv.csv"
+      >
         Tableau CSV ↓
       </a>
     </div>
   </section>
-  <section class="paper method">
+  <section class="paper method bg-cream text-ink rounded-[8px] pt-[30px] max-[760.001px]:pt-[22px] pr-[30px] max-[760.001px]:pr-[22px] pb-[30px] max-[760.001px]:pb-[22px] pl-[30px] max-[760.001px]:pl-[22px] mt-6 [&_h2]:text-[23px] [&_h2]:font-bold [&_h2]:mb-3 [&_p]:text-[14px] [&_li]:text-[14px]">
     <h2>Sources, dates et droits</h2>
-    <ul class="method-list">
+    <ul class="method-list [list-style:disc] pl-[22px] mt-5 mb-5 grid gap-3">
       <li>
         QPV 2024 : ANCT / SIG Ville,{" "}
         <a href="https://www.data.gouv.fr/datasets/quartiers-prioritaires-de-la-politique-de-la-ville-qpv">
@@ -301,9 +318,9 @@ const nuage = {
       </a>
     </p>
   </section>
-  <section class="paper method">
+  <section class="paper method bg-cream text-ink rounded-[8px] pt-[30px] max-[760.001px]:pt-[22px] pr-[30px] max-[760.001px]:pr-[22px] pb-[30px] max-[760.001px]:pb-[22px] pl-[30px] max-[760.001px]:pl-[22px] mt-6 [&_h2]:text-[23px] [&_h2]:font-bold [&_h2]:mb-3 [&_p]:text-[14px] [&_li]:text-[14px]">
     <h2>Pourquoi ces modes d’intégration ?</h2>
-    <ul class="method-list">
+    <ul class="method-list [list-style:disc] pl-[22px] mt-5 mb-5 grid gap-3">
       <li>
         <strong>
           A, au <Terme id="build" label="build" /> :
@@ -323,9 +340,9 @@ const nuage = {
       </li>
     </ul>
   </section>
-  <section class="paper method">
+  <section class="paper method bg-cream text-ink rounded-[8px] pt-[30px] max-[760.001px]:pt-[22px] pr-[30px] max-[760.001px]:pr-[22px] pb-[30px] max-[760.001px]:pb-[22px] pl-[30px] max-[760.001px]:pl-[22px] mt-6 [&_h2]:text-[23px] [&_h2]:font-bold [&_h2]:mb-3 [&_p]:text-[14px] [&_li]:text-[14px]">
     <h2>Les limites de l’enquête</h2>
-    <ul class="method-list">
+    <ul class="method-list [list-style:disc] pl-[22px] mt-5 mb-5 grid gap-3">
       <li>
         Une seule observation de température de surface ne décrit pas une saison
         et ne donne pas la température de l’air.
