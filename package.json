@@ -13,6 +13,7 @@
     "verify:data": "node scripts/verifier-donnees.mjs"
   },
   "dependencies": {
+    "@astrojs/netlify": "^8.2.10",
     "@astrojs/node": "^11.1.9",
     "@fontsource/inter": "^5.2.0",
     "@fontsource/rubik-glitch": "^5.2.0",
