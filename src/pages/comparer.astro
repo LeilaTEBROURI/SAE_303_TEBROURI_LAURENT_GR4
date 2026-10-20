@@ -1,5 +1,7 @@
 ---
+import Terme from "../components/Terme.astro";
 import Layout from "../layouts/Layout.astro";
+import BarriereTitre from "../components/BarriereTitre.astro";
 import ComparaisonQuartier from "../components/ComparaisonQuartier.astro";
 import quartiers from "../assets/indicateurs.json";
 const a =
@@ -11,7 +13,8 @@ const b =
 ---
 
 <Layout title="Comparer deux quartiers · Qui a volé l’ombre ?">
-  <header class="comparison-intro">
+  <header class="comparison-intro with-barrier">
+    <BarriereTitre />
     <p class="eyebrow">Croiser les indices</p>
     <h1>
       Deux quartiers.
@@ -20,7 +23,10 @@ const b =
     </h1>
     <p class="muted">
       Compare la chaleur et les catégories de lieux à une même distance. Les
-      barres utilisent toutes les deux une échelle de 0 à 100 %.
+      barres utilisent toutes les deux une échelle de 0 à 100 %. Les dossiers
+      concernent des quartiers prioritaires de la politique de la ville (
+      <Terme id="qpv" />
+      ).
     </p>
   </header>
   <form
@@ -80,9 +86,10 @@ const b =
       zéro ne prouve donc pas une absence de fraîcheur.
     </p>
     <p>
-      La distance est mesurée depuis le contour du QPV, à vol d’oiseau. Elle ne
-      garantit pas un accès ou un trajet piéton. Les pourcentages décrivent des
-      surfaces, pas les habitants exposés.
+      La distance est mesurée depuis le contour du quartier,{" "}
+      <Terme id="vol-oiseau" label="à vol d’oiseau" />. Elle ne garantit pas un
+      accès ou un trajet piéton. Les pourcentages décrivent des surfaces, pas
+      les habitants exposés.
     </p>
     <p>
       Chaleur : 11 juillet 2022 · QPV : 2024 · inventaire extrait le 19 octobre

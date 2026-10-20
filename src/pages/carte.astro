@@ -1,4 +1,5 @@
 ---
+import Terme from "../components/Terme.astro";
 import Layout from "../layouts/Layout.astro";
 import CarteEnquete from "../components/CarteEnquete.astro";
 ---
@@ -12,8 +13,9 @@ import CarteEnquete from "../components/CarteEnquete.astro";
         <br />à la recherche de fraîcheur.
       </h1>
       <p class="muted">
-        Où la chaleur de surface se concentre-t-elle ? Quels lieux sont recensés
-        pour se rafraîchir ? Explore les quartiers, puis ouvre leur dossier.
+        Où la <Terme id="temperature-surface" label="chaleur de surface" /> se
+        concentre-t-elle ? Quels lieux sont recensés pour se rafraîchir ?
+        Explore les quartiers, puis ouvre leur dossier.
       </p>
     </div>
     <aside class="paper scope">
@@ -24,7 +26,8 @@ import CarteEnquete from "../components/CarteEnquete.astro";
       </h2>
       <p>
         La carte situe Bordeaux Métropole. Les comparaisons portent sur les 23
-        quartiers prioritaires, pas sur toute la population métropolitaine.
+        quartiers prioritaires de la politique de la ville (<Terme id="qpv" />
+        ), pas sur toute la population métropolitaine.
       </p>
     </aside>
   </section>
@@ -42,7 +45,10 @@ import CarteEnquete from "../components/CarteEnquete.astro";
     <article class="paper">
       <strong>11 juillet 2022</strong>
       <h2>date de l’observation de chaleur</h2>
-      <p>Observation du 11 juillet 2022 · delta ≥ 3</p>
+      <p>
+        Observation du 11 juillet 2022 ·{" "}
+        <Terme id="delta" label="écart d’au moins +3 °C" />
+      </p>
     </article>
   </div>
   <p class="compare-entry">

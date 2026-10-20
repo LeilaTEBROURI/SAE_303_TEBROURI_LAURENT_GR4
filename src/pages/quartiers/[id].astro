@@ -1,6 +1,8 @@
 ---
+import Terme from "../../components/Terme.astro";
 import ProgressionEnquete from "../../components/ProgressionEnquete.astro";
 import Layout from "../../layouts/Layout.astro";
+import BarriereTitre from "../../components/BarriereTitre.astro";
 import CarteEnquete from "../../components/CarteEnquete.astro";
 import indicateurs from "../../assets/indicateurs.json";
 // Comme dans le TP6 : lire le paramètre de l’URL à chaque requête.
@@ -37,12 +39,21 @@ const format = (n: number) =>
         Dossier consulté
       </span>
     </div>
-    <h1>{quartier.quartier}</h1>
-    <p class="mb-8">{quartier.communes} · Quartier prioritaire 2024</p>
+    <div class="dossier-heading">
+      <h1>{quartier.quartier}</h1>
+      <BarriereTitre />
+    </div>
+    <p class="mb-8">
+      {quartier.communes} · Quartier prioritaire de la politique de la ville (
+      <Terme id="qpv" />
+      ), contours 2024
+    </p>
     <div class="metrics detail-metrics">
       <article>
         <strong class="hot-text">{format(quartier.part_chaude_pct)} %</strong>
-        <h2>de surface classée chaude</h2>
+        <h2>
+          de <Terme id="part-chaude" label="surface classée chaude" />
+        </h2>
         <p>Observation du 11 juillet 2022</p>
       </article>
       <article>
@@ -73,8 +84,8 @@ const format = (n: number) =>
           {quartier.nombre_lieux_frais} lieux ponctuels sont recensés dans le
           QPV ou à 300 m de son contour.
         </span>
-        Les parcs représentés par des polygones ne sont pas inclus dans cet
-        effectif.
+        Les parcs représentés par des <Terme id="polygone" label="polygones" />{" "}
+        ne sont pas inclus dans cet effectif.
       </p>
       <p class="text-sm mt-3">
         À vérifier sur place : entrées, horaires, accès, aménagements récents et
@@ -83,7 +94,7 @@ const format = (n: number) =>
     </section>
     <details class="collapse collapse-arrow border border-black/10 mt-6">
       <summary class="collapse-title font-semibold">
-        Consulter les chiffres et les dénominateurs
+        Consulter les chiffres et leur mode de calcul
       </summary>
       <div class="collapse-content overflow-x-auto">
         <table class="table">
@@ -91,14 +102,22 @@ const format = (n: number) =>
           <tbody>
             <tr>
               <th>Superficie totale du QPV</th>
-              <td>{format(quartier.surface_qpv_ha)} ha</td>
+              <td>
+                {format(quartier.surface_qpv_ha)}{" "}
+                <Terme id="hectare" label="ha" />
+              </td>
             </tr>
             <tr>
               <th>Surface chaude située dans le QPV</th>
-              <td>{format(quartier.surface_chaude_ha)} ha</td>
+              <td>
+                {format(quartier.surface_chaude_ha)}{" "}
+                <Terme id="hectare" label="ha" />
+              </td>
             </tr>
             <tr>
-              <th>Part chaude</th>
+              <th>
+                <Terme id="denominateur" label="Calcul de la part chaude" />
+              </th>
               <td>Surface chaude ÷ superficie du QPV × 100</td>
             </tr>
             {[100, 300, 500].map((rayon) => (
@@ -110,7 +129,7 @@ const format = (n: number) =>
                       `nombre_lieux_frais_${rayon}m` as "nombre_lieux_frais_300m"
                     ]
                   }{" "}
-                  objets recensés, sans dénominateur
+                  <Terme id="effectif" label="objets recensés" />
                 </td>
               </tr>
             ))}

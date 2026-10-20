@@ -1,4 +1,5 @@
 ---
+import Terme from "../components/Terme.astro";
 import ProgressionEnquete from "../components/ProgressionEnquete.astro";
 import Layout from "../layouts/Layout.astro";
 import HeroIllustration from "../components/HeroIllustration.astro";
@@ -41,7 +42,9 @@ import quartiers from "../assets/indicateurs.json";
         <h2 id="dossiers-title">23 quartiers. 23 dossiers à ouvrir.</h2>
         <p class="muted mt-2">
           Choisis un quartier pour examiner la chaleur et les possibilités de
-          fraîcheur.
+          fraîcheur. Il s’agit de quartiers prioritaires de la politique de la
+          ville (<Terme id="qpv" />
+          ).
         </p>
       </div>
       <label class="search-field">

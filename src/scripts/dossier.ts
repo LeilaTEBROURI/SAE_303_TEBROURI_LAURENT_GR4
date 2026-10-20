@@ -19,12 +19,12 @@ if (dossier) {
     for (const caption of dossier!.querySelectorAll(
       ".distance-caption, .trial-distance",
     ))
-      caption.textContent = `Dans le QPV ou à ${distance} m de son contour`;
+      caption.textContent = `Dans le quartier ou à ${distance} m de son contour`;
     const interpretation = dossier!.querySelector(
       "[data-lieux-interpretation]",
     );
     if (interpretation)
-      interpretation.textContent = `${total} lieux ponctuels sont recensés dans le QPV ou à ${distance} m de son contour.`;
+      interpretation.textContent = `${total} lieux ponctuels sont recensés dans le quartier ou à ${distance} m de son contour.`;
     for (const el of dossier!.querySelectorAll<HTMLElement>(
       "[data-detail-family]",
     ))

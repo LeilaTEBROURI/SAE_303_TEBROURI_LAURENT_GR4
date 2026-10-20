@@ -1,0 +1,19 @@
+---
+import { glossaire } from "../data/glossaire";
+interface Props {
+  id: string;
+  label?: string;
+}
+const { id, label } = Astro.props;
+const terme = glossaire.find((terme) => terme.id === id);
+if (!terme) throw new Error(`Définition absente du glossaire : ${id}`);
+const texte = label ?? terme.mot;
+---
+
+<a
+  class="glossary-term"
+  href={`/glossaire/#${id}`}
+  aria-label={`${texte} : ${terme.complet ?? terme.mot}. Lire la définition.`}
+>
+  {texte}
+</a>

@@ -1,0 +1,70 @@
+---
+export const prerender = true;
+import Layout from "../layouts/Layout.astro";
+import BarriereTitre from "../components/BarriereTitre.astro";
+import { glossaire, rubriques } from "../data/glossaire";
+---
+
+<Layout
+  title="Le glossaire · Qui a volé l’ombre ?"
+  description="QPV, surface chaude, rayon de proximité : les mots de l’enquête expliqués simplement, avec des exemples."
+>
+  <header class="glossary-intro with-barrier">
+    <BarriereTitre />
+    <p class="eyebrow">Le petit lexique du détective</p>
+    <h1>
+      Les mots de l’enquête,
+      <br />
+      en clair.
+    </h1>
+    <p>
+      Pas besoin de connaître les sigles pour suivre les indices. Retrouve ici
+      les mots du site, expliqués simplement.
+    </p>
+    <p>
+      Un mot souligné dans une page te mène directement à sa définition. Utilise
+      ensuite le bouton Retour de ton navigateur pour reprendre ta lecture.
+    </p>
+  </header>
+  <nav class="glossary-index paper" aria-label="Thèmes du glossaire">
+    {rubriques.map((r) => (
+      <a href={`#theme-${r.id}`}>{r.titre} ↓</a>
+    ))}
+  </nav>
+  {rubriques.map((r) => (
+    <section class="glossary-section" aria-labelledby={`theme-${r.id}`}>
+      <h2 id={`theme-${r.id}`}>{r.titre}</h2>
+      <dl class="glossary-grid">
+        {glossaire
+          .filter((t) => t.rubrique === r.id)
+          .map((t) => (
+            <div class="paper glossary-entry" id={t.id}>
+              <dt>
+                <h3>{t.mot}</h3>
+                {t.complet && <p class="glossary-full-name">{t.complet}</p>}
+              </dt>
+              <dd>
+                <p>{t.definition}</p>
+                {t.source && (
+                  <a
+                    class="glossary-source"
+                    href={t.source}
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    {t.sourceLabel} ↗
+                  </a>
+                )}
+              </dd>
+            </div>
+          ))}
+      </dl>
+    </section>
+  ))}
+  <div class="glossary-end">
+    <a class="btn btn-primary" href="/carte/">
+      Retour à la carte →
+    </a>
+    <a href="/sources/">Voir les sources et la méthode ↗</a>
+  </div>
+</Layout>

@@ -1,4 +1,5 @@
 ---
+import Terme from "../components/Terme.astro";
 import Layout from "../layouts/Layout.astro";
 import indicateurs from "../assets/indicateurs.json";
 const format = (n: number) =>
@@ -13,6 +14,16 @@ const exemples = [
 
 <Layout title="Conclusion de l’enquête · Qui a volé l’ombre ?">
   <header class="verdict-hero">
+    <img
+      class="verdict-barrier"
+      src="/illustrations/dont_cross_barriere.avif"
+      alt=""
+      width="876"
+      height="614"
+      loading="lazy"
+      aria-hidden="true"
+    />
+
     <p class="eyebrow">Les conclusions de notre enquête</p>
     <h1>
       Des indices sur la carte.
@@ -20,8 +31,9 @@ const exemples = [
       <span>Des actions sur le terrain.</span>
     </h1>
     <p class="muted">
-      Nous avons croisé les surfaces chaudes, les contours des 23 QPV et les
-      lieux de fraîcheur recensés pour repérer les situations à approfondir.
+      Nous avons croisé les surfaces chaudes, les contours des 23 quartiers
+      prioritaires de la politique de la ville (<Terme id="qpv" />) et les lieux
+      de fraîcheur recensés pour repérer les situations à approfondir.
     </p>
     <div class="verdict-tag">VERDICT PROVISOIRE · À COMPLÉTER SUR PLACE</div>
   </header>
@@ -50,7 +62,7 @@ const exemples = [
       </p>
       <small>
         Surface chaude : 11 juillet 2022. Lieux ponctuels : dans le quartier ou
-        dans son tampon de 300 m.
+        dans sa <Terme id="tampon" label="zone de proximité de 300 m" />.
       </small>
     </aside>
   </section>
@@ -100,7 +112,7 @@ const exemples = [
       sont comptés. Notre enquête ne démontre donc ni une causalité ni un
       classement définitif des quartiers.
     </p>
-    <a href="/sources/">Retrouver les sources et les dénominateurs ↗</a>
+    <a href="/sources/">Retrouver les sources et les calculs ↗</a>
   </section>
   <section class="verdict-actions" aria-labelledby="actions-title">
     <p class="eyebrow">Et maintenant, que peut-on faire ?</p>
@@ -154,9 +166,12 @@ const exemples = [
         <p class="typewriter">04 · TRANSFORMER ET SUIVRE</p>
         <h3>Végétaliser et redonner une place aux sols.</h3>
         <p>
-          Étudier la désimperméabilisation et la végétalisation des cours,
+          Étudier la{" "}
+          <Terme id="desimpermeabilisation" label="désimperméabilisation" /> et
+          la <Terme id="vegetalisation" label="végétalisation" /> des cours,
           placettes ou espaces publics pertinents. Compléter nos données par la
-          canopée et des observations de terrain pour suivre les évolutions.
+          <Terme id="canopee" label="canopée" /> et des observations de terrain
+          pour suivre les évolutions.
         </p>
         <span class="action-horizon">Projet dans la durée et évaluation</span>
       </article>

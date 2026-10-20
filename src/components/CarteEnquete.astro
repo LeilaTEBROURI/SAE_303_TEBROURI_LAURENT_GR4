@@ -1,4 +1,5 @@
 ---
+import Terme from "./Terme.astro";
 import quartiers from "../assets/indicateurs.json";
 import "leaflet/dist/leaflet.css";
 const { code = "", detail = false } = Astro.props;
@@ -124,17 +125,23 @@ const { code = "", detail = false } = Astro.props;
       </a>
       <p class="panel-note">
         Un zéro signifie « aucun lieu ponctuel retenu ». Les parcs dessinés en
-        polygones sont exclus du comptage. Présence, gratuité et ouverture sont
-        à vérifier sur place.
+        <Terme id="polygone" label="polygones" /> sont exclus du comptage.
+        Présence, gratuité et ouverture sont à vérifier sur place.
       </p>
     </aside>
   </div>
+  <p class="map-word-help">
+    Un <Terme id="ponctuel" label="lieu ponctuel" /> est représenté par un
+    point. Les distances sont mesurées{" "}
+    <Terme id="vol-oiseau" label="à vol d’oiseau" /> autour du quartier.
+  </p>
   <div class="map-legend">
     <span>
-      <i style="background:#de6d37"></i> Surface chaude (delta ≥ 3)
+      <i style="background:#de6d37"></i>{" "}
+      <Terme id="delta" label="Surface chaude (écart ≥ +3 °C)" />
     </span>
     <span>
-      <i style="background:#60457b"></i> Contour QPV
+      <i style="background:#60457b"></i> Contour d’un <Terme id="qpv" />
     </span>
     <span>
       <i style="background:#2c6d4b"></i> Espace végétalisé

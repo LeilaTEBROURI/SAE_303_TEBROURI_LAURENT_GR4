@@ -1,0 +1,62 @@
+---
+// Le numéro du dossier choisit uniquement son côté de départ.
+const code = Astro.url.pathname.split("/").filter(Boolean).at(-1) ?? "";
+const gauche =
+  /\d/.test(code) &&
+  [...code].reduce((total, lettre) => total + lettre.charCodeAt(0), 0) % 2 ===
+    0;
+---
+
+<div
+  class:list={["peeking-thief", { "peeking-thief-left": gauche }]}
+  aria-hidden="true"
+>
+  <img src="/illustrations/voleur.avif" alt="" width="92" height="274" />
+</div>
+
+<script>
+  const voleur = document.querySelector<HTMLElement>(".peeking-thief");
+  if (voleur) {
+    const departGauche = voleur.classList.contains("peeking-thief-left");
+    const mouvementReduit = window.matchMedia(
+      "(prefers-reduced-motion: reduce)",
+    );
+    let etape = -1;
+    let frameEnAttente = false;
+    let changement: ReturnType<typeof setTimeout> | undefined;
+
+    function suivreLecture() {
+      frameEnAttente = false;
+      // Un changement environ à chaque hauteur d’écran parcourue.
+      const nouvelleEtape = Math.floor(
+        window.scrollY / Math.max(500, window.innerHeight * 0.85),
+      );
+      if (nouvelleEtape === etape) return;
+      const premierAffichage = etape === -1;
+      etape = nouvelleEtape;
+      const gauche = departGauche !== (etape % 2 === 1);
+      clearTimeout(changement);
+      if (premierAffichage || mouvementReduit.matches) {
+        voleur!.classList.toggle("peeking-thief-left", gauche);
+        voleur!.classList.remove("peeking-thief-hidden");
+        return;
+      }
+      // Il disparaît puis réapparaît sur le bord opposé, sans traverser la carte.
+      voleur!.classList.add("peeking-thief-hidden");
+      changement = setTimeout(() => {
+        voleur!.classList.toggle("peeking-thief-left", gauche);
+        voleur!.classList.remove("peeking-thief-hidden");
+      }, 140);
+    }
+
+    function planifierLecture() {
+      if (frameEnAttente) return;
+      frameEnAttente = true;
+      window.requestAnimationFrame(suivreLecture);
+    }
+    window.addEventListener("scroll", planifierLecture, { passive: true });
+    window.addEventListener("resize", planifierLecture);
+    window.addEventListener("pageshow", suivreLecture);
+    suivreLecture();
+  }
+</script>

@@ -6,9 +6,11 @@ import "@fontsource/inter/700.css";
 import "@fontsource/rubik-glitch";
 import "@fontsource/special-elite";
 import Header from "../components/Header.astro";
+import ChargementEnquete from "../components/ChargementEnquete.astro";
+import VoleurDiscret from "../components/VoleurDiscret.astro";
 const {
   title = "Qui a volé l’ombre ?",
-  description = "Une enquête sur la chaleur et les lieux de fraîcheur dans les 23 QPV de Bordeaux Métropole.",
+  description = "Une enquête sur la chaleur et les lieux de fraîcheur dans les 23 quartiers prioritaires de Bordeaux Métropole.",
 } = Astro.props;
 ---
 
@@ -31,11 +33,12 @@ const {
     </script>
     <link rel="icon" href="/illustrations/e5f05.svg" type="image/svg+xml" />
   </head>
-  <body>
+  <body class:list={[{ "inner-page": Astro.url.pathname !== "/" }]}>
     <a class="skip-link" href="#contenu">
       Aller au contenu
     </a>
     <Header />
+    {Astro.url.pathname !== "/" && <VoleurDiscret />}
     <main id="contenu" class="container">
       <slot />
     </main>
@@ -43,7 +46,9 @@ const {
       <p>SAE 303 · Bordeaux Métropole</p>
       <p>Une enquête par les données, pas une mesure directe de l’ombre.</p>
       <a href="/sources/">Sources et méthode ↗</a>
+      <a href="/glossaire/">Un mot à comprendre ? Le glossaire ↗</a>
     </footer>
+    <ChargementEnquete />
     <div id="spotlight" aria-hidden="true"></div>
     <script src="../scripts/mode-loupe.ts"></script>
   </body>

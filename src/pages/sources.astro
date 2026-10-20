@@ -1,6 +1,8 @@
 ---
+import Terme from "../components/Terme.astro";
 export const prerender = true;
 import Layout from "../layouts/Layout.astro";
+import BarriereTitre from "../components/BarriereTitre.astro";
 import PlotFigure from "../components/PlotFigure.astro";
 import * as Plot from "@observablehq/plot";
 import indicateurs from "../assets/indicateurs.json";
@@ -66,7 +68,8 @@ const nuage = {
 ---
 
 <Layout title="Sources et méthode · Qui a volé l’ombre ?">
-  <section class="sources-intro">
+  <section class="sources-intro with-barrier">
+    <BarriereTitre />
     <p class="eyebrow">Vérifier les pièces du dossier</p>
     <h1>
       Les données, la méthode,
@@ -85,9 +88,12 @@ const nuage = {
       <p class="typewriter">PIÈCE 01</p>
       <h2>Les quartiers</h2>
       <p>
-        Les 23 QPV de Bordeaux Métropole, géographie prioritaire 2024, viennent
-        de l’ANCT. Le contour métropolitain de l’API Géo de l’État fournit le
-        même contexte que dans le notebook.
+        Les 23 quartiers prioritaires de la politique de la ville (
+        <Terme id="qpv" />) de Bordeaux Métropole, contours officiels 2024,
+        viennent de l’
+        <Terme id="anct" />. Le contour métropolitain de l’
+        <Terme id="api" label="API Géo de l’État" /> fournit le même contexte
+        que dans le notebook.
       </p>
       <a href="https://sig.ville.gouv.fr/" target="_blank" rel="noreferrer">
         Source : SIG Ville ↗
@@ -98,9 +104,10 @@ const nuage = {
       <h2>La chaleur</h2>
       <p>
         {methode.chaleur_source.toLocaleString("fr-FR")} polygones du 11 juillet
-        2022 : <code>delta ≥ 3</code> et <code>dimension = "BM"</code>. L’écart
-        publié est d’au moins +3 °C par rapport à la température moyenne de
-        surface de référence métropolitaine.
+        2022 : <Terme id="delta" label="delta ≥ 3" /> et{" "}
+        <Terme id="bm" label="dimension = BM" />. L’écart publié est d’au moins
+        +3 °C par rapport à la température moyenne de surface de référence
+        métropolitaine.
       </p>
       <a
         href="https://opendata.bordeaux-metropole.fr/explore/dataset/ri_icu_ifu_s/"
@@ -118,7 +125,8 @@ const nuage = {
         {methode.lieux_source.toLocaleString("fr-FR")} objets dans le fichier.
         Le filtre du notebook conserve{" "}
         {methode.lieux_ponctuels_eligibles.toLocaleString("fr-FR")} points et
-        écarte {methode.lieux_non_ponctuels_ecartes} objets surfaciques.
+        écarte {methode.lieux_non_ponctuels_ecartes}{" "}
+        <Terme id="polygone" label="objets surfaciques" />.
       </p>
       <a
         href="https://geo.bordeaux-metropole.fr/adws/app/33cebc9f-cd8e-11ed-ad24-9bf3b515cd35/?context=q3KX"
@@ -133,20 +141,22 @@ const nuage = {
     <h2>Les mêmes calculs que dans le notebook</h2>
     <ol class="method-list">
       <li>
-        <strong>Chaleur :</strong> Turf.js 7.2.0 calcule les intersections entre
-        chaque QPV et les polygones chauds. Leurs superficies sont additionnées,
-        comme dans les cellules du PDF, puis divisées par la superficie du QPV.
-        Aucune union ou réparation supplémentaire n’est ajoutée au calcul du
-        site. Le code du notebook ignore les intersections en erreur : lors de
-        cette reproduction, {methode.intersections_ignorees} exception a été
-        rencontrée.
+        <strong>Chaleur :</strong> <Terme id="turf" label="Turf.js" /> 7.2.0
+        calcule les intersections entre chaque QPV et les polygones chauds.
+        Leurs superficies sont additionnées, comme dans les cellules du PDF,
+        puis divisées par la superficie du QPV. Aucune union ou réparation
+        supplémentaire n’est ajoutée au calcul du site. Le code du notebook
+        ignore les intersections en erreur : lors de cette reproduction,{" "}
+        {methode.intersections_ignorees} exception a été rencontrée.
       </li>
       <li>
-        <strong>Proximité :</strong> un tampon de 0,3 km est créé avec{" "}
-        <code>turf.buffer</code>, puis <code>turf.booleanPointInPolygon</code>{" "}
-        sélectionne les points dans le tampon de chaque QPV. 300 m reste la
-        référence du notebook. Les scénarios 100 et 500 m sont un ajout au site,
-        calculé avec les mêmes points et les mêmes fonctions Turf.
+        <strong>Proximité :</strong> une{" "}
+        <Terme id="tampon" label="zone tampon" /> de 0,3 km (300 m) est créé
+        avec <code>turf.buffer</code>, puis{" "}
+        <code>turf.booleanPointInPolygon</code> sélectionne les points dans le
+        tampon de chaque QPV. 300 m reste la référence du notebook. Les
+        scénarios 100 et 500 m sont un ajout au site, calculé avec les mêmes
+        points et les mêmes fonctions Turf.
       </li>
       <li>
         <strong>Catégories :</strong> les mêmes trois familles sont utilisées :
@@ -172,9 +182,11 @@ const nuage = {
     <h2>Ce que signifie chaque nombre</h2>
     <ul class="method-list">
       <li>
-        <strong>Part chaude :</strong> somme des surfaces d’intersection chaudes
-        dans le QPV ÷ superficie totale du QPV × 100. Ce n’est pas une
-        proportion d’habitants exposés.
+        <strong>
+          <Terme id="part-chaude" label="Part chaude" /> :
+        </strong>{" "}
+        somme des surfaces d’intersection chaudes dans le QPV ÷ superficie
+        totale du QPV × 100. Ce n’est pas une proportion d’habitants exposés.
       </li>
       <li>
         <strong>Lieux proches :</strong> nombre brut de fiches ponctuelles dans
@@ -191,8 +203,10 @@ const nuage = {
     <p>
       300 m est un choix d’exploration, pas une norme d’accessibilité ni un
       temps de marche. Les entrées et les obstacles ne sont pas pris en compte.
-      Turf.area fournit des surfaces géodésiques : cette reproduction ne
-      projette pas les données en Lambert-93.
+      Turf.area fournit des{" "}
+      <Terme id="geodesique" label="surfaces géodésiques" /> : cette
+      reproduction ne projette pas les données en{" "}
+      <Terme id="lambert" label="Lambert-93" />.
     </p>
   </section>
   <section class="paper method">
@@ -256,7 +270,8 @@ const nuage = {
         .
       </li>
       <li>
-        Chaleur du 11 juillet 2022 : Bordeaux Métropole, données ACMG,{" "}
+        Chaleur du 11 juillet 2022 : Bordeaux Métropole, données{" "}
+        <Terme id="acmg" />,{" "}
         <a href="https://opendata.bordeaux-metropole.fr/explore/dataset/ri_icu_ifu_s/">
           Licence Ouverte indiquée dans le catalogue
         </a>
@@ -290,9 +305,12 @@ const nuage = {
     <h2>Pourquoi ces modes d’intégration ?</h2>
     <ul class="method-list">
       <li>
-        <strong>A, au build :</strong> les graphiques de cette page sont
-        exportés en SVG dans le HTML, sans moteur Plot à télécharger par le
-        lecteur.
+        <strong>
+          A, au <Terme id="build" label="build" /> :
+        </strong>{" "}
+        les graphiques de cette page sont exportés en{" "}
+        <Terme id="svg" label="SVG" /> dans la page, sans moteur Plot à
+        télécharger par le lecteur.
       </li>
       <li>
         <strong>B, chez le lecteur :</strong> les calques, le quartier et la

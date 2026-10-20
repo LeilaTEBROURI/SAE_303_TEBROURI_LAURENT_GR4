@@ -1,0 +1,33 @@
+<div
+  id="chargement-enquete"
+  class="case-loading"
+  hidden
+  role="status"
+  aria-live="polite"
+  aria-label="Ouverture de la page en cours"
+>
+  <div class="case-loading-content">
+    <p class="eyebrow">Sur la piste du voleur</p>
+    <h2>
+      <span data-loading-line="1">Ne bouge pas…</span>
+      <br />
+      <span data-loading-line="2">on suit sa trace.</span>
+    </h2>
+    <div class="case-loading-track" aria-hidden="true">
+      {Array.from({ length: 7 }, (_, i) => (
+        <span class="case-loading-dot" style={`--etape:${i}`}></span>
+      ))}
+      <img
+        class="case-loading-thief"
+        src="/illustrations/voleur-corps-transparent.webp"
+        alt=""
+        width="600"
+        height="548"
+      />
+    </div>
+    <p class="case-loading-caption">
+      Ouverture de la prochaine pièce du dossier…
+    </p>
+  </div>
+</div>
+<script src="../scripts/chargement.ts"></script>
