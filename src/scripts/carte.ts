@@ -135,7 +135,28 @@ if (explorer) {
       const note = document.createElement("small");
       note.textContent = "Entrée, accès et horaires à vérifier.";
       popup.append(heading, family, note);
-      layer.bindPopup(popup).addTo(placesLayer);
+      // La même fiche s’ouvre au survol ; le clic reste disponible sur mobile.
+      layer.bindPopup(popup, { autoPan: false }).addTo(placesLayer);
+      let fermeture: number | undefined;
+      const garderOuvert = () => window.clearTimeout(fermeture);
+      const fermerApresSurvol = () => {
+        garderOuvert();
+        fermeture = window.setTimeout(() => layer.closePopup(), 180);
+      };
+      layer.on("mouseover", (event: L.LeafletMouseEvent) => {
+        garderOuvert();
+        layer.openPopup(event.latlng);
+      });
+      layer.on("mouseout", fermerApresSurvol);
+      layer.on("popupopen", () => {
+        const fiche = layer.getPopup()?.getElement();
+        if (fiche) {
+          // Laisser le temps de déplacer le pointeur du point vers la fiche.
+          fiche.onmouseenter = garderOuvert;
+          fiche.onmouseleave = fermerApresSurvol;
+        }
+      });
+      layer.on("popupclose remove", garderOuvert);
     }
   }
   function renderSelection(zoom: boolean) {
