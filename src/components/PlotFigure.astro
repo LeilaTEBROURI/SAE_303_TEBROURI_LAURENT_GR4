@@ -1,9 +1,27 @@
 ---
 import * as Plot from "@observablehq/plot";
 import { JSDOM } from "jsdom";
-const { options } = Astro.props;
 
-const plot = Plot.plot({ ...options, document: new JSDOM("").window.document });
+interface Props {
+  options: Plot.PlotOptions;
+  class?: string;
+  caption?: string;
+}
+
+const { options, caption, class: className = "plot-figure" } = Astro.props;
+const document = new JSDOM("").window.document;
+const plot = Plot.plot({ ...options, document });
+
+// Plot nomme automatiquement ses groupes SVG internes. Lighthouse considère
+// ces aria-label comme interdits sur le rôle générique de <g>; le SVG racine
+// reste, lui, correctement nommé grâce à l'option ariaLabel du graphique.
+plot.querySelectorAll("g[aria-label], g[aria-description]").forEach((group) => {
+  group.removeAttribute("aria-label");
+  group.removeAttribute("aria-description");
+});
 ---
 
-<div set:html={plot.outerHTML} />
+<figure class={className}>
+  <div set:html={plot.outerHTML} />
+  {caption && <figcaption>{caption}</figcaption>}
+</figure>

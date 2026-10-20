@@ -1,0 +1,38 @@
+---
+const path = Astro.url.pathname;
+const links = [
+  { href: "/", label: "L’enquête" },
+  { href: "/carte/", label: "Vue d’ensemble" },
+  { href: "/conclusion/", label: "Le verdict" },
+  { href: "/sources/", label: "Les sources" },
+];
+---
+
+<header class="container site-header">
+  <a class="brand" href="/">
+    <img src="/illustrations/e5f05.svg" width="34" height="34" alt="" />
+    <span>ENQUÊTE MÉTROPOLITAINE</span>
+  </a>
+  <nav aria-label="Navigation principale">
+    {links.map((link) => (
+      <a
+        href={link.href}
+        aria-current={path === link.href ? "page" : undefined}
+      >
+        {link.label}
+      </a>
+    ))}
+  </nav>
+  <label class="loupe-control">
+    <input
+      aria-describedby="loupe-help"
+      id="mode-loupe"
+      class="toggle toggle-xs"
+      type="checkbox"
+    />{" "}
+    Mode détective
+  </label>
+</header>
+<p id="loupe-help" class="container loupe-help">
+  Éclaire les indices · <kbd>Échap</kbd> pour désactiver le mode détective.
+</p>

@@ -1,22 +1,38 @@
 {
-  "name": "base-astro-tw-plot",
+  "name": "qui-a-vole-lombre",
+  "private": true,
+  "version": "1.0.0",
   "type": "module",
-  "version": "0.0.1",
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "check": "astro check",
+    "start": "node ./dist/server/entry.mjs",
+    "audit": "lighthouse http://127.0.0.1:4321/ --only-categories=accessibility,best-practices,performance,seo --output=html --output-path=./audits/accueil.html --chrome-flags=\"--headless\"",
+    "verify:data": "node scripts/verifier-donnees.mjs"
   },
   "dependencies": {
-    "@astrojs/netlify": "^8.2.3",
-    "@observablehq/plot": "^0.6.17",
+    "@astrojs/node": "^11.1.9",
+    "@fontsource/inter": "^5.2.0",
+    "@fontsource/rubik-glitch": "^5.2.0",
+    "@fontsource/special-elite": "^5.2.0",
+    "@observablehq/plot": "0.6.17",
     "@tailwindcss/vite": "^4.3.3",
     "astro": "^7.2.4",
+    "daisyui": "^5.7.37",
     "jsdom": "^30.0.1",
+    "leaflet": "^1.9.4",
     "tailwindcss": "^4.3.3"
   },
   "devDependencies": {
-    "@types/jsdom": "^30.0.0"
+    "@astrojs/check": "^0.9.10",
+    "@turf/turf": "7.2.0",
+    "@types/jsdom": "^30.0.0",
+    "@types/leaflet": "^1.9.22",
+    "lighthouse": "^13.5.0",
+    "prettier": "^3.9.10",
+    "prettier-plugin-astro": "^1.1.1",
+    "typescript": "^6.0.3"
   }
 }

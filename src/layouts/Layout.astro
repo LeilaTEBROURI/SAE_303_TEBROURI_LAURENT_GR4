@@ -1,26 +1,50 @@
 ---
 import "../styles/global.css";
+import "@fontsource/inter/400.css";
+import "@fontsource/inter/600.css";
+import "@fontsource/inter/700.css";
+import "@fontsource/rubik-glitch";
+import "@fontsource/special-elite";
+import Header from "../components/Header.astro";
+const {
+  title = "Qui a volé l’ombre ?",
+  description = "Une enquête sur la chaleur et les lieux de fraîcheur dans les 23 QPV de Bordeaux Métropole.",
+} = Astro.props;
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang="fr" data-theme="enquete">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <meta name="generator" content={Astro.generator} />
-    <title>Astro Basics</title>
+    <meta name="description" content={description} />
+    <title>{title}</title>
+    <script is:inline>
+      // Restaurer la préférence avant l’affichage pour éviter un clignotement.
+      try {
+        if (localStorage.getItem("enquete-mode-loupe") === "active") {
+          document.documentElement.dataset.modeLoupe = "active";
+        }
+      } catch {
+        // Le mode reste utilisable même si le stockage est bloqué.
+      }
+    </script>
+    <link rel="icon" href="/illustrations/e5f05.svg" type="image/svg+xml" />
   </head>
   <body>
-    <slot />
+    <a class="skip-link" href="#contenu">
+      Aller au contenu
+    </a>
+    <Header />
+    <main id="contenu" class="container">
+      <slot />
+    </main>
+    <footer class="container site-footer">
+      <p>SAE 303 · Bordeaux Métropole</p>
+      <p>Une enquête par les données, pas une mesure directe de l’ombre.</p>
+      <a href="/sources/">Sources et méthode ↗</a>
+    </footer>
+    <div id="spotlight" aria-hidden="true"></div>
+    <script src="../scripts/mode-loupe.ts"></script>
   </body>
 </html>
-
-<style>
-  html,
-  body {
-    margin: 0;
-    width: 100%;
-    height: 100%;
-  }
-</style>

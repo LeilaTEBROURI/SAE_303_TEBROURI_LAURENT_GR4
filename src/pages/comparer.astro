@@ -1,0 +1,101 @@
+---
+import Layout from "../layouts/Layout.astro";
+import ComparaisonQuartier from "../components/ComparaisonQuartier.astro";
+import quartiers from "../assets/indicateurs.json";
+const a =
+  quartiers.find((q) => q.code_qp === Astro.url.searchParams.get("a")) ??
+  quartiers.find((q) => q.code_qp === "QN03317M")!;
+const b =
+  quartiers.find((q) => q.code_qp !== a.code_qp && q.code_qp === "QN03308M") ??
+  quartiers.find((q) => q.code_qp !== a.code_qp)!;
+---
+
+<Layout title="Comparer deux quartiers · Qui a volé l’ombre ?">
+  <header class="comparison-intro">
+    <p class="eyebrow">Croiser les indices</p>
+    <h1>
+      Deux quartiers.
+      <br />
+      Une même grille de lecture.
+    </h1>
+    <p class="muted">
+      Compare la chaleur et les catégories de lieux à une même distance. Les
+      barres utilisent toutes les deux une échelle de 0 à 100 %.
+    </p>
+  </header>
+  <form
+    class="paper comparison-controls"
+    aria-label="Paramètres de comparaison"
+    onsubmit="return false"
+  >
+    <label for="quartier-a">
+      Dossier A
+      <select id="quartier-a" class="select">
+        {quartiers.map((q) => (
+          <option value={q.code_qp} selected={q.code_qp === a.code_qp}>
+            {q.quartier} · {q.communes}
+          </option>
+        ))}
+      </select>
+    </label>
+    <label for="quartier-b">
+      Dossier B
+      <select id="quartier-b" class="select">
+        {quartiers.map((q) => (
+          <option value={q.code_qp} selected={q.code_qp === b.code_qp}>
+            {q.quartier} · {q.communes}
+          </option>
+        ))}
+      </select>
+    </label>
+    <label for="distance-comparaison">
+      Proximité à vol d’oiseau
+      <select id="distance-comparaison" class="select">
+        {[100, 300, 500].map((rayon) => (
+          <option value={rayon} selected={rayon === 300}>
+            {rayon} m
+          </option>
+        ))}
+      </select>
+    </label>
+  </form>
+  <p class="muted mt-4">
+    300 m reprend le notebook ; 100 et 500 m sont un ajout d’exploration du
+    site.
+  </p>
+  <p id="comparison-status" class="comparison-status" aria-live="polite">
+    {a.quartier} et {b.quartier} · rayon commun de 300 m.
+  </p>
+  <div class="comparison-grid">
+    <ComparaisonQuartier quartier={a} side="a" />
+    <ComparaisonQuartier quartier={b} side="b" />
+  </div>
+  <aside class="comparison-caution paper">
+    <h2>Comparer sans tirer de conclusion trop vite.</h2>
+    <p>
+      Une fontaine et un bâtiment n’offrent pas le même service. Les nombres
+      recensés ne mesurent ni leur capacité ni leur qualité. Un zéro signifie
+      qu’aucun objet n’a été trouvé dans notre inventaire à cette distance. Le
+      filtre du notebook écarte les parcs représentés comme des polygones ; un
+      zéro ne prouve donc pas une absence de fraîcheur.
+    </p>
+    <p>
+      La distance est mesurée depuis le contour du QPV, à vol d’oiseau. Elle ne
+      garantit pas un accès ou un trajet piéton. Les pourcentages décrivent des
+      surfaces, pas les habitants exposés.
+    </p>
+    <p>
+      Chaleur : 11 juillet 2022 · QPV : 2024 · inventaire extrait le 19 octobre
+      2026.
+    </p>
+    <a href="/sources/">Lire la méthode ↗</a>
+    <a href="/conclusion/">Retrouver le verdict ↗</a>
+  </aside>
+  <noscript>
+    <p>
+      La comparaison initiale reste lisible. Active JavaScript pour changer les
+      quartiers.
+    </p>
+  </noscript>
+</Layout>
+<script src="../scripts/comparer.ts"></script>

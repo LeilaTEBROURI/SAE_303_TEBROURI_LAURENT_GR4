@@ -1,0 +1,15 @@
+---
+import Layout from "../layouts/Layout.astro";
+Astro.response.status = 404;
+---
+
+<Layout title="Dossier introuvable · Qui a volé l’ombre ?">
+  <section class="sources-intro">
+    <p class="eyebrow">Dossier introuvable · 404</p>
+    <h1>Ce quartier n’est pas dans les dossiers.</h1>
+    <p class="muted">Choisis l’un des 23 quartiers de l’enquête.</p>
+    <a class="btn btn-primary mt-6" href="/#dossiers">
+      Retour aux dossiers →
+    </a>
+  </section>
+</Layout>

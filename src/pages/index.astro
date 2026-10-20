@@ -1,21 +1,106 @@
 ---
-import PlotFigure from "../components/PlotFigure.astro";
+import ProgressionEnquete from "../components/ProgressionEnquete.astro";
 import Layout from "../layouts/Layout.astro";
-import * as Plot from "@observablehq/plot";
-import penguins from "../assets/penguins.json";
+import HeroIllustration from "../components/HeroIllustration.astro";
+import DossierCard from "../components/DossierCard.astro";
+import quartiers from "../assets/indicateurs.json";
 ---
 
 <Layout>
-  <h1 class="text-2xl">Test Astro et Plot (Observablehq)</h1>
-  <PlotFigure
-    options={{
-      marks: [
-        Plot.dot(penguins, {
-          x: "culmen_length_mm",
-          y: "culmen_depth_mm",
-          stroke: "species",
-        }),
-      ],
-    }}
-  />
+  <section class="home-hero">
+    <div class="hero-copy">
+      <p class="case-label">Enquête ouverte · 23 quartiers</p>
+      <h1 class="glitch">
+        QUI A VOLÉ
+        <br />
+        L’OMBRE ?
+      </h1>
+      <h2>
+        Des quartiers chauffent.
+        <br />
+        Où trouver de la fraîcheur ?
+      </h2>
+      <p class="muted">
+        Ouvre un dossier, rassemble les indices
+        <br />
+        et découvre les lieux recensés près du quartier.
+      </p>
+      <a class="btn btn-primary hero-cta" href="#dossiers">
+        Choisir mon quartier <span aria-hidden="true">→</span>
+      </a>
+      <a class="text-sm" href="/carte/">
+        Comprendre la situation ↗
+      </a>
+    </div>
+    <HeroIllustration />
+  </section>
+  <ProgressionEnquete />
+  <section id="dossiers" class="archive" aria-labelledby="dossiers-title">
+    <div class="section-head">
+      <div>
+        <h2 id="dossiers-title">23 quartiers. 23 dossiers à ouvrir.</h2>
+        <p class="muted mt-2">
+          Choisis un quartier pour examiner la chaleur et les possibilités de
+          fraîcheur.
+        </p>
+      </div>
+      <label class="search-field">
+        <span class="sr-only">Rechercher un quartier ou une commune</span>
+        <input
+          id="recherche"
+          class="input input-bordered"
+          type="search"
+          placeholder="⌕ Rechercher un quartier…"
+        />
+      </label>
+    </div>
+    <p id="resultats" class="sr-only" aria-live="polite"></p>
+    <div class="folder-grid">
+      {quartiers.map((quartier, index) => (
+        <DossierCard quartier={quartier} index={index} />
+      ))}
+    </div>
+    <p id="no-results" hidden>
+      Aucun dossier ne correspond. Essaie le nom d’une commune.
+    </p>
+  </section>
+  <section class="home-verdict" aria-labelledby="home-verdict-title">
+    <div>
+      <p class="eyebrow">Conclusion de l’enquête</p>
+      <h2 id="home-verdict-title">
+        Les indices sont réunis.
+        <br />
+        Quelles pistes pour la suite ?
+      </h2>
+      <p>
+        Retrouve nos constats, les limites de nos recherches et les actions à
+        étudier pour améliorer l’accès à la fraîcheur.
+      </p>
+    </div>
+    <a class="btn btn-primary" href="/conclusion/">
+      Lire le verdict →
+    </a>
+  </section>
 </Layout>
+<script>
+  const input = document.querySelector<HTMLInputElement>("#recherche")!;
+  const cards = [...document.querySelectorAll<HTMLElement>("[data-search]")];
+  function normaliser(s: string) {
+    return s
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "")
+      .toLowerCase();
+  }
+  input.addEventListener("input", () => {
+    let count = 0;
+    for (const card of cards) {
+      card.hidden = !normaliser(card.dataset.search!).includes(
+        normaliser(input.value),
+      );
+      if (!card.hidden) count++;
+    }
+    document.querySelector("#resultats")!.textContent =
+      `${count} dossiers trouvés`;
+    (document.querySelector("#no-results") as HTMLElement).hidden = count > 0;
+  });
+</script>

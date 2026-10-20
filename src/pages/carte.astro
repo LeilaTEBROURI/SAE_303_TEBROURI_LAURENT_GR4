@@ -1,0 +1,79 @@
+---
+import Layout from "../layouts/Layout.astro";
+import CarteEnquete from "../components/CarteEnquete.astro";
+---
+
+<Layout title="Vue d’ensemble · Qui a volé l’ombre ?">
+  <section class="overview-hero">
+    <div>
+      <p class="eyebrow">Le terrain de l’enquête</p>
+      <h1>
+        Bordeaux Métropole,
+        <br />à la recherche de fraîcheur.
+      </h1>
+      <p class="muted">
+        Où la chaleur de surface se concentre-t-elle ? Quels lieux sont recensés
+        pour se rafraîchir ? Explore les quartiers, puis ouvre leur dossier.
+      </p>
+    </div>
+    <aside class="paper scope">
+      <h2>
+        Tout Bordeaux en contexte.
+        <br />
+        Les QPV au cœur de l’enquête.
+      </h2>
+      <p>
+        La carte situe Bordeaux Métropole. Les comparaisons portent sur les 23
+        quartiers prioritaires, pas sur toute la population métropolitaine.
+      </p>
+    </aside>
+  </section>
+  <div class="metrics">
+    <article class="paper">
+      <strong>300 m</strong>
+      <h2>rayon par défaut autour des QPV</h2>
+      <p>100 et 500 m aussi disponibles sur la carte</p>
+    </article>
+    <article class="paper">
+      <strong>23</strong>
+      <h2>quartiers prioritaires étudiés</h2>
+      <p>Géographie prioritaire 2024</p>
+    </article>
+    <article class="paper">
+      <strong>11 juillet 2022</strong>
+      <h2>date de l’observation de chaleur</h2>
+      <p>Observation du 11 juillet 2022 · delta ≥ 3</p>
+    </article>
+  </div>
+  <p class="compare-entry">
+    <a class="btn btn-outline" href="/comparer/">
+      Comparer deux quartiers ↗
+    </a>
+  </p>
+  <CarteEnquete />
+  <section class="reading-steps" aria-label="Comment mener l’enquête">
+    {[
+      {
+        n: "01",
+        title: "Comprendre",
+        text: "La chaleur de surface décrit les sols et les toitures. Elle ne mesure ni la température de l’air, ni directement l’ombre.",
+      },
+      {
+        n: "02",
+        title: "Explorer",
+        text: "Croise les contours des quartiers avec les surfaces chaudes et les catégories de lieux recensés à proximité.",
+      },
+      {
+        n: "03",
+        title: "Vérifier",
+        text: "Ouvre un dossier pour retrouver les chiffres, leur dénominateur et leurs limites. Les horaires et l’accès restent à contrôler sur place.",
+      },
+    ].map((item) => (
+      <article class="paper">
+        <p class="typewriter">INDICE {item.n}</p>
+        <h2>{item.title}</h2>
+        <p>{item.text}</p>
+      </article>
+    ))}
+  </section>
+</Layout>

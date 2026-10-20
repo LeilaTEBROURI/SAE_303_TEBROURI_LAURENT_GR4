@@ -1,0 +1,161 @@
+---
+import quartiers from "../assets/indicateurs.json";
+import "leaflet/dist/leaflet.css";
+const { code = "", detail = false } = Astro.props;
+---
+
+<section
+  class:list={["explorer", { "detail-explorer": detail }]}
+  data-explorer
+  data-code={code}
+  data-detail={String(detail)}
+  aria-labelledby="carte-title"
+>
+  <div class="section-head">
+    <div>
+      <h2 id="carte-title">
+        {detail ? "Localiser les indices" : "À toi de mener l’enquête"}
+      </h2>
+      <p class="mt-2">
+        {detail
+          ? "Observe les surfaces chaudes et les lieux recensés aux alentours."
+          : "Choisis un quartier sur la carte ou dans la liste, puis ouvre son dossier."}
+      </p>
+    </div>
+    {!detail && (
+      <a class="btn btn-neutral" href="/#dossiers">
+        Les 23 dossiers ↗
+      </a>
+    )}
+  </div>
+  <div class="map-controls">
+    <label class="layer-pill">
+      <input
+        class="checkbox checkbox-xs"
+        type="checkbox"
+        data-layer="quartiers"
+        checked
+      />{" "}
+      Quartiers
+    </label>
+    <label class="layer-pill heat-pill">
+      <input
+        class="checkbox checkbox-xs"
+        type="checkbox"
+        data-layer="chaleur"
+        checked
+      />{" "}
+      Surfaces chaudes
+    </label>
+    <label class="layer-pill places-pill">
+      <input
+        class="checkbox checkbox-xs"
+        type="checkbox"
+        data-layer="lieux"
+        checked
+      />{" "}
+      Lieux recensés
+    </label>
+    {!detail && (
+      <label class="quartier-select">
+        <span class="sr-only">Choisir un quartier</span>
+        <select class="select" data-quartier>
+          <option value="">Toute la métropole</option>
+          {quartiers.map((q) => (
+            <option value={q.code_qp} selected={q.code_qp === code}>
+              {q.quartier} · {q.communes}
+            </option>
+          ))}
+        </select>
+      </label>
+    )}
+    <button class="btn btn-sm btn-ghost" data-reset type="button">
+      Vue générale ↗
+    </button>
+  </div>
+  <div class="map-layout">
+    <figure style="margin:0;min-width:0">
+      <div
+        class="leaflet-map"
+        data-map
+        role="region"
+        aria-label="Carte interactive des quartiers et des lieux de fraîcheur"
+        tabindex="0"
+      ></div>
+      <figcaption class="map-hint">
+        + / − pour zoomer · Glisse pour te déplacer · Clique un quartier pour
+        ouvrir ses indices. Orange : surface chaude ; violet : contour des QPV.
+        Les chiffres et catégories sont disponibles dans le panneau et les
+        dossiers.
+      </figcaption>
+    </figure>
+    <aside class="selected-panel" aria-live="polite">
+      <p class="eyebrow">Dossier sélectionné</p>
+      <h3 data-nom></h3>
+      <p class="muted" data-commune></p>
+      <hr />
+      <div class="panel-metric">
+        <strong data-chaud></strong>
+        <span>de surface chaude dans le QPV</span>
+      </div>
+      <fieldset class="distance-field">
+        <legend>Chercher les lieux à proximité</legend>
+        <div class="join">
+          {[100, 300, 500].map((rayon) => (
+            <label class="btn btn-sm join-item radius-choice">
+              <input
+                type="radio"
+                name="distance"
+                value={rayon}
+                checked={rayon === 300}
+              />
+              <span>{rayon} m</span>
+            </label>
+          ))}
+        </div>
+        <p class="panel-note">
+          300 m : référence du notebook. 100 et 500 m : exploration ajoutée au
+          site.
+        </p>
+      </fieldset>
+      <dl class="counts" data-counts></dl>
+      <a class="btn btn-primary" data-open href="#">
+        Ouvrir ce dossier →
+      </a>
+      <p class="panel-note">
+        Un zéro signifie « aucun lieu ponctuel retenu ». Les parcs dessinés en
+        polygones sont exclus du comptage. Présence, gratuité et ouverture sont
+        à vérifier sur place.
+      </p>
+    </aside>
+  </div>
+  <div class="map-legend">
+    <span>
+      <i style="background:#de6d37"></i> Surface chaude (delta ≥ 3)
+    </span>
+    <span>
+      <i style="background:#60457b"></i> Contour QPV
+    </span>
+    <span>
+      <i style="background:#2c6d4b"></i> Espace végétalisé
+    </span>
+    <span>
+      <i style="background:#2d7e9e"></i> Eau / baignade
+    </span>
+    <span>
+      <i style="background:#7c6995"></i> Bâtiment
+    </span>
+  </div>
+  <p class="map-source">
+    Chaleur : 11 juillet 2022 · QPV : 2024 · Lieux : inventaire extrait le 19
+    octobre 2026. Le gris représente le contour de Bordeaux Métropole. Le
+    comptage porte sur les lieux ponctuels à la distance choisie.
+  </p>
+  <noscript>
+    <p>
+      Active JavaScript pour explorer la carte. Tous les chiffres restent
+      disponibles dans les <a href="/#dossiers">dossiers des quartiers</a>.
+    </p>
+  </noscript>
+</section>
+<script src="../scripts/carte.ts"></script>

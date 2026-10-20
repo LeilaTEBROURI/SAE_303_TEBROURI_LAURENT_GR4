@@ -1,0 +1,15 @@
+<svg preserveAspectRatio="none" overflow="visible" style="display: block;" width="48" height="51" viewBox="0 0 160 170" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="Loupe / indice r&#195;&#169;v&#195;&#169;l&#195;&#169;">
+<g id="Vector">
+<path d="M101 106L146 154Z" fill="black"/>
+<path d="M101 106L146 154" stroke-width="17" stroke-linecap="round" stroke="#2F2F2F"/>
+</g>
+<g id="Vector_2">
+<path d="M101 106L143 151Z" fill="black"/>
+<path d="M101 106L143 151" stroke-width="4" stroke-linecap="round" stroke="#827B69"/>
+</g>
+<path id="Vector_3" d="M64 117C93.2711 117 117 93.2711 117 64C117 34.7289 93.2711 11 64 11C34.7289 11 11 34.7289 11 64C11 93.2711 34.7289 117 64 117Z" fill="white" fill-opacity="0.08" stroke-width="7" stroke="#2F2F2F"/>
+<path id="Vector_4" d="M111 64C111 89.9574 89.9574 111 64 111C38.0426 111 17 89.9574 17 64C17 38.0426 38.0426 17 64 17C89.9574 17 111 38.0426 111 64Z" stroke-width="2" stroke="#C49E4B"/>
+<path id="Vector_5" d="M31 38C34.931 33.078 39.9688 29.1539 45.7033 26.5473C51.4378 23.9407 57.7069 22.7253 64 23" stroke-width="5" stroke-linecap="round" stroke="#FFFBEF"/>
+</g>
+</svg>

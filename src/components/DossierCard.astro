@@ -1,0 +1,22 @@
+---
+const { quartier, index } = Astro.props;
+---
+
+<a
+  class="folder-card"
+  href={`/quartiers/${quartier.code_qp}/`}
+  data-search={`${quartier.quartier} ${quartier.communes}`}
+>
+  <div class="flex justify-between gap-3 text-[10px] uppercase">
+    <span>Dossier {String(index + 1).padStart(2, "0")}</span>
+    <span class="dossier-status" data-code={quartier.code_qp}>
+      À explorer
+    </span>
+  </div>
+  <h3>{quartier.quartier}</h3>
+  <p>{quartier.communes}</p>
+  <div class="flex justify-between items-center mt-auto text-xs">
+    <span>Ouvrir le dossier</span>
+    <span aria-hidden="true">↗</span>
+  </div>
+</a>

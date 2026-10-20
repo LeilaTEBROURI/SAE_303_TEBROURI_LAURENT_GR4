@@ -1,0 +1,69 @@
+---
+const { quartier: q, side, distance = 300 } = Astro.props;
+const format = (n: number) =>
+  n.toLocaleString("fr-FR", { maximumFractionDigits: 1 });
+const counts = q[`comptes_${distance}m`];
+---
+
+<article class="paper comparison-card" data-comparison={side}>
+  <p class="typewriter">DOSSIER {side === "a" ? "A" : "B"}</p>
+  <h2 data-field="quartier">{q.quartier}</h2>
+  <p class="comparison-commune" data-field="communes">
+    {q.communes}
+  </p>
+  <div class="comparison-heat">
+    <strong>
+      <span data-field="part_chaude_pct">{format(q.part_chaude_pct)}</span> %
+    </strong>
+    <p>de la surface du QPV est classée chaude</p>
+    <progress
+      class="progress"
+      data-heat-bar
+      max="100"
+      value={q.part_chaude_pct}
+      aria-label="Part de surface chaude en pourcentage"
+    ></progress>
+  </div>
+  <dl class="comparison-measures">
+    <div>
+      <dt>Superficie totale du QPV</dt>
+      <dd>
+        <span data-field="surface_qpv_ha">{format(q.surface_qpv_ha)}</span> ha
+      </dd>
+    </div>
+    <div>
+      <dt>Surface chaude dans le QPV</dt>
+      <dd>
+        <span data-field="surface_chaude_ha">
+          {format(q.surface_chaude_ha)}
+        </span>{" "}
+        ha
+      </dd>
+    </div>
+    <div>
+      <dt>
+        Lieux ponctuels retenus à <span data-distance>{distance}</span> m
+      </dt>
+      <dd data-field="nombre_lieux_frais">{q.nombre_lieux_frais}</dd>
+    </div>
+  </dl>
+  <h3>
+    Lieux recensés dans le QPV ou à <span data-distance>{distance}</span> m de
+    son contour
+  </h3>
+  <dl class="comparison-counts">
+    {Object.entries(counts).map(([name, n]) => (
+      <div>
+        <dt>{name}</dt>
+        <dd data-family={name}>{String(n)}</dd>
+      </div>
+    ))}
+  </dl>
+  <a
+    class="btn btn-neutral"
+    data-dossier-link
+    href={`/quartiers/${q.code_qp}/`}
+  >
+    Ouvrir ce dossier ↗
+  </a>
+</article>

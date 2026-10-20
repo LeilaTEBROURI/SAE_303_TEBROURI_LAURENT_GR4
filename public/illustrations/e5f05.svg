@@ -1,0 +1,14 @@
+<svg preserveAspectRatio="none" overflow="visible" style="display: block;" width="34" height="34" viewBox="0 0 34 34" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="Loupe / signe" clip-path="url(#clip0_0_298)">
+<path id="Vector" d="M25 14C25 19.5228 20.5228 24 15 24C9.47715 24 5 19.5228 5 14C5 8.47715 9.47715 4 15 4C20.5228 4 25 8.47715 25 14Z" stroke-width="3" stroke="#F8C457"/>
+<g id="Vector_2">
+<path d="M8 22L1 31Z" fill="black"/>
+<path d="M8 22L1 31" stroke-width="4" stroke-linecap="round" stroke="#F8C457"/>
+</g>
+</g>
+<defs>
+<clipPath id="clip0_0_298">
+<rect width="34" height="34" fill="white"/>
+</clipPath>
+</defs>
+</svg>

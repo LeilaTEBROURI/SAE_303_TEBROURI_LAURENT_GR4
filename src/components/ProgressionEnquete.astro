@@ -1,0 +1,33 @@
+---
+import quartiers from "../assets/indicateurs.json";
+const { compact = false, code = "" } = Astro.props;
+---
+
+<section
+  class:list={["enquete-progress", { compact }]}
+  aria-label="Progression de l’enquête"
+>
+  <div>
+    <p class="typewriter">TON CARNET D’ENQUÊTE</p>
+    <p class="progress-label" data-progress-text aria-live="polite">
+      Les dossiers consultés se marquent au fil de ton exploration.
+    </p>
+    <progress
+      class="progress progress-primary"
+      data-progress-bar
+      value="0"
+      max={quartiers.length}
+      aria-label="Nombre de dossiers consultés"
+    ></progress>
+    <p class="progress-note" data-progress-note>
+      Progression mémorisée sur ce navigateur.
+    </p>
+  </div>
+  <a
+    class="btn btn-primary"
+    href={code ? `/comparer/?a=${code}` : "/comparer/"}
+  >
+    Comparer deux quartiers ↗
+  </a>
+</section>
+<script src="../scripts/progression.ts"></script>

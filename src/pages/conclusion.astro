@@ -1,0 +1,205 @@
+---
+import Layout from "../layouts/Layout.astro";
+import indicateurs from "../assets/indicateurs.json";
+const format = (n: number) =>
+  n.toLocaleString("fr-FR", { maximumFractionDigits: 1 });
+const exemples = [
+  "QN03324N",
+  indicateurs.find((q) => q.quartier === "Carle Vernet - Terres Neuves")!
+    .code_qp,
+  "QN03308M",
+].map((code) => indicateurs.find((q) => q.code_qp === code)!);
+---
+
+<Layout title="Conclusion de l’enquête · Qui a volé l’ombre ?">
+  <header class="verdict-hero">
+    <p class="eyebrow">Les conclusions de notre enquête</p>
+    <h1>
+      Des indices sur la carte.
+      <br />
+      <span>Des actions sur le terrain.</span>
+    </h1>
+    <p class="muted">
+      Nous avons croisé les surfaces chaudes, les contours des 23 QPV et les
+      lieux de fraîcheur recensés pour repérer les situations à approfondir.
+    </p>
+    <div class="verdict-tag">VERDICT PROVISOIRE · À COMPLÉTER SUR PLACE</div>
+  </header>
+  <section class="paper verdict-summary" aria-labelledby="constat-title">
+    <div>
+      <p class="typewriter">CE QUE NOS RECHERCHES MONTRENT</p>
+      <h2 id="constat-title">
+        Les quartiers ne disposent pas des mêmes ressources à proximité.
+      </h2>
+      <p>
+        Une forte part de surface chaude ne suffit pas à conclure qu’un quartier
+        manque de possibilités de se rafraîchir. Il faut aussi regarder les
+        catégories de lieux, leur proximité et leurs conditions d’accès.
+      </p>
+      <p>
+        Thorez Goëlands ressort avec une part chaude proche de 100 % et aucun
+        lieu ponctuel retenu à 300 m. Carle Vernet – Terres Neuves combine aussi
+        une forte part chaude et peu de lieux ponctuels, alors que
+        Marne-Capucins en compte 40.
+      </p>
+    </div>
+    <aside class="verdict-number">
+      <strong>23 QPV</strong>
+      <p>
+        comparés selon leur part chaude et les lieux ponctuels recensés à 300 m.
+      </p>
+      <small>
+        Surface chaude : 11 juillet 2022. Lieux ponctuels : dans le quartier ou
+        dans son tampon de 300 m.
+      </small>
+    </aside>
+  </section>
+  <section class="verdict-examples" aria-labelledby="exemples-title">
+    <div class="section-head">
+      <div>
+        <p class="eyebrow">Trois dossiers à approfondir</p>
+        <h2 id="exemples-title">Des situations différentes, à vérifier.</h2>
+      </div>
+      <p class="muted">Repère commun : 300 m à vol d’oiseau.</p>
+    </div>
+    <div class="verdict-grid">
+      {exemples.map((q) => (
+        <article class="paper verdict-case">
+          <p class="typewriter">{q.communes}</p>
+          <h3>{q.quartier}</h3>
+          <p class="case-heat">
+            <strong>{format(q.part_chaude_pct)} %</strong> de surface chaude
+          </p>
+          <p>
+            <strong>{q.nombre_lieux_frais}</strong> lieu(x) ponctuel(s) dans le
+            QPV ou à 300 m.
+          </p>
+          <p class="case-caution">
+            {q.nombre_lieux_frais === 0
+              ? "Le filtre exclut les parcs surfaciques. Ce zéro n’établit donc pas l’absence réelle de possibilités de fraîcheur."
+              : "Ce nombre ne mesure ni la capacité, ni les horaires, ni l’accès réel aux lieux. Les parcs représentés en polygones ne sont pas comptés."}
+          </p>
+          <a href={`/quartiers/${q.code_qp}/`}>Revoir les indices ↗</a>
+        </article>
+      ))}
+    </div>
+  </section>
+  <section class="paper verdict-limits">
+    <p class="typewriter">COMMENT INTERPRÉTER LE VERDICT</p>
+    <h2>Notre carte aide à poser les bonnes questions.</h2>
+    <p>
+      Nous avons localisé des situations à examiner ; nous n’avons pas mesuré
+      directement l’ombre, le confort des habitants ou les trajets réellement
+      praticables. Un lieu recensé n’est pas forcément ouvert, gratuit ou
+      accessible par une entrée proche.
+    </p>
+    <p>
+      La chaleur date du 11 juillet 2022, les contours QPV de 2024 et
+      l’inventaire des lieux a été extrait en 2026. Les résultats varient aussi
+      avec la méthode retenue : ici, seuls les lieux ponctuels situés à 300 m
+      sont comptés. Notre enquête ne démontre donc ni une causalité ni un
+      classement définitif des quartiers.
+    </p>
+    <a href="/sources/">Retrouver les sources et les dénominateurs ↗</a>
+  </section>
+  <section class="verdict-actions" aria-labelledby="actions-title">
+    <p class="eyebrow">Et maintenant, que peut-on faire ?</p>
+    <h2 id="actions-title">
+      Quatre pistes à discuter avec les habitants et les collectivités.
+    </h2>
+    <p class="muted actions-intro">
+      Ce sont des propositions à étudier localement. Nos données ne permettent
+      pas de choisir seules les aménagements ni de chiffrer leur effet.
+    </p>
+    <div class="actions-grid">
+      <article class="paper">
+        <p class="typewriter">01 · VÉRIFIER L’EXISTANT</p>
+        <h3>Confirmer les lieux réellement utilisables.</h3>
+        <p>
+          Faire des repérages avec les habitants : entrées des parcs, horaires,
+          accès gratuit, état des fontaines et parcours accessibles. Compléter
+          l’inventaire avant de décider où intervenir.
+        </p>
+        <span class="action-horizon">
+          Première étape de l’enquête de terrain
+        </span>
+      </article>
+      <article class="paper">
+        <p class="typewriter">02 · RENDRE LA FRAÎCHEUR VISIBLE</p>
+        <h3>Mieux indiquer les lieux et leurs accès.</h3>
+        <p>
+          Une fois les informations vérifiées, signaler les points d’eau, les
+          bâtiments ouverts et les entrées des espaces végétalisés. Présenter
+          des itinéraires à partir des accès réels plutôt que d’un simple rayon
+          sur la carte.
+        </p>
+        <span class="action-horizon">
+          Information et accès aux ressources existantes
+        </span>
+      </article>
+      <article class="paper">
+        <p class="typewriter">03 · CRÉER DE L’OMBRE</p>
+        <h3>Étudier des protections sur les espaces fréquentés.</h3>
+        <p>
+          Examiner la plantation d’arbres adaptés et, selon les lieux, des
+          pergolas, voiles ou auvents sur les zones d’attente et de repos.
+          Vérifier le sol, les usages, l’entretien et les besoins en eau avant
+          tout choix.
+        </p>
+        <span class="action-horizon">
+          Aménagements à concevoir et à entretenir
+        </span>
+      </article>
+      <article class="paper">
+        <p class="typewriter">04 · TRANSFORMER ET SUIVRE</p>
+        <h3>Végétaliser et redonner une place aux sols.</h3>
+        <p>
+          Étudier la désimperméabilisation et la végétalisation des cours,
+          placettes ou espaces publics pertinents. Compléter nos données par la
+          canopée et des observations de terrain pour suivre les évolutions.
+        </p>
+        <span class="action-horizon">Projet dans la durée et évaluation</span>
+      </article>
+    </div>
+    <p class="action-source">
+      Les pistes d’ombrage, de végétalisation et de désimperméabilisation
+      s’appuient sur les familles de solutions présentées par l’
+      <a
+        href="https://agirpourlatransition.ademe.fr/collectivites/conseils/adaptation/rafraichissement-urbain"
+        target="_blank"
+        rel="noreferrer"
+      >
+        ADEME ↗
+      </a>{" "}
+      et son{" "}
+      <a
+        href="https://librairie.ademe.fr/changement-climatique/4726-5688-rafraichir-les-villes.html"
+        target="_blank"
+        rel="noreferrer"
+      >
+        guide « Rafraîchir les villes » ↗
+      </a>
+      . Leur pertinence doit être vérifiée pour chaque site.
+    </p>
+  </section>
+  <section class="verdict-end">
+    <p class="typewriter">L’ENQUÊTE NE S’ARRÊTE PAS À LA CARTE</p>
+    <h2>
+      Nos résultats donnent des pistes.
+      <br />
+      Le terrain permettra de les préciser.
+    </h2>
+    <p>
+      Comparer les quartiers, écouter les habitants et vérifier les lieux :
+      c’est ainsi que l’enquête peut aider à construire des réponses adaptées.
+    </p>
+    <div class="flex flex-wrap gap-3 mt-6">
+      <a class="btn btn-primary" href="/carte/">
+        Retour sur le terrain →
+      </a>
+      <a class="btn btn-outline text-cream" href="/#dossiers">
+        Revoir les dossiers
+      </a>
+    </div>
+  </section>
+</Layout>

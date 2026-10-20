@@ -1,0 +1,335 @@
+---
+export const prerender = true;
+import Layout from "../layouts/Layout.astro";
+import PlotFigure from "../components/PlotFigure.astro";
+import * as Plot from "@observablehq/plot";
+import indicateurs from "../assets/indicateurs.json";
+import methode from "../assets/methode-notebook.json";
+const format = (n: number) =>
+  n.toLocaleString("fr-FR", { maximumFractionDigits: 1 });
+const options = {
+  width: 1000,
+  height: 640,
+  marginLeft: 330,
+  marginRight: 50,
+  x: { domain: [0, 100], label: "Part de surface chaude (%)", grid: true },
+  y: { label: null },
+  marks: [
+    Plot.barX(indicateurs, {
+      x: "part_chaude_pct",
+      y: "quartier",
+      sort: { y: "x", reverse: true },
+      fill: "#de6d37",
+    }),
+    Plot.text(indicateurs, {
+      x: "part_chaude_pct",
+      y: "quartier",
+      text: (d: (typeof indicateurs)[number]) => format(d.part_chaude_pct),
+      dx: 6,
+      textAnchor: "start",
+    }),
+  ],
+  ariaLabel:
+    "Classement des 23 QPV par part de surface chaude le 11 juillet 2022",
+};
+const nuage = {
+  width: 750,
+  height: 550,
+  marginLeft: 65,
+  x: { domain: [0, 100], label: "Part de surface chaude (%)", grid: true },
+  y: { label: "Nombre de lieux ponctuels à 300 m", grid: true },
+  marks: [
+    Plot.dot(indicateurs, {
+      x: "part_chaude_pct",
+      y: "nombre_lieux_frais",
+      r: 7,
+      fill: "#de6d37",
+      stroke: "white",
+      title: (d) =>
+        `${d.quartier}\n${format(d.part_chaude_pct)} % de surface chaude\n${d.nombre_lieux_frais} lieux ponctuels`,
+    }),
+    Plot.text(
+      indicateurs.filter((d) => d.code_qp === "QN03324N"),
+      {
+        x: "part_chaude_pct",
+        y: "nombre_lieux_frais",
+        text: "quartier",
+        dx: -10,
+        dy: -12,
+        textAnchor: "end",
+      },
+    ),
+  ],
+  ariaLabel:
+    "Chaleur et lieux ponctuels dans les 23 QPV : Thorez Goëlands présente 100 % de surface chaude et aucun lieu ponctuel à 300 m. Marne-Capucins compte 40 lieux.",
+};
+---
+
+<Layout title="Sources et méthode · Qui a volé l’ombre ?">
+  <section class="sources-intro">
+    <p class="eyebrow">Vérifier les pièces du dossier</p>
+    <h1>
+      Les données, la méthode,
+      <br />
+      et ce qu’on peut en dire.
+    </h1>
+    <p class="muted">
+      « Qui a volé l’ombre ? » est une accroche narrative. Les données ne
+      mesurent pas directement l’ombre. Le site reprend la version du notebook
+      exportée dans « NOTEBOOK FINI », sans appliquer le correctif proposé
+      ensuite.
+    </p>
+  </section>
+  <div class="sources-grid">
+    <article class="paper">
+      <p class="typewriter">PIÈCE 01</p>
+      <h2>Les quartiers</h2>
+      <p>
+        Les 23 QPV de Bordeaux Métropole, géographie prioritaire 2024, viennent
+        de l’ANCT. Le contour métropolitain de l’API Géo de l’État fournit le
+        même contexte que dans le notebook.
+      </p>
+      <a href="https://sig.ville.gouv.fr/" target="_blank" rel="noreferrer">
+        Source : SIG Ville ↗
+      </a>
+    </article>
+    <article class="paper">
+      <p class="typewriter">PIÈCE 02</p>
+      <h2>La chaleur</h2>
+      <p>
+        {methode.chaleur_source.toLocaleString("fr-FR")} polygones du 11 juillet
+        2022 : <code>delta ≥ 3</code> et <code>dimension = "BM"</code>. L’écart
+        publié est d’au moins +3 °C par rapport à la température moyenne de
+        surface de référence métropolitaine.
+      </p>
+      <a
+        href="https://opendata.bordeaux-metropole.fr/explore/dataset/ri_icu_ifu_s/"
+        target="_blank"
+        rel="noreferrer"
+      >
+        Source : Bordeaux Métropole ↗
+      </a>
+    </article>
+    <article class="paper">
+      <p class="typewriter">PIÈCE 03</p>
+      <h2>Les lieux ponctuels</h2>
+      <p>
+        Inventaire « Espaces fraîcheur », extrait le 19 octobre 2026 :{" "}
+        {methode.lieux_source.toLocaleString("fr-FR")} objets dans le fichier.
+        Le filtre du notebook conserve{" "}
+        {methode.lieux_ponctuels_eligibles.toLocaleString("fr-FR")} points et
+        écarte {methode.lieux_non_ponctuels_ecartes} objets surfaciques.
+      </p>
+      <a
+        href="https://geo.bordeaux-metropole.fr/adws/app/33cebc9f-cd8e-11ed-ad24-9bf3b515cd35/?context=q3KX"
+        target="_blank"
+        rel="noreferrer"
+      >
+        Source : Espaces fraîcheur ↗
+      </a>
+    </article>
+  </div>
+  <section class="paper method">
+    <h2>Les mêmes calculs que dans le notebook</h2>
+    <ol class="method-list">
+      <li>
+        <strong>Chaleur :</strong> Turf.js 7.2.0 calcule les intersections entre
+        chaque QPV et les polygones chauds. Leurs superficies sont additionnées,
+        comme dans les cellules du PDF, puis divisées par la superficie du QPV.
+        Aucune union ou réparation supplémentaire n’est ajoutée au calcul du
+        site. Le code du notebook ignore les intersections en erreur : lors de
+        cette reproduction, {methode.intersections_ignorees} exception a été
+        rencontrée.
+      </li>
+      <li>
+        <strong>Proximité :</strong> un tampon de 0,3 km est créé avec{" "}
+        <code>turf.buffer</code>, puis <code>turf.booleanPointInPolygon</code>{" "}
+        sélectionne les points dans le tampon de chaque QPV. 300 m reste la
+        référence du notebook. Les scénarios 100 et 500 m sont un ajout au site,
+        calculé avec les mêmes points et les mêmes fonctions Turf.
+      </li>
+      <li>
+        <strong>Catégories :</strong> les mêmes trois familles sont utilisées :
+        espace végétalisé, eau et rafraîchissement, bâtiment ou autre lieu.
+        Aucun dédoublonnage supplémentaire n’est appliqué ; un objet peut
+        compter pour plusieurs QPV.
+      </li>
+      <li>
+        <strong>Export :</strong> les calculs utilisent les fichiers sources
+        complets. Seuls les champs utiles sont envoyés au site et les valeurs
+        sont arrondies à deux décimales. Les coordonnées conservent leur
+        précision. Les contours QPV et chaleur sont simplifiés pour l’affichage
+        seulement, avec une tolérance de 0,00002 degré.
+      </li>
+    </ol>
+    <p>
+      L’analyse compare trois distances sur le site (100, 300 et 500 m), avec
+      300 m par défaut, et deux indicateurs : la part de surface chaude et
+      l’effectif de lieux ponctuels recensés.
+    </p>
+  </section>
+  <section class="paper method">
+    <h2>Ce que signifie chaque nombre</h2>
+    <ul class="method-list">
+      <li>
+        <strong>Part chaude :</strong> somme des surfaces d’intersection chaudes
+        dans le QPV ÷ superficie totale du QPV × 100. Ce n’est pas une
+        proportion d’habitants exposés.
+      </li>
+      <li>
+        <strong>Lieux proches :</strong> nombre brut de fiches ponctuelles dans
+        le QPV ou dans son tampon de 100, 300 ou 500 m, sans dénominateur de
+        population. Les points ne mesurent ni une capacité d’accueil ni une
+        qualité.
+      </li>
+      <li>
+        <strong>Limite importante :</strong> les parcs représentés par des
+        polygones sont exclus par le filtre du notebook. Un zéro ne signifie
+        donc pas « aucun parc » ou « aucune possibilité de fraîcheur ».
+      </li>
+    </ul>
+    <p>
+      300 m est un choix d’exploration, pas une norme d’accessibilité ni un
+      temps de marche. Les entrées et les obstacles ne sont pas pris en compte.
+      Turf.area fournit des surfaces géodésiques : cette reproduction ne
+      projette pas les données en Lambert-93.
+    </p>
+  </section>
+  <section class="paper method">
+    <h2>Comparer les parts de surface chaude</h2>
+    <PlotFigure
+      options={options}
+      caption="Part chaude des 23 QPV au 11 juillet 2022. Échelle de 0 à 100 %. Calculs Turf identiques aux cellules du notebook ; valeurs arrondies pour le site."
+    />
+    <h2 class="mt-8">Croiser la chaleur et les lieux ponctuels</h2>
+    <PlotFigure
+      options={nuage}
+      caption="Chaque point représente un QPV. En bas à droite : forte part chaude et peu de lieux ponctuels retenus à 300 m. Les parcs surfaciques sont exclus ; ce graphique ne mesure pas l’accès réel à la fraîcheur."
+    />
+    <details class="collapse collapse-arrow border border-black/10">
+      <summary class="collapse-title font-semibold">
+        Lire les chiffres des 23 QPV
+      </summary>
+      <div class="collapse-content overflow-x-auto">
+        <table class="table">
+          <caption>Indicateurs reproduits à partir du notebook</caption>
+          <thead>
+            <tr>
+              <th scope="col">Quartier</th>
+              <th scope="col">Surface chaude (%)</th>
+              <th scope="col">Lieux ponctuels à 300 m</th>
+              <th scope="col">Dossier</th>
+            </tr>
+          </thead>
+          <tbody>
+            {indicateurs.map((q) => (
+              <tr>
+                <th scope="row">{q.quartier}</th>
+                <td>{format(q.part_chaude_pct)} %</td>
+                <td>{q.nombre_lieux_frais}</td>
+                <td>
+                  <a href={`/quartiers/${q.code_qp}/`}>Ouvrir ↗</a>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </details>
+    <div class="flex flex-wrap gap-3 mt-5">
+      <a class="btn btn-neutral" download href="/donnees/indicateurs_qpv.json">
+        Indicateurs JSON ↓
+      </a>
+      <a class="btn btn-neutral" download href="/donnees/indicateurs_qpv.csv">
+        Tableau CSV ↓
+      </a>
+    </div>
+  </section>
+  <section class="paper method">
+    <h2>Sources, dates et droits</h2>
+    <ul class="method-list">
+      <li>
+        QPV 2024 : ANCT / SIG Ville,{" "}
+        <a href="https://www.data.gouv.fr/datasets/quartiers-prioritaires-de-la-politique-de-la-ville-qpv">
+          Licence Ouverte / Open Licence indiquée sur la fiche officielle
+        </a>
+        .
+      </li>
+      <li>
+        Chaleur du 11 juillet 2022 : Bordeaux Métropole, données ACMG,{" "}
+        <a href="https://opendata.bordeaux-metropole.fr/explore/dataset/ri_icu_ifu_s/">
+          Licence Ouverte indiquée dans le catalogue
+        </a>
+        .
+      </li>
+      <li>
+        Contour de Bordeaux Métropole :{" "}
+        <a href="https://geo.api.gouv.fr/epcis/243300316?format=geojson&amp;geometry=contour">
+          API Géo de l’État, EPCI 243300316
+        </a>
+        , consulté le 20 octobre 2026 pour le contexte cartographique.
+      </li>
+      <li>
+        Espaces fraîcheur : données proposées par l’a-urba et revues par les
+        communes, extraction du 19 octobre 2026. Aucune licence explicite dans
+        l’extraction consultée : les conditions de réutilisation restent à
+        confirmer auprès du producteur avant publication.
+      </li>
+    </ul>
+    <p>
+      <a
+        href="https://observablehq.com/d/ca366ea4ab66a1f2"
+        target="_blank"
+        rel="noreferrer"
+      >
+        Consulter le notebook de référence ↗
+      </a>
+    </p>
+  </section>
+  <section class="paper method">
+    <h2>Pourquoi ces modes d’intégration ?</h2>
+    <ul class="method-list">
+      <li>
+        <strong>A, au build :</strong> les graphiques de cette page sont
+        exportés en SVG dans le HTML, sans moteur Plot à télécharger par le
+        lecteur.
+      </li>
+      <li>
+        <strong>B, chez le lecteur :</strong> les calques, le quartier et la
+        comparaison changent dans le navigateur, à partir des mêmes données
+        exportées.
+      </li>
+      <li>
+        <strong>C, une page par valeur :</strong> un seul modèle Astro sert les
+        dossiers par code QPV ; les chiffres restent lisibles sans JavaScript.
+      </li>
+    </ul>
+  </section>
+  <section class="paper method">
+    <h2>Les limites de l’enquête</h2>
+    <ul class="method-list">
+      <li>
+        Une seule observation de température de surface ne décrit pas une saison
+        et ne donne pas la température de l’air.
+      </li>
+      <li>
+        Le seuil delta ≥ 3 est un choix d’analyse sur les classes publiées, pas
+        un seuil sanitaire.
+      </li>
+      <li>
+        Les polygones de lieux sont exclus du comptage. Les doublons éventuels
+        du fichier ponctuel sont conservés pour correspondre au notebook.
+      </li>
+      <li>
+        Additionner des intersections peut compter plusieurs fois une zone si
+        les polygones chauds sources se recouvrent. Le site reproduit ce calcul
+        sans le remplacer par une union.
+      </li>
+      <li>
+        L’inventaire ne garantit ni l’exhaustivité, ni l’ouverture, ni la
+        gratuité. Les lieux, les contours et les températures portent sur des
+        dates différentes.
+      </li>
+    </ul>
+  </section>
+</Layout>

@@ -1,0 +1,115 @@
+<div
+  class="hero-art"
+  aria-label="Un dossier d’enquête, une carte illustrative et tes illustrations"
+>
+  <div class="art-canvas">
+    <div class="art-cover"></div>
+    <div class="art-tab"></div>
+    <div class="art-sheet"></div>
+    <div class="art-map">
+      <img
+        class="map-rues"
+        src="/illustrations/4a86d.svg"
+        alt=""
+        width="680"
+        height="426"
+      />
+      <img
+        class="map-river"
+        src="/illustrations/ea115.svg"
+        alt=""
+        width="680"
+        height="426"
+      />
+      {[
+        { x: 62, y: 65, w: 93, h: 50 },
+        { x: 275, y: 20, w: 58, h: 44 },
+        { x: 470, y: 280, w: 90, h: 48 },
+        { x: 500, y: 60, w: 92, h: 64 },
+        { x: 205, y: 305, w: 60, h: 67 },
+      ].map((p) => (
+        <span
+          class="art-park"
+          style={`left:${p.x}px;top:${p.y}px;width:${p.w}px;height:${p.h}px`}
+        ></span>
+      ))}
+      {[
+        ["69a53", 145, 95, 95, 54],
+        ["7b298", 252, 200, 68, 54],
+        ["ae7e5", 485, 177, 93, 62],
+        ["6c6ee", 140, 325, 85, 58],
+        ["2b75f", 530, 345, 74, 50],
+      ].map(([f, x, y, w, h]) => (
+        <img
+          src={`/illustrations/${f}.svg`}
+          alt=""
+          style={`position:absolute;left:${x}px;top:${y}px;width:${w}px;height:${h}px`}
+        />
+      ))}
+      <img class="art-quartiers" src="/illustrations/c5aff.svg" alt="" />
+      <strong class="art-city">BORDEAUX</strong>
+      {[
+        ["d66e0", 105, 148],
+        ["7c08d", 300, 277],
+        ["d66e0", 546, 95],
+        ["7c08d", 438, 300],
+        ["d66e0", 250, 85],
+      ].map(([f, x, y]) => (
+        <img
+          src={`/illustrations/${f}.svg`}
+          width="22"
+          height="22"
+          alt=""
+          style={`position:absolute;left:${x}px;top:${y}px`}
+        />
+      ))}
+    </div>
+    <span class="art-stamp">À EXAMINER</span>
+    <div class="art-note">
+      <strong>INDICE 01</strong>
+      <span>Ça chauffe ici.</span>
+    </div>
+    <div class="art-photo">
+      <img
+        src="/illustrations/bordeaux.webp"
+        alt="Les quais de Bordeaux"
+        width="128"
+        height="85"
+      />
+    </div>
+    <img
+      class="art-clip"
+      src="/illustrations/trombone.webp"
+      alt=""
+      width="20"
+      height="25"
+    />
+    <img
+      class="art-glass"
+      src="/illustrations/e90ed.svg"
+      alt=""
+      width="160"
+      height="170"
+    />
+    <div class="art-legend">
+      <span>🟠 Chaleur</span>
+      <span>🟢 Lieux frais</span>
+      <span>🔵 Eau</span>
+    </div>
+    <p class="art-caption">
+      Carte illustrative · explore la carte pour consulter les données
+    </p>
+  </div>
+</div>
+<div class="thief" aria-hidden="true">
+  <img class="thief-body" src="/illustrations/voleur.avif" width="92" height="274" alt="" />
+</div>
+<script>
+  const art = document.querySelector<HTMLElement>(".hero-art");
+  if (art) {
+    const observer = new ResizeObserver(() =>
+      art.style.setProperty("--art-scale", String(art.clientWidth / 768)),
+    );
+    observer.observe(art);
+  }
+</script>

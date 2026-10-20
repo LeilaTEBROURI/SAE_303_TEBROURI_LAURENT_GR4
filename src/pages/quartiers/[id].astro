@@ -1,0 +1,140 @@
+---
+import ProgressionEnquete from "../../components/ProgressionEnquete.astro";
+import Layout from "../../layouts/Layout.astro";
+import CarteEnquete from "../../components/CarteEnquete.astro";
+import indicateurs from "../../assets/indicateurs.json";
+// Comme dans le TP6 : lire le paramètre de l’URL à chaque requête.
+export const prerender = false;
+const { id } = Astro.params;
+const quartier = indicateurs.find((quartier) => quartier.code_qp === id);
+
+if (!quartier) {
+  return Astro.rewrite("/404");
+}
+
+const index = indicateurs.findIndex((quartier) => quartier.code_qp === id);
+const format = (n: number) =>
+  n.toLocaleString("fr-FR", { maximumFractionDigits: 1 });
+---
+
+<Layout title={`${quartier.quartier} · Qui a volé l’ombre ?`}>
+  <ProgressionEnquete compact code={quartier.code_qp} />
+  <a class="back-link" href="/#dossiers">
+    ← Tous les dossiers
+  </a>
+  <article class="dossier-sheet" data-dossier={quartier.code_qp}>
+    <div class="flex items-center justify-between gap-4">
+      <p class="typewriter">
+        DOSSIER {String(index + 1).padStart(2, "0")} · {quartier.code_qp}
+      </p>
+      <span class="consulted">
+        <img
+          src="/illustrations/empreinte.webp"
+          width="22"
+          height="32"
+          alt=""
+        />
+        Dossier consulté
+      </span>
+    </div>
+    <h1>{quartier.quartier}</h1>
+    <p class="mb-8">{quartier.communes} · Quartier prioritaire 2024</p>
+    <div class="metrics detail-metrics">
+      <article>
+        <strong class="hot-text">{format(quartier.part_chaude_pct)} %</strong>
+        <h2>de surface classée chaude</h2>
+        <p>Observation du 11 juillet 2022</p>
+      </article>
+      <article>
+        <strong class="green-text" id="places-count">
+          {quartier.nombre_lieux_frais}{" "}
+          {quartier.nombre_lieux_frais === 1
+            ? "lieu ponctuel"
+            : "lieux ponctuels"}
+        </strong>
+        <h2>recensés à proximité</h2>
+        <p class="distance-caption">Dans le QPV ou à 300 m de son contour</p>
+      </article>
+      <article>
+        <strong class="blue-text" id="water-count">
+          {quartier.comptes_300m["Eau et rafraîchissement"]} lieux d’eau
+        </strong>
+        <h2>recensés à proximité</h2>
+        <p>Ils ne remplacent pas un espace ombragé</p>
+      </article>
+    </div>
+    <CarteEnquete code={quartier.code_qp} detail />
+    <section class="interpretation">
+      <h2>Ce que les indices suggèrent</h2>
+      <p>
+        {format(quartier.part_chaude_pct)} % de la surface du QPV est classée
+        chaude.{" "}
+        <span data-lieux-interpretation>
+          {quartier.nombre_lieux_frais} lieux ponctuels sont recensés dans le
+          QPV ou à 300 m de son contour.
+        </span>
+        Les parcs représentés par des polygones ne sont pas inclus dans cet
+        effectif.
+      </p>
+      <p class="text-sm mt-3">
+        À vérifier sur place : entrées, horaires, accès, aménagements récents et
+        lieux absents de l’inventaire.
+      </p>
+    </section>
+    <details class="collapse collapse-arrow border border-black/10 mt-6">
+      <summary class="collapse-title font-semibold">
+        Consulter les chiffres et les dénominateurs
+      </summary>
+      <div class="collapse-content overflow-x-auto">
+        <table class="table">
+          <caption>Indicateurs de{quartier.quartier}</caption>
+          <tbody>
+            <tr>
+              <th>Superficie totale du QPV</th>
+              <td>{format(quartier.surface_qpv_ha)} ha</td>
+            </tr>
+            <tr>
+              <th>Surface chaude située dans le QPV</th>
+              <td>{format(quartier.surface_chaude_ha)} ha</td>
+            </tr>
+            <tr>
+              <th>Part chaude</th>
+              <td>Surface chaude ÷ superficie du QPV × 100</td>
+            </tr>
+            {[100, 300, 500].map((rayon) => (
+              <tr>
+                <th>Lieux ponctuels à {rayon} m</th>
+                <td>
+                  {
+                    quartier[
+                      `nombre_lieux_frais_${rayon}m` as "nombre_lieux_frais_300m"
+                    ]
+                  }{" "}
+                  objets recensés, sans dénominateur
+                </td>
+              </tr>
+            ))}
+            <tr>
+              <th colspan="2">
+                Catégories à <span data-detail-distance>300</span> m
+              </th>
+            </tr>
+            {Object.entries(quartier.comptes_300m).map(([famille, nombre]) => (
+              <tr>
+                <th>{famille}</th>
+                <td data-detail-family={famille}>{nombre}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </details>
+    <p class="map-source mt-8">
+      Sources : ANCT, QPV 2024 ; Bordeaux Métropole, chaleur du 11 juillet 2022
+      ; carte Espaces fraîcheur, extraction du 19 octobre 2026. Distances à vol
+      d’oiseau. <a href="/sources/">Lire la méthode complète ↗</a>
+    </p>
+  </article>
+</Layout>
+
+<script src="../../scripts/dossier.ts"></script>
