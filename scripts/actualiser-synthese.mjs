@@ -1,7 +1,8 @@
 import fs from "node:fs";
+import { fileURLToPath } from "node:url";
 import * as turf from "@turf/turf";
 const read = (p) => JSON.parse(fs.readFileSync(p, "utf8"));
-const root = new URL("..", import.meta.url).pathname;
+const root = fileURLToPath(new URL("..", import.meta.url));
 const [qpvPath, lieuxPath, fondPath] = process.argv.slice(2);
 if (!fondPath)
   throw new Error("Fournir les fichiers QPV, lieux frais et routes/eaux.");
@@ -92,7 +93,7 @@ const colonnes = [
   "part_chaude_pct",
   "nombre_lieux_frais",
 ];
-const cellule = (valeur) => JSON.stringify(String(valeur));
+const cellule = (valeur) => '"' + String(valeur).replaceAll('"', '""') + '"';
 fs.writeFileSync(
   root + "/public/donnees/synthese_notebook.csv",
   [

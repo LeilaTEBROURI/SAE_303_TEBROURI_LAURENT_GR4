@@ -9,7 +9,8 @@ interface Props {
 }
 
 const { options, caption, class: className = "plot-figure" } = Astro.props;
-const document = new JSDOM("").window.document;
+const dom = new JSDOM("");
+const document = dom.window.document;
 const { title, subtitle, caption: source, ...dessin } = options;
 const plot = Plot.plot({ ...dessin, document });
 
@@ -20,6 +21,8 @@ plot.querySelectorAll("g[aria-label], g[aria-description]").forEach((group) => {
   group.removeAttribute("aria-label");
   group.removeAttribute("aria-description");
 });
+const graphiqueHTML = plot.outerHTML;
+dom.window.close();
 ---
 
 <figure
@@ -47,10 +50,7 @@ plot.querySelectorAll("g[aria-label], g[aria-description]").forEach((group) => {
       </div>
     </div>
   )}
-  <div
-    class="cursor-default! [&_*]:cursor-default!"
-    set:html={plot.outerHTML}
-  />
+  <div class="cursor-default! [&_*]:cursor-default!" set:html={graphiqueHTML} />
   {(source || caption) && (
     <figcaption class="text-[12px] leading-relaxed text-[#65615b] mt-3">
       {source || caption}

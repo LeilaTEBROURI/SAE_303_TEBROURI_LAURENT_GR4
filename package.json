@@ -8,7 +8,6 @@
     "build": "astro build",
     "preview": "astro preview",
     "check": "astro check",
-    "start": "node ./dist/server/entry.mjs",
     "audit": "lighthouse http://127.0.0.1:4321/ --only-categories=accessibility,best-practices,performance,seo --output=html --output-path=./audits/accueil.html --chrome-flags=\"--headless\"",
     "verify:data": "node scripts/verifier-donnees.mjs"
   },

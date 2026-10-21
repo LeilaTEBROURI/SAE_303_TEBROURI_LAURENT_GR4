@@ -76,7 +76,11 @@ window.addEventListener("hashchange", () => {
   recherche.value = "";
   theme = "";
   filtrer();
-  document
-    .getElementById(decodeURIComponent(location.hash.slice(1)))
-    ?.scrollIntoView();
+  let identifiant = location.hash.slice(1);
+  try {
+    identifiant = decodeURIComponent(identifiant);
+  } catch {
+    // Une ancre mal encodée ne doit pas interrompre le filtrage du glossaire.
+  }
+  document.getElementById(identifiant)?.scrollIntoView();
 });

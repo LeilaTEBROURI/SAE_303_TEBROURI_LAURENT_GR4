@@ -10,15 +10,13 @@ if (dossier) {
     const total =
       quartier[`nombre_lieux_frais_${distance}m` as "nombre_lieux_frais_300m"];
     const counts = quartier[`comptes_${distance}m` as "comptes_300m"];
-    const places = dossier!.querySelector("#places-count, #trial-vegetation");
+    const places = dossier!.querySelector("#places-count");
     if (places)
       places.textContent = `${total} ${total === 1 ? "lieu ponctuel" : "lieux ponctuels"}`;
-    const water = dossier!.querySelector("#water-count, #trial-water");
+    const water = dossier!.querySelector("#water-count");
     if (water)
       water.textContent = `${counts["Eau et rafraîchissement"]} lieux d’eau`;
-    for (const caption of dossier!.querySelectorAll(
-      ".distance-caption, .trial-distance",
-    ))
+    for (const caption of dossier!.querySelectorAll(".distance-caption"))
       caption.textContent = `Dans le quartier ou à ${distance} m de son contour`;
     const interpretation = dossier!.querySelector(
       "[data-lieux-interpretation]",

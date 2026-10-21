@@ -146,7 +146,7 @@ export const glossaire = [
     rubrique: "carte",
     mot: "Polygone / objet surfacique",
     definition:
-      "Une forme fermée qui couvre une surface sur la carte. Un parc peut ainsi être dessiné par son contour, plutôt que par un point. Ces lieux dessinés comme des surfaces sont exclus du comptage repris du notebook.",
+      "Une forme fermée qui couvre une surface sur la carte. Un parc peut ainsi être dessiné par son contour, plutôt que par un point. Ces lieux dessinés comme des surfaces sont inclus dans les graphiques de synthèse et exclus des cartes détaillées, qui affichent seulement les points.",
   },
   {
     id: "ponctuel",
