@@ -4,68 +4,14 @@ import Terme from "../components/Terme.astro";
 export const prerender = true;
 import Layout from "../layouts/Layout.astro";
 import BarriereTitre from "../components/BarriereTitre.astro";
+import { optionsNuage } from "../utils/nuage-sources";
 import PlotFigure from "../components/PlotFigure.astro";
-import * as Plot from "@observablehq/plot";
-import indicateurs from "../assets/indicateurs.json";
+import { graphiquesNotebook } from "../utils/graphiques-notebook";
+import indicateurs from "../assets/synthese-notebook.json";
 import methode from "../assets/methode-notebook.json";
 const format = (n: number) =>
   n.toLocaleString("fr-FR", { maximumFractionDigits: 1 });
-const options = {
-  width: 1000,
-  height: 640,
-  marginLeft: 330,
-  marginRight: 50,
-  x: { domain: [0, 100], label: "Part de surface chaude (%)", grid: true },
-  y: { label: null },
-  marks: [
-    Plot.barX(indicateurs, {
-      x: "part_chaude_pct",
-      y: "quartier",
-      sort: { y: "x", reverse: true },
-      fill: "#de6d37",
-    }),
-    Plot.text(indicateurs, {
-      x: "part_chaude_pct",
-      y: "quartier",
-      text: (d: (typeof indicateurs)[number]) => format(d.part_chaude_pct),
-      dx: 6,
-      textAnchor: "start",
-    }),
-  ],
-  ariaLabel:
-    "Classement des 23 QPV par part de surface chaude le 11 juillet 2022",
-};
-const nuage = {
-  width: 750,
-  height: 550,
-  marginLeft: 65,
-  x: { domain: [0, 100], label: "Part de surface chaude (%)", grid: true },
-  y: { label: "Nombre de lieux ponctuels à 300 m", grid: true },
-  marks: [
-    Plot.dot(indicateurs, {
-      x: "part_chaude_pct",
-      y: "nombre_lieux_frais",
-      r: 7,
-      fill: "#de6d37",
-      stroke: "white",
-      title: (d) =>
-        `${d.quartier}\n${format(d.part_chaude_pct)} % de surface chaude\n${d.nombre_lieux_frais} lieux ponctuels`,
-    }),
-    Plot.text(
-      indicateurs.filter((d) => d.code_qp === "QN03324N"),
-      {
-        x: "part_chaude_pct",
-        y: "nombre_lieux_frais",
-        text: "quartier",
-        dx: -10,
-        dy: -12,
-        textAnchor: "end",
-      },
-    ),
-  ],
-  ariaLabel:
-    "Chaleur et lieux ponctuels dans les 23 QPV : Thorez Goëlands présente 100 % de surface chaude et aucun lieu ponctuel à 300 m. Marne-Capucins compte 40 lieux.",
-};
+const nuage = optionsNuage();
 ---
 
 <Layout title="Sources et méthode · Qui a volé l’ombre ?">
@@ -82,15 +28,13 @@ const nuage = {
     <p class="muted text-muted">
       « Qui a volé l’ombre ? » est une accroche narrative. Les données ne
       mesurent pas directement l’ombre. Le site reprend la version du notebook
-      exportée dans « NOTEBOOK FINI », sans appliquer le correctif proposé
-      ensuite.
+      corrigée le 21 octobre 2026. Les graphiques de synthèse et les cartes
+      détaillées conservent leurs méthodes respectives.
     </p>
   </section>
   <div class="sources-grid grid grid-cols-3 max-[760.001px]:grid-cols-1 gap-5 [&_h2]:text-[23px] [&_h2]:font-bold [&_h2]:mb-3 [&_.typewriter]:text-[#a74d2c] [&_.typewriter]:mb-3 [&_p]:text-[14px] [&_p]:mb-[18px] [&_a]:text-[12px] [&_a]:underline">
     <article class="paper bg-cream text-ink rounded-[8px] pt-[25px] pr-[25px] pb-[25px] pl-[25px]">
-      <p class="typewriter font-typewriter text-[13px]">
-        PIÈCE 01
-      </p>
+      <p class="typewriter font-typewriter text-[13px]">PIÈCE 01</p>
       <h2>Les quartiers</h2>
       <p>
         Les 23 quartiers prioritaires de la politique de la ville (
@@ -105,9 +49,7 @@ const nuage = {
       </a>
     </article>
     <article class="paper bg-cream text-ink rounded-[8px] pt-[25px] pr-[25px] pb-[25px] pl-[25px]">
-      <p class="typewriter font-typewriter text-[13px]">
-        PIÈCE 02
-      </p>
+      <p class="typewriter font-typewriter text-[13px]">PIÈCE 02</p>
       <h2>La chaleur</h2>
       <p>
         {methode.chaleur_source.toLocaleString("fr-FR")} polygones du 11 juillet
@@ -125,17 +67,15 @@ const nuage = {
       </a>
     </article>
     <article class="paper bg-cream text-ink rounded-[8px] pt-[25px] pr-[25px] pb-[25px] pl-[25px]">
-      <p class="typewriter font-typewriter text-[13px]">
-        PIÈCE 03
-      </p>
-      <h2>Les lieux ponctuels</h2>
+      <p class="typewriter font-typewriter text-[13px]">PIÈCE 03</p>
+      <h2>Les lieux frais recensés</h2>
       <p>
         Inventaire « Espaces fraîcheur », extrait le 19 octobre 2026 :{" "}
         {methode.lieux_source.toLocaleString("fr-FR")} objets dans le fichier.
-        Le filtre du notebook conserve{" "}
-        {methode.lieux_ponctuels_eligibles.toLocaleString("fr-FR")} points et
-        écarte {methode.lieux_non_ponctuels_ecartes}{" "}
-        <Terme id="polygone" label="objets surfaciques" />.
+        Les graphiques de synthèse comptent les points et les surfaces. Les
+        cartes détaillées retiennent les{" "}
+        {methode.lieux_ponctuels_eligibles.toLocaleString("fr-FR")} points
+        valides, comme la carte de sélection du notebook.
       </p>
       <a
         href="https://geo.bordeaux-metropole.fr/adws/app/33cebc9f-cd8e-11ed-ad24-9bf3b515cd35/?context=q3KX"
@@ -161,11 +101,11 @@ const nuage = {
       <li>
         <strong>Proximité :</strong> une{" "}
         <Terme id="tampon" label="zone tampon" /> de 0,3 km (300 m) est créé
-        avec <code>turf.buffer</code>, puis{" "}
-        <code>turf.booleanPointInPolygon</code> sélectionne les points dans le
-        tampon de chaque QPV. 300 m reste la référence du notebook. Les
-        scénarios 100 et 500 m sont un ajout au site, calculé avec les mêmes
-        points et les mêmes fonctions Turf.
+        avec <code>turf.buffer</code>. Pour les graphiques de synthèse,{" "}
+        <code>turf.booleanIntersects</code> retient toutes les géométries qui
+        rencontrent cette zone. Pour les cartes des dossiers,{" "}
+        <code>turf.booleanPointInPolygon</code> retient seulement les points.
+        Les scénarios 100 et 500 m restent disponibles sur ces cartes.
       </li>
       <li>
         <strong>Catégories :</strong> les mêmes trois familles sont utilisées :
@@ -184,7 +124,8 @@ const nuage = {
     <p>
       L’analyse compare trois distances sur le site (100, 300 et 500 m), avec
       300 m par défaut, et deux indicateurs : la part de surface chaude et
-      l’effectif de lieux ponctuels recensés.
+      l’effectif de lieux recensés, en précisant le périmètre de chaque
+      visualisation.
     </p>
   </section>
   <section class="paper method bg-cream text-ink rounded-[8px] pt-[30px] max-[760.001px]:pt-[22px] pr-[30px] max-[760.001px]:pr-[22px] pb-[30px] max-[760.001px]:pb-[22px] pl-[30px] max-[760.001px]:pl-[22px] mt-6 [&_h2]:text-[23px] [&_h2]:font-bold [&_h2]:mb-3 [&_p]:text-[14px] [&_li]:text-[14px]">
@@ -198,15 +139,15 @@ const nuage = {
         totale du QPV × 100. Ce n’est pas une proportion d’habitants exposés.
       </li>
       <li>
-        <strong>Lieux proches :</strong> nombre brut de fiches ponctuelles dans
-        le QPV ou dans son tampon de 100, 300 ou 500 m, sans dénominateur de
-        population. Les points ne mesurent ni une capacité d’accueil ni une
-        qualité.
+        <strong>Lieux proches :</strong> nombre brut de fiches dans le QPV ou
+        dans son tampon de 100, 300 ou 500 m, sans dénominateur de population.
+        Les points ne mesurent ni une capacité d’accueil ni une qualité.
       </li>
       <li>
-        <strong>Limite importante :</strong> les parcs représentés par des
-        polygones sont exclus par le filtre du notebook. Un zéro ne signifie
-        donc pas « aucun parc » ou « aucune possibilité de fraîcheur ».
+        <strong>Limite importante :</strong> les cartes détaillées excluent les
+        géométries surfaciques ; les graphiques de synthèse les incluent. Leurs
+        effectifs peuvent donc différer. Un zéro ne garantit pas l’absence de
+        possibilité de fraîcheur.
       </li>
     </ul>
     <p>
@@ -219,16 +160,25 @@ const nuage = {
     </p>
   </section>
   <section class="paper method bg-cream text-ink rounded-[8px] pt-[30px] max-[760.001px]:pt-[22px] pr-[30px] max-[760.001px]:pr-[22px] pb-[30px] max-[760.001px]:pb-[22px] pl-[30px] max-[760.001px]:pl-[22px] mt-6 [&_h2]:text-[23px] [&_h2]:font-bold [&_h2]:mb-3 [&_p]:text-[14px] [&_li]:text-[14px]">
-    <h2>Comparer les parts de surface chaude</h2>
-    <PlotFigure
-      options={options}
-      caption="Part chaude des 23 QPV au 11 juillet 2022. Échelle de 0 à 100 %. Calculs Turf identiques aux cellules du notebook ; valeurs arrondies pour le site."
-    />
-    <h2 class="mt-8">Croiser la chaleur et les lieux ponctuels</h2>
-    <PlotFigure
-      options={nuage}
-      caption="Chaque point représente un QPV. En bas à droite : forte part chaude et peu de lieux ponctuels retenus à 300 m. Les parcs surfaciques sont exclus ; ce graphique ne mesure pas l’accès réel à la fraîcheur."
-    />
+    <h2>Les graphiques du notebook</h2>
+    <p>
+      Les six premières figures et le nuage de points ci-dessous reprennent les
+      visualisations de synthèse du notebook corrigé. Sur les cartes : orange
+      pour la chaleur, violet pour les quartiers, gris pour les routes et bleu
+      pour l’eau.
+    </p>
+    <p class="mt-3">
+      <strong>Deux périmètres distincts :</strong> les graphiques ci-dessous
+      incluent les points et les surfaces. Les cartes des dossiers affichent et
+      comptent uniquement les lieux ponctuels. Par exemple, Marne-Capucins
+      compte 41 lieux dans la synthèse et 40 points sur sa carte.
+    </p>
+    {graphiquesNotebook.map((options) => (
+      <PlotFigure options={options} />
+    ))}
+    <div data-nuage-sources>
+      <PlotFigure options={nuage} />
+    </div>
     <details class="collapse collapse-arrow border border-black/10">
       <summary class="collapse-title font-semibold">
         Lire les chiffres des 23 QPV
@@ -240,7 +190,7 @@ const nuage = {
             <tr>
               <th scope="col">Quartier</th>
               <th scope="col">Surface chaude (%)</th>
-              <th scope="col">Lieux ponctuels à 300 m</th>
+              <th scope="col">Lieux recensés à 300 m</th>
               <th scope="col">Dossier</th>
             </tr>
           </thead>
@@ -263,21 +213,27 @@ const nuage = {
       <a
         class="btn btn-neutral font-semibold normal-case shadow-none text-cream bg-ink"
         download
-        href="/donnees/indicateurs_qpv.json"
+        href="/donnees/synthese_notebook.json"
       >
-        Indicateurs JSON ↓
+        Indicateurs de synthèse JSON ↓
       </a>
       <a
         class="btn btn-neutral font-semibold normal-case shadow-none text-cream bg-ink"
         download
-        href="/donnees/indicateurs_qpv.csv"
+        href="/donnees/synthese_notebook.csv"
       >
-        Tableau CSV ↓
+        Tableau de synthèse CSV ↓
       </a>
     </div>
   </section>
   <section class="paper method bg-cream text-ink rounded-[8px] pt-[30px] max-[760.001px]:pt-[22px] pr-[30px] max-[760.001px]:pr-[22px] pb-[30px] max-[760.001px]:pb-[22px] pl-[30px] max-[760.001px]:pl-[22px] mt-6 [&_h2]:text-[23px] [&_h2]:font-bold [&_h2]:mb-3 [&_p]:text-[14px] [&_li]:text-[14px]">
     <h2>Sources, dates et droits</h2>
+    <p>
+      Routes principales et cours d’eau : © contributeurs OpenStreetMap,
+      extraction Overpass du 21 octobre 2026, licence ODbL. Seuls les axes et
+      cours d’eau sélectionnés dans le notebook sont représentés ; ce fond n’est
+      pas exhaustif.
+    </p>
     <ul class="method-list [list-style:disc] pl-[22px] mt-5 mb-5 grid gap-3">
       <li>
         QPV 2024 : ANCT / SIG Ville,{" "}
@@ -310,7 +266,7 @@ const nuage = {
     </ul>
     <p>
       <a
-        href="https://observablehq.com/d/ca366ea4ab66a1f2"
+        href="https://observablehq.com/@mmi-montbeliard/sae-303-gr-04"
         target="_blank"
         rel="noreferrer"
       >
@@ -325,9 +281,9 @@ const nuage = {
         <strong>
           A, au <Terme id="build" label="build" /> :
         </strong>{" "}
-        les graphiques de cette page sont exportés en{" "}
-        <Terme id="svg" label="SVG" /> dans la page, sans moteur Plot à
-        télécharger par le lecteur.
+        les graphiques de cette page sont d’abord exportés en{" "}
+        <Terme id="svg" label="SVG" /> dans la page. Le nuage de points devient
+        ensuite interactif avec Plot pour afficher les données au survol.
       </li>
       <li>
         <strong>B, chez le lecteur :</strong> les calques, le quartier et la
@@ -336,7 +292,8 @@ const nuage = {
       </li>
       <li>
         <strong>C, une page par valeur :</strong> un seul modèle Astro sert les
-        dossiers par code QPV ; les chiffres restent lisibles sans JavaScript.
+        dossiers par nom de quartier ; les chiffres restent lisibles sans
+        JavaScript.
       </li>
     </ul>
   </section>
@@ -352,8 +309,9 @@ const nuage = {
         un seuil sanitaire.
       </li>
       <li>
-        Les polygones de lieux sont exclus du comptage. Les doublons éventuels
-        du fichier ponctuel sont conservés pour correspondre au notebook.
+        Les polygones de lieux sont inclus dans les graphiques de synthèse et
+        exclus des cartes détaillées. Les éventuels doublons sont conservés,
+        comme dans le notebook.
       </li>
       <li>
         Additionner des intersections peut compter plusieurs fois une zone si
@@ -368,3 +326,5 @@ const nuage = {
     </ul>
   </section>
 </Layout>
+
+<script src="../scripts/nuage-sources.ts"></script>

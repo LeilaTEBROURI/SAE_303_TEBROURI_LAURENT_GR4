@@ -1,6 +1,5 @@
 const ecran = document.querySelector<HTMLElement>("#chargement-enquete")!;
 const mouvementReduit = window.matchMedia("(prefers-reduced-motion: reduce)");
-let enCours = false;
 let depart: ReturnType<typeof setTimeout> | undefined;
 let secours: ReturnType<typeof setTimeout> | undefined;
 
@@ -8,7 +7,6 @@ function masquer() {
   clearTimeout(depart);
   clearTimeout(secours);
   ecran.hidden = true;
-  enCours = false;
 }
 
 const repliques = [
@@ -71,57 +69,27 @@ function changerReplique() {
 
 function afficher() {
   changerReplique();
-  enCours = true;
   ecran.hidden = false;
   // Rendre la page utilisable si une navigation est interrompue.
   secours = setTimeout(masquer, 10000);
 }
 
-// Navigation classique Astro : les contrôles, téléchargements et liens externes restent natifs.
-document.addEventListener("click", (event) => {
-  if (!(event.target instanceof Element)) return;
-  const lien = event.target.closest<HTMLAnchorElement>("a[href]");
-  if (
-    !lien ||
-    event.defaultPrevented ||
-    event.button !== 0 ||
-    event.metaKey ||
-    event.ctrlKey ||
-    event.shiftKey ||
-    event.altKey ||
-    lien.hasAttribute("download") ||
-    lien.classList.contains("glossary-term") ||
-    (lien.target && lien.target !== "_self")
-  )
-    return;
-  const destination = new URL(lien.href, window.location.href);
-  if (
-    destination.origin !== location.origin ||
-    !["http:", "https:"].includes(destination.protocol) ||
-    (destination.pathname === location.pathname &&
-      destination.search === location.search)
-  )
-    return;
-  event.preventDefault();
-  if (enCours) return;
+// Une seule introduction par onglet ; les liens gardent leur navigation native.
+const cleIntroduction = "enquete-introduction-vue";
+let premiereOuverture = false;
+try {
+  premiereOuverture = sessionStorage.getItem(cleIntroduction) !== "oui";
+  sessionStorage.setItem(cleIntroduction, "oui");
+} catch {
+  // Sans stockage, ne pas imposer une animation à chaque navigation.
+}
+if (premiereOuverture && !mouvementReduit.matches) {
   afficher();
-  depart = setTimeout(
-    () => {
-      window.location.assign(destination.href);
-    },
-    mouvementReduit.matches ? 0 : 1500,
-  );
+  depart = setTimeout(masquer, 1500);
+}
+window.addEventListener("pageshow", (event) => {
+  if (event.persisted) masquer();
 });
-
-window.addEventListener("pageshow", masquer);
 document.addEventListener("keydown", (event) => {
   if (event.key === "Escape") masquer();
 });
-
-document
-  .querySelector<HTMLButtonElement>("#tester-chargement")
-  ?.addEventListener("click", () => {
-    if (enCours) return;
-    afficher();
-    depart = setTimeout(masquer, mouvementReduit.matches ? 1000 : 3000);
-  });

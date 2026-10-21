@@ -87,7 +87,7 @@ const { code = "", detail = false } = Astro.props;
   <div class="map-layout grid grid-cols-[minmax(0,_2.3fr)_minmax(280px,_1fr)] max-[760.001px]:grid-cols-1 min-[760.001px]:max-[1100.001px]:grid-cols-[minmax(0,_1.6fr)_280px] gap-[22px]">
     <figure style="margin:0;min-width:0">
       <div
-        class="leaflet-map h-[620px] max-[760.001px]:h-[440px] min-[760.001px]:max-[1100.001px]:h-[600px] bg-[#f6efdb] rounded-[8px] z-0"
+        class="leaflet-map relative overflow-hidden isolate [contain:paint] cursor-default! [&_*]:cursor-default! h-[620px] max-[760.001px]:h-[440px] min-[760.001px]:max-[1100.001px]:h-[600px] bg-[#f6efdb] rounded-[8px] z-0"
         data-map
         role="region"
         aria-label="Carte interactive des quartiers et des lieux de fraîcheur"
@@ -174,11 +174,19 @@ const { code = "", detail = false } = Astro.props;
     <span>
       <i style="background:#7c6995"></i> Bâtiment
     </span>
+    <span>
+      <i style="background:#8f8577"></i> Route principale
+    </span>
+    <span>
+      <i style="background:#64748b"></i> Cours d’eau
+    </span>
   </div>
   <p class="map-source text-[10px] mt-4 leading-[1.7] [&_a]:underline">
     Chaleur : 11 juillet 2022 · QPV : 2024 · Lieux : inventaire extrait le 19
-    octobre 2026. Le gris représente le contour de Bordeaux Métropole. Le
-    comptage porte sur les lieux ponctuels à la distance choisie.
+    octobre 2026 · © contributeurs OpenStreetMap, routes et cours d’eau,
+    extraction du 21 octobre 2026, ODbL. Le gris représente le contour de
+    Bordeaux Métropole. Le comptage porte sur les lieux ponctuels à la distance
+    choisie.
   </p>
   <noscript>
     <p>

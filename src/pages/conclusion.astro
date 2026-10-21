@@ -2,7 +2,7 @@
 import { adresseQuartier } from "../utils/quartiers";
 import Terme from "../components/Terme.astro";
 import Layout from "../layouts/Layout.astro";
-import indicateurs from "../assets/indicateurs.json";
+import indicateurs from "../assets/synthese-notebook.json";
 const format = (n: number) =>
   n.toLocaleString("fr-FR", { maximumFractionDigits: 1 });
 const exemples = [
@@ -60,18 +60,18 @@ const exemples = [
       </p>
       <p>
         Thorez Goëlands ressort avec une part chaude proche de 100 % et aucun
-        lieu ponctuel retenu à 300 m. Carle Vernet – Terres Neuves combine aussi
-        une forte part chaude et peu de lieux ponctuels, alors que
-        Marne-Capucins en compte 40.
+        lieu recensé à 300 m. Carle Vernet – Terres Neuves combine aussi une
+        forte part chaude et peu de lieux recensés, alors que Marne-Capucins en
+        compte 41.
       </p>
     </div>
     <aside class="verdict-number bg-[#f6efdb] pt-[25px] pr-[25px] pb-[25px] pl-[25px] rounded-[7px] self-center [&_>_strong]:block [&_>_strong]:text-[58px] max-[760.001px]:[&_>_strong]:text-[48px] [&_>_strong]:tracking-[-0.04em] [&_>_strong]:leading-[1.1] [&_>_strong]:text-[#b04e28] [&_>_strong]:mb-[15px] [&_p]:text-[14px] [&_small]:block [&_small]:mt-[18px] [&_small]:text-[11px] [&_small]:leading-[1.6] [&_small]:text-[#676052]">
       <strong>23 QPV</strong>
       <p>
-        comparés selon leur part chaude et les lieux ponctuels recensés à 300 m.
+        comparés selon leur part chaude et les lieux recensés recensés à 300 m.
       </p>
       <small>
-        Surface chaude : 11 juillet 2022. Lieux ponctuels : dans le quartier ou
+        Surface chaude : 11 juillet 2022. Lieux recensés : dans le quartier ou
         dans sa <Terme id="tampon" label="zone de proximité de 300 m" />.
       </small>
     </aside>
@@ -92,20 +92,18 @@ const exemples = [
     <div class="verdict-grid grid grid-cols-3 max-[760.001px]:grid-cols-1 gap-5">
       {exemples.map((q) => (
         <article class="paper verdict-case bg-cream text-ink rounded-[8px] pt-[25px] pr-[25px] pb-[25px] pl-[25px] flex flex-col gap-[15px] [&_>_.typewriter]:text-[11px] [&_>_.typewriter]:text-[#756745] [&_h3]:text-[25px] max-[760.001px]:[&_h3]:text-[24px] min-[760.001px]:max-[900.001px]:[&_h3]:text-[21px] [&_h3]:font-bold [&_h3]:leading-[1.2] [&_p]:text-[14px] [&_.case-caution]:text-[11px] [&_.case-caution]:text-[#6f6656] [&_a]:mt-auto [&_a]:text-[12px] [&_a]:font-semibold [&_a]:underline">
-          <p class="typewriter font-typewriter text-[13px]">
-            {q.communes}
-          </p>
+          <p class="typewriter font-typewriter text-[13px]">{q.communes}</p>
           <h3>{q.quartier}</h3>
           <p class="case-heat [&_strong]:text-[30px] [&_strong]:text-[#b04e28] [&_strong]:block">
             <strong>{format(q.part_chaude_pct)} %</strong> de surface chaude
           </p>
           <p>
-            <strong>{q.nombre_lieux_frais}</strong> lieu(x) ponctuel(s) dans le
+            <strong>{q.nombre_lieux_frais}</strong> lieu(x) recensé(s) dans le
             QPV ou à 300 m.
           </p>
           <p class="case-caution">
             {q.nombre_lieux_frais === 0
-              ? "Le filtre exclut les parcs surfaciques. Ce zéro n’établit donc pas l’absence réelle de possibilités de fraîcheur."
+              ? "Ce zéro indique l’absence de lieu recensé dans cette extraction ; il n’établit pas l’absence réelle de possibilités de fraîcheur."
               : "Ce nombre ne mesure ni la capacité, ni les horaires, ni l’accès réel aux lieux. Les parcs représentés en polygones ne sont pas comptés."}
           </p>
           <a href={adresseQuartier(q)}>Revoir les indices ↗</a>
@@ -127,7 +125,7 @@ const exemples = [
     <p>
       La chaleur date du 11 juillet 2022, les contours QPV de 2024 et
       l’inventaire des lieux a été extrait en 2026. Les résultats varient aussi
-      avec la méthode retenue : ici, seuls les lieux ponctuels situés à 300 m
+      avec la méthode retenue : ici, seuls les lieux recensés situés à 300 m
       sont comptés. Notre enquête ne démontre donc ni une causalité ni un
       classement définitif des quartiers.
     </p>

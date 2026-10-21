@@ -10,7 +10,8 @@ interface Props {
 
 const { options, caption, class: className = "plot-figure" } = Astro.props;
 const document = new JSDOM("").window.document;
-const plot = Plot.plot({ ...options, document });
+const { title, subtitle, caption: source, ...dessin } = options;
+const plot = Plot.plot({ ...dessin, document });
 
 // Plot nomme automatiquement ses groupes SVG internes. Lighthouse considère
 // ces aria-label comme interdits sur le rôle générique de <g>; le SVG racine
@@ -27,6 +28,32 @@ plot.querySelectorAll("g[aria-label], g[aria-description]").forEach((group) => {
     "overflow-x-auto mt-[25px] [&_svg]:h-auto [&_svg]:max-w-[100%]! max-[760.001px]:[&_svg]:max-w-none! [&_svg]:bg-transparent! max-[760.001px]:[&_svg]:min-w-[730px]",
   ]}
 >
-  <div set:html={plot.outerHTML} />
-  {caption && <figcaption>{caption}</figcaption>}
+  {title && (
+    <h3 class="text-[22px] max-[760.001px]:text-[20px] font-bold leading-snug mb-2">
+      {title}
+    </h3>
+  )}
+  {subtitle && (
+    <p class="text-[14px] leading-relaxed mb-4 text-[#65615b]">{subtitle}</p>
+  )}
+  {options.color?.type === "linear" && (
+    <div class="w-[240px] mb-4 text-[12px]">
+      <p class="mb-1">Part de surface chaude (%)</p>
+      <div class="h-3 bg-[linear-gradient(to_right,#f6d365,#6b2715)]"></div>
+      <div class="flex justify-between">
+        <span>0 %</span>
+        <span>50 %</span>
+        <span>100 %</span>
+      </div>
+    </div>
+  )}
+  <div
+    class="cursor-default! [&_*]:cursor-default!"
+    set:html={plot.outerHTML}
+  />
+  {(source || caption) && (
+    <figcaption class="text-[12px] leading-relaxed text-[#65615b] mt-3">
+      {source || caption}
+    </figcaption>
+  )}
 </figure>

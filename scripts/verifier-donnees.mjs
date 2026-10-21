@@ -68,3 +68,29 @@ assert.equal(csv.trim().split("\n").length, 24);
 console.log(
   "69 cas vérifiés : points, catégories et totaux cohérents aux trois rayons ; référence 300 m conservée.",
 );
+
+// Le notebook final distingue la synthèse (toutes géométries) des cartes (points).
+const synthese = read("../src/assets/synthese-notebook.json");
+assert.equal(synthese.length, 23);
+assert.deepEqual(synthese, read("../public/donnees/synthese_notebook.json"));
+for (const q of synthese) {
+  const points = rows.find((p) => p.code_qp === q.code_qp);
+  assert(points);
+  assert.equal(q.part_chaude_pct, points.part_chaude_pct);
+  assert(q.nombre_lieux_frais >= points.nombre_lieux_frais);
+  assert.equal(
+    Object.values(q.comptes).reduce((a, b) => a + b, 0),
+    q.nombre_lieux_frais,
+  );
+}
+assert.equal(
+  synthese.find((q) => q.quartier === "Marne-Capucins").nombre_lieux_frais,
+  41,
+);
+assert.deepEqual(
+  synthese.filter((q) => q.nombre_lieux_frais === 0).map((q) => q.quartier),
+  ["Thorez Goëlands"],
+);
+console.log(
+  "Synthèse finale vérifiée : 23 quartiers, 41 lieux à Marne-Capucins et un seul quartier sans lieu recensé.",
+);

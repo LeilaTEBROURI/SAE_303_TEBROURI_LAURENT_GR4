@@ -1,114 +1,82 @@
-<div
-  class="hero-art max-[1500.001px]:max-w-none w-[calc(100%_-_60px)] max-[760.001px]:w-full [aspect-ratio:768/570] relative max-[760.001px]:mt-1 max-w-[768px]"
-  aria-label="Un dossier d’enquête, une carte illustrative et tes illustrations"
->
-  <div class="art-canvas w-[768px] h-[570px] absolute [transform:scale(var(--art-scale,_1))] [transform-origin:top_left] text-ink">
-    <div class="art-cover absolute bg-gold left-[12px] top-[44px] w-[744px] h-[508px] rounded-[8px]"></div>
-    <div class="art-tab absolute left-[28px] top-[18px] w-[250px] h-[36px] rounded-[16px_16px_0_0] bg-gold"></div>
-    <div class="art-sheet absolute left-[30px] top-[55px] w-[708px] h-[466px] bg-cream [transform:rotate(-1.5deg)]"></div>
-    <div class="art-map absolute left-[44px] top-[78px] w-[680px] h-[426px] bg-[#f6efdb] overflow-hidden">
-      <img
-        class="map-rues absolute left-0 top-0"
-        src="/illustrations/4a86d.svg"
-        alt=""
-        width="680"
-        height="426"
-      />
-      <img
-        class="map-river absolute left-0 top-0"
-        src="/illustrations/ea115.svg"
-        alt=""
-        width="680"
-        height="426"
-      />
-      {[
-        { x: 62, y: 65, w: 93, h: 50 },
-        { x: 275, y: 20, w: 58, h: 44 },
-        { x: 470, y: 280, w: 90, h: 48 },
-        { x: 500, y: 60, w: 92, h: 64 },
-        { x: 205, y: 305, w: 60, h: 67 },
-      ].map((p) => (
-        <span
-          class="art-park absolute rounded-[15px] bg-[#2c6d4b] opacity-[0.2]"
-          style={`left:${p.x}px;top:${p.y}px;width:${p.w}px;height:${p.h}px`}
-        ></span>
+---
+import quartiers from "../assets/synthese-notebook.json";
+const majoriteChaude = quartiers.filter((q) => q.part_chaude_pct > 50).length;
+const sansLieu = quartiers.filter((q) => q.nombre_lieux_frais === 0).length;
+const indices = [
+  {
+    valeur: String(quartiers.length),
+    titre: "quartiers étudiés",
+    detail: "Les quartiers prioritaires de Bordeaux Métropole.",
+    couleur: "text-ink",
+  },
+  {
+    valeur: String(majoriteChaude),
+    titre: "quartiers majoritairement chauds",
+    detail: "Plus de 50 % de leur surface est classée chaude.",
+    couleur: "text-[#b34d25]",
+  },
+  {
+    valeur: String(sansLieu),
+    titre: "quartier sans lieu frais recensé",
+    detail: "Dans le quartier ou à moins de 300 m de son contour.",
+    couleur: "text-[#60457b]",
+  },
+  {
+    valeur: "300 m",
+    titre: "pour explorer les alentours",
+    detail: "La distance de référence de notre recherche.",
+    couleur: "text-[#2d7e9e]",
+  },
+];
+---
+
+<figure class="hero-art max-[1500.001px]:max-w-none w-[calc(100%_-_60px)] max-[760.001px]:w-full aspect-[768/570] relative max-[760.001px]:mt-1 max-w-[768px] text-ink [container-type:inline-size]">
+  <div class="absolute bg-gold left-[1.56%] top-[7.72%] w-[96.88%] h-[89.12%] rounded-[8px]"></div>
+  <div class="absolute left-[3.65%] top-[3.16%] w-[32.55%] h-[6.32%] rounded-t-[16px] bg-gold"></div>
+  <div class="absolute left-[3.91%] top-[9.65%] w-[92.19%] h-[81.75%] bg-cream"></div>
+  <div class="absolute left-[7%] top-[14%] w-[86%]">
+    <p class="uppercase tracking-[0.15em] text-[1.7cqw] font-bold text-[#765221]">
+      Les premières pièces du dossier
+    </p>
+    <h2 class="font-typewriter text-[3.5cqw] leading-[1.2] mt-[1.5cqw] mb-[2cqw]">
+      L’enquête en 4 chiffres.
+    </h2>
+    <dl class="grid grid-cols-2 gap-[1.5cqw]">
+      {indices.map((indice) => (
+        <div class="bg-[#f6efdb] border border-[#e4dbc5] rounded-[1cqw] p-[1.7cqw]">
+          <dd
+            class:list={[
+              "font-bold text-[6cqw] leading-none mb-[0.8cqw]",
+              indice.couleur,
+            ]}
+          >
+            {indice.valeur}
+          </dd>
+          <dt class="font-bold text-[1.85cqw] leading-[1.25]">
+            {indice.titre}
+          </dt>
+          <dd class="text-[1.5cqw] leading-[1.4] mt-[0.7cqw] text-[#65615b]">
+            {indice.detail}
+          </dd>
+        </div>
       ))}
-      {[
-        ["69a53", 145, 95, 95, 54],
-        ["7b298", 252, 200, 68, 54],
-        ["ae7e5", 485, 177, 93, 62],
-        ["6c6ee", 140, 325, 85, 58],
-        ["2b75f", 530, 345, 74, 50],
-      ].map(([f, x, y, w, h]) => (
-        <img
-          src={`/illustrations/${f}.svg`}
-          alt=""
-          style={`position:absolute;left:${x}px;top:${y}px;width:${w}px;height:${h}px`}
-        />
-      ))}
-      <img
-        class="art-quartiers absolute left-[113px] top-[66px] w-[478px] h-[328px]"
-        src="/illustrations/c5aff.svg"
-        alt=""
-      />
-      <strong class="art-city absolute left-[255px] top-[258px] text-[12px]">
-        BORDEAUX
-      </strong>
-      {[
-        ["d66e0", 105, 148],
-        ["7c08d", 300, 277],
-        ["d66e0", 546, 95],
-        ["7c08d", 438, 300],
-        ["d66e0", 250, 85],
-      ].map(([f, x, y]) => (
-        <img
-          src={`/illustrations/${f}.svg`}
-          width="22"
-          height="22"
-          alt=""
-          style={`position:absolute;left:${x}px;top:${y}px`}
-        />
-      ))}
-    </div>
-    <span class="art-stamp absolute left-[520px] top-[38px] [border:2px_solid_#a73d30] text-[#a73d30] pt-[6px] pr-3 pb-[6px] pl-3 [transform:rotate(-5deg)] text-[18px]">
-      À EXAMINER
-    </span>
-    <div class="art-note absolute left-[10px] top-[110px] bg-primary w-[154px] h-[102px] [transform:rotate(7deg)] pt-[15px] pr-[15px] pb-[15px] pl-[15px] flex flex-col gap-[10px] [&_strong]:text-[12px] [&_span]:font-['Special_Elite'] [&_span]:text-[17px] [&_span]:leading-[1.3]">
-      <strong>INDICE 01</strong>
-      <span>Ça chauffe ici.</span>
-    </div>
-    <div class="art-photo absolute left-[550px] top-[390px] bg-cream pt-[10px] pr-[9px] pb-[17px] pl-[9px] [transform:rotate(5deg)] [&_img]:object-cover">
-      <img
-        src="/illustrations/bordeaux.webp"
-        alt="Les quais de Bordeaux"
-        width="128"
-        height="85"
-      />
-    </div>
-    <img
-      class="art-clip absolute left-[565px] top-[388px]"
-      src="/illustrations/trombone.webp"
-      alt=""
-      width="20"
-      height="25"
-    />
-    <img
-      class="art-glass absolute left-[410px] top-[228px]"
-      src="/illustrations/e90ed.svg"
-      alt=""
-      width="160"
-      height="170"
-    />
-    <div class="art-legend absolute left-[44px] top-[472px] flex gap-4 text-[10px]">
-      <span>🟠 Chaleur</span>
-      <span>🟢 Lieux frais</span>
-      <span>🔵 Eau</span>
-    </div>
-    <p class="art-caption absolute left-[44px] top-[510px] text-[10px]">
-      Carte illustrative · explore la carte pour consulter les données
+    </dl>
+    <p class="text-[1.5cqw] leading-[1.4] mt-[1.3cqw] text-[#65615b]">
+      Un zéro ne signifie pas « aucune fraîcheur » : l’inventaire ne garantit ni
+      l’ouverture ni l’accès aux lieux.
     </p>
   </div>
-</div>
+  <span class="absolute left-[67.7%] top-[6.67%] border-2 border-[#a73d30] text-[#a73d30] py-[6px] px-3 -rotate-5 text-[clamp(10px,1.1vw,18px)] z-[1] pointer-events-none">
+    À EXAMINER
+  </span>
+  <figcaption class="absolute left-[7%] top-[86%] w-[86%] text-[1.5cqw] leading-[1.4] text-[#65615b]">
+    Sources : ANCT, quartiers 2024 · Bordeaux Métropole, chaleur du 11/07/2022 ·
+    Espaces fraîcheur, extraction du 19/10/2026.
+    <a href="/sources/" class="underline underline-offset-2">
+      Lire la méthode ↗
+    </a>
+  </figcaption>
+</figure>
 <div
   class="thief absolute right-[calc(50%_-_50vw)] top-[100px] max-[760.001px]:top-[80px] w-[92px] max-[760.001px]:w-[60px] h-[274px] max-[760.001px]:h-[179px] pointer-events-none z-[3] [transform:none] max-[760.001px]:[transform-origin:right_top]"
   aria-hidden="true"
@@ -121,12 +89,3 @@
     alt=""
   />
 </div>
-<script>
-  const art = document.querySelector<HTMLElement>(".hero-art");
-  if (art) {
-    const observer = new ResizeObserver(() =>
-      art.style.setProperty("--art-scale", String(art.clientWidth / 768)),
-    );
-    observer.observe(art);
-  }
-</script>

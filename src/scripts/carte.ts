@@ -5,6 +5,7 @@ import type { GeoJsonObject, Feature } from "geojson";
 import quartiers from "../assets/quartiers.json";
 import chaleur from "../assets/chaleur.json";
 import metropole from "../assets/metropole.json";
+import fondCarte from "../assets/fond-carte.json";
 import lieux from "../assets/lieux.json";
 import indicateurs from "../assets/indicateurs.json";
 
@@ -49,6 +50,21 @@ if (explorer) {
       fillColor: "#de6d37",
       fillOpacity: 0.62,
     },
+  }).addTo(map);
+  map.createPane("reperes");
+  map.getPane("reperes")!.style.zIndex = "375";
+  const fondRenderer = L.canvas({ pane: "reperes" });
+  L.geoJSON(fondCarte as GeoJsonObject, {
+    pane: "reperes",
+    interactive: false,
+    style: (feature) => ({
+      renderer: fondRenderer,
+      color:
+        feature?.properties.typeCarte === "Cours d’eau" ? "#64748b" : "#8f8577",
+      weight: feature?.properties.typeCarte === "Cours d’eau" ? 1.5 : 0.7,
+      opacity: 0.65,
+      fill: false,
+    }),
   }).addTo(map);
   const qpLayer = L.geoJSON(quartiers as GeoJsonObject, {
     style: {
@@ -207,7 +223,7 @@ if (explorer) {
           L.geoJSON(f as Feature)
             .getBounds()
             .pad(detail ? 0.8 : 0.6),
-          { maxZoom: 15 },
+          { maxZoom: 15, animate: false },
         );
       else map.fitBounds(allBounds, { padding: [12, 12] });
     }
